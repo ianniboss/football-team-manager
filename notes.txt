@@ -1,0 +1,1 @@
+login et mot de passe en clair dans login.php, juste un pretexte pour utiliser les sessions, pas d'utilisateurs en base de données
