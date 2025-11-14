@@ -1,1 +1,9 @@
 login et mot de passe en clair dans login.php, juste un pretexte pour utiliser les sessions, pas d'utilisateurs en base de données
+
+
+modele : la partie DAO, tout ce qui concerne la mémoire du projet, la structure des données du projet,
+la connexion à la BDD, etc
+vue : la partie html, affichage, requêtes, tout ce à quoi l'entraineur a accès
+controleur : la logique du projet, les controles, les regles métiers. Pas d'affichage. Chaque classe
+contient les méthodes nécessaires à l'exécution du projet
+
