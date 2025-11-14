@@ -1,0 +1,98 @@
+Architecture Overview
+    MVC layers: Models (domain + persistence), Controllers (HTTP/actions), Views (templates/UI).
+    Add services for business rules (selection, stats) and repositories for data access.
+    Keep routing simple via a front controller; guard routes with session-based auth.
+
+Directory Structure
+    public/ — entry point, assets, router, authentication.
+    app/Controllers/ — one controller per feature (Players, Matches, Selection, Stats, Auth).
+    app/Models/ — Joueur, Match, Participation, Commentaire.
+    app/Repositories/ — SQL/PDO queries per entity.
+    app/Services/ — SelectionService, StatsService, EvaluationService.
+    app/Views/ — templates (list/detail/forms), partials (_layout, _nav).
+    config/ — DB config, app settings (e.g., plain-text auth per your note).
+    db/ — schema, migrations, seed data.
+    
+Model Mapping (from MCD)
+
+    Joueur — fields: id_joueur, nom, prenom, num_licence, date_naissance, taille, poids, statut.
+    Match — fields: id_match, date_match, heure, adresse, nom_equipe_adverse, lieu, resultat.
+    Participation — fields: id_participation, id_match, id_joueur, poste, titulaire (bool), evaluation.
+    Commentaire — fields: id_commentaire, id_joueur, commentaire.
+    Relations: Joueur 1..N Commentaire, Joueur 0..N Participation, Match 0..N Participation.
+
+Controllers
+    AuthController — login (plain credentials), logout, session guard middleware.
+    PlayersController — list/create/update/delete players; manage statut; list/add/delete comments.
+    MatchesController — list upcoming/past; create/update; record resultat when finished.
+    SelectionController — build match sheet:
+    Only upcoming matches and players with statut = Actif.
+    Assign poste, mark titulaire vs remplaçant.
+    EvaluationsController (or within Selection) — post-match ratings for participants who played.
+    StatsController — global W/D/L; per-player KPIs (starter count, replacement count, avg rating, best position, consecutive matches, win percentage).
+
+Views (Templates)
+    Layout: header/nav/footer; flash messages.
+    Players: list + search, create/edit form, status badge, comments panel.
+    Matches: calendar/list, create/edit, result capture, selection link.
+    Selection: match sheet editor (starters vs bench, position dropdowns), validation states.
+    Evaluations: rating UI (1–5 or stars), only for a_joue participants.
+    Stats: global cards + per-player table with sortable columns.
+
+Repositories
+    JoueurRepository — CRUD, filter by statut, attach/detach comments.
+    MatchRepository — CRUD, upcoming/past filters, set result.
+    ParticipationRepository — upsert participants per match, fetch sheet, constraints (unique per match+joueur).
+    CommentaireRepository — list/add/delete per player.
+
+Services (Business Rules)
+    SelectionService
+        Enforces “upcoming match” and “active players only”.
+        Validates role/poste consistency (e.g., max number of starters if you decide).
+    StatsService
+        Global W/D/L counts and percentages.
+        Per-player metrics from participations and results.
+        Best position = highest average evaluation by poste.
+        Consecutive matches played (streak) computed by date order.
+    EvaluationService
+        Accepts ratings only if player participated (a_joue/presence in sheet).
+        Optional normalization or star-to-score mapping.
+
+Routing
+    Front controller in public/index.php dispatching to controllers.
+    Route groups: /players, /matches, /matches/{id}/selection, /matches/{id}/evaluations, /stats, /login, /logout.
+    Protect all routes except /login with session check.
+
+Validation & UX Rules
+    Player forms: required identity fields; num_licence unique; status dropdown.
+    Match forms: date_match + heure required; lieu restricted; opponent and address required.
+    Selection: only active players; prevent duplicate player entries for a match.
+    Evaluations: allow only on completed matches or mark separately; rating 1–5.
+
+Data & Integrity
+    Unique constraint: (id_match, id_joueur) in Participation.
+    Enumerations: statut (Actif, Blessé, Suspendu, Absent), lieu (Domicile, Exterieur), resultat (Victoire, Defaite, Nul).
+    Nullable: resultat, evaluation until available.
+
+Security & Sessions
+    Use session-based guard; store only username (per note: no DB users).
+    Add CSRF token to forms; validate request methods.
+    Escape output in views; validate/clean inputs on controllers.
+
+Collaboration Plan (Two Teammates)
+    Teammate A (Data & Features)
+        Set up DB schema/migrations and repositories.
+        Implement Players + Comments CRUD.
+        Implement Matches CRUD + result capture.
+    Teammate B (Flows & Analytics)
+        Implement Selection builder and Evaluations flow.
+        Implement Stats service + views.
+        Build shared layout, nav, and authentication controller.
+
+Milestones
+    M1: Skeleton MVC, routing, auth guard, base layout.
+    M2: Players and Matches CRUD with validations.
+    M3: Selection builder (upcoming matches, active players).
+    M4: Evaluations and persistence.
+    M5: Stats views and exports.
+    M6: Polish (form errors, pagination, sorting, minimal tests).
