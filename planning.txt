@@ -39,12 +39,6 @@ Views (Templates)
     Evaluations: rating UI (1–5 or stars), only for a_joue participants.
     Stats: global cards + per-player table with sortable columns.
 
-Repositories
-    JoueurRepository — CRUD, filter by statut, attach/detach comments.
-    MatchRepository — CRUD, upcoming/past filters, set result.
-    ParticipationRepository — upsert participants per match, fetch sheet, constraints (unique per match+joueur).
-    CommentaireRepository — list/add/delete per player.
-
 Services (Business Rules)
     SelectionService
         Enforces “upcoming match” and “active players only”.
