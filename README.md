@@ -90,3 +90,52 @@ Mise en forme
 Utiliser les feuilles de style (CSS) et les bases d'ergonomie logicielle pour faire en sorte que l'utilisation de l'application soit la plus agréable et intuitive possible.
 
 N.B : La priorité reste le code et les fonctionnalités, attention à ne pas perdre trop de temps sur la forme.
+
+
+
+## Routes Cheat Sheet (MVC)
+
+Conventions
+- Front controller: `public/index.php` with query params `c` (controller) and `a` (action).
+- All routes require authentication (session) except `public/login.php`.
+- Use `GET` to display forms/pages and `POST` to submit changes.
+- Base URL examples assume `http://localhost:8000/public/`.
+
+Authentication
+- Login (GET/POST): `/public/login.php`
+- Logout (GET): `/public/logout.php`
+
+Players (`c=players`)
+- List (GET): `/public/index.php?c=players&a=index`
+- Show (GET): `/public/index.php?c=players&a=show&id=<id_joueur>`
+- Create form (GET): `/public/index.php?c=players&a=create`
+- Store (POST): `/public/index.php?c=players&a=store`
+- Edit form (GET): `/public/index.php?c=players&a=edit&id=<id_joueur>`
+- Update (POST): `/public/index.php?c=players&a=update&id=<id_joueur>`
+- Delete (POST): `/public/index.php?c=players&a=delete&id=<id_joueur>`
+- Comments (GET): `/public/index.php?c=players&a=comments&id=<id_joueur>`
+- Add comment (POST): `/public/index.php?c=players&a=addComment&id=<id_joueur>`
+- Delete comment (POST): `/public/index.php?c=players&a=deleteComment&id_commentaire=<id_commentaire>`
+
+Matches (`c=matches`)
+- List upcoming/past (GET): `/public/index.php?c=matches&a=index`
+- Show (GET): `/public/index.php?c=matches&a=show&id=<id_match>`
+- Create form (GET): `/public/index.php?c=matches&a=create`
+- Store (POST): `/public/index.php?c=matches&a=store`
+- Edit form (GET): `/public/index.php?c=matches&a=edit&id=<id_match>`
+- Update (POST): `/public/index.php?c=matches&a=update&id=<id_match>`
+- Delete (POST): `/public/index.php?c=matches&a=delete&id=<id_match>`
+- Edit result + evaluations (GET): `/public/index.php?c=matches&a=editResult&id=<id_match>`
+- Update result + evaluations (POST): `/public/index.php?c=matches&a=updateResult&id=<id_match>`
+
+Selection / Match Sheet (`c=selection`)
+- Edit selection (GET): `/public/index.php?c=selection&a=edit&id_match=<id_match>`
+- Update selection (POST): `/public/index.php?c=selection&a=update&id_match=<id_match>`
+
+Statistics (`c=stats`)
+- Global and per-player stats (GET): `/public/index.php?c=stats&a=index`
+
+Notes
+- Selection editor enforces minimum starters and only lists active players.
+- Matches “Edit Result” page also captures coach evaluations for participants.
+- Navigation menu appears on every page and links to Players, Matches, Selection (per match), and Stats.
