@@ -8,3 +8,7 @@ vue : la partie html, affichage, requêtes, tout ce à quoi l'entraineur a accè
 controleur : la logique du projet, les controles, les regles métiers. Pas d'affichage. Chaque classe
 contient les méthodes nécessaires à l'exécution du projet
 
+Une classe DAO se compose des éléments suivants :
+    Un attribut privé de type PDO, permettant la connexion à la base de données
+    Un constructeur
+    Une méthode par opération à mener sur la base de données (insert, update, delete, select)
