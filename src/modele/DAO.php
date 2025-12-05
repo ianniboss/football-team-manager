@@ -8,7 +8,7 @@ function ajouterJoueur($nom, $prenom, $num_licence, $date_naissance, $taille, $p
 // ...
 
 // ---- fonctions pour les rencontres ----
-function ajouterRencontre($date_rencontre, $heure, $adresse, $nom_equipe_adverse, lieu, resultat) {};
+function ajouterRencontre($date_rencontre, $heure, $adresse, $nom_equipe_adverse, $lieu, $resultat) {};
 
 // ...
 
