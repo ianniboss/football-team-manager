@@ -1,0 +1,33 @@
+<?php
+// affiche les details d'un joueur et ses commentaires
+session_start();
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: ../login.php");
+    exit;
+}
+
+require_once __DIR__ . '/../../modele/DAO/JoueurDAO.php';
+require_once __DIR__ . '/../../modele/DAO/CommentaireDAO.php';
+
+// Vérification qu'un ID est bien passé dans l'URL
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+
+    $joueurDAO = new JoueurDAO();
+    $commentaireDAO = new CommentaireDAO();
+
+    $joueur = $joueurDAO->getJoueurById($id);
+    $commentaires = $commentaireDAO->getCommentairesByJoueur($id);
+
+    if ($joueur) {
+        require __DIR__ . '/../../vue/joueurs/ficheJoueur.php';
+    } else {
+        echo "Joueur introuvable.";
+    }
+} else {
+    // Si pas d'ID, retour à la liste
+    header("Location: ObtenirTousLesJoueurs.php");
+    exit;
+}
+?>
