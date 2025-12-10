@@ -18,7 +18,7 @@ class ParticiperDAO {
                 FROM participer p
                 JOIN joueur j ON p.id_joueur = j.id_joueur
                 WHERE p.id_rencontre = :id_rencontre
-                ORDER BY p.titulaire DESC, p.poste ASC"; // Les titulaires en premier
+                ORDER BY p.titulaire DESC, p.poste ASC"; 
         
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(array(':id_rencontre' => $id_rencontre));
