@@ -17,7 +17,7 @@ Après chaque match, il souhaite pouvoir évaluer la performance de chaque joueu
 Enfin, il souhaite avoir des statistiques qui l'aideront dans sa prise de décision. Ces statistiques devront donner :
 
 - Le nombre et le pourcentage de victoires, de défaites et de matchs nuls.
-- Un tableau donnant, pour chaque joueur, son statut actuel, le poste sur lequel il est le plus performant en moyenne, son nombre de titularisations, son nombre de « remplacements » (nombre de match où le joueur est positionné en tant que remplacant), la moyenne de ses évaluations de l’entraîneur, le nombre de matchs consécutifs auxquels il a participé, et le pourcentage de matchs gagnés parmi ceux auxquels il a participé).
+- Un tableau donnant, pour chaque joueur, son statut actuel, le poste sur lequel il est le plus performant en moyenne, son nombre de titularisations, son nombre de « remplacements » (nombre de match où le joueur est positionné en tant que remplacant), la moyenne de ses évaluations de l’entraîneur, le nombre de matchs consécutifs auxquels il a participé, et le pourcentage de matchs gagnés parmi ceux auxquels il a participé.
 
 ## CONSIGNES
 
