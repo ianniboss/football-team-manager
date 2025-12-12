@@ -27,7 +27,7 @@
                             match</a>
                     <?php endif; ?>
                     | <a href="SupprimerUneRencontre.php?id=<?php echo $r['id_rencontre']; ?>"
-                        onclick="return confirm('Confirmer ?');">X</a>
+                        onclick="return confirm('Confirmer ?');">Supprimer</a>
                 </td>
             </tr>
         <?php endforeach; ?>

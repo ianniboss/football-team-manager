@@ -18,7 +18,7 @@
 
         nav {
             background-color: rgba(51, 51, 51, 0.95);
-            padding: 15px 80px;
+            padding: 15px 200px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -61,7 +61,7 @@
             <a href="/controleur/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
             <a href="/controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
             <a href="/controleur/stats/AfficherStatistiques.php">Statistiques</a>
-            <a href="/controleur/logout.php">Déconnexion</a>
+            <a href="/controleur/logout.php"onclick="return confirm('Vous êtes sur le point de vous déconnecter');">Déconnexion</a>
         </div>
     </nav>
     <div class="container">
