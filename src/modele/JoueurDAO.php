@@ -7,7 +7,7 @@ class JoueurDAO
 
     public function __construct()
     {
-        $this->pdo = Connexion::getInstance()->getPDO();
+        $this->pdo = ConnexionBD::getInstance()->getPDO();
     }
 
     // Récupérer tous les joueurs (SELECT)

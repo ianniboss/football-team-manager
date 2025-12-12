@@ -1,6 +1,6 @@
 // la connexion à la base de données
 <?php
-class Connexion {
+class ConnexionBD {
     private static $instance = null;
     private $pdo;
 
@@ -21,7 +21,7 @@ class Connexion {
 
     public static function getInstance() {
         if (self::$instance === null) {
-            self::$instance = new Connexion();
+            self::$instance = new ConnexionBD();
         }
         return self::$instance;
     }

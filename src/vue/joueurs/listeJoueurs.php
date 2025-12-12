@@ -18,10 +18,10 @@
 
     <?php foreach ($joueurs as $j) : ?>
         <tr>
-            <td><?= htmlspecialchars($j['id']); ?></td>
+            <td><?= htmlspecialchars($j['id_joueur']); ?></td>
             <td><?= htmlspecialchars($j['nom']); ?></td>
             <td><?= htmlspecialchars($j['prenom']); ?></td>
-            <td><?= htmlspecialchars($j['poste']); ?></td>
+            <td><?= htmlspecialchars($j['statut']); ?></td>
         </tr>
     <?php endforeach; ?>
 
