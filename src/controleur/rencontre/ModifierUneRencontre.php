@@ -6,7 +6,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/RencontreDAO.php';
+require_once __DIR__ . '/../../modele/RencontreDAO.php';
 $dao = new RencontreDAO();
 
 // modifier les informations générales du match

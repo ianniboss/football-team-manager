@@ -8,8 +8,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/RencontreDAO.php';
-require_once __DIR__ . '/../../modele/DAO/ParticiperDAO.php';
+require_once __DIR__ . '/../../modele/RencontreDAO.php';
+require_once __DIR__ . '/../../modele/ParticiperDAO.php';
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
 
     // Infos du match
     $rencontre = $rencontreDAO->getRencontreById($id);
-    
+
     // Liste des joueurs convoqués (feuille de match)
     $joueursParticipe = $participerDAO->getFeuilleMatch($id);
 

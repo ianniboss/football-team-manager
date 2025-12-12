@@ -1,26 +1,30 @@
 <?php
-require_once __DIR__ . '/../../modele/Connexion.php';
+require_once __DIR__ . '/ConnexionBD.php';
 
-class CommentaireDAO {
+class CommentaireDAO
+{
     private $pdo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pdo = Connexion::getInstance()->getPDO();
     }
 
-    // Récupérer tous les commentaires d'un joueur spécifique
-    public function getCommentairesByJoueur($id_joueur) {
+    // Récupérer tous les commentaires d'un joueur (SELECT)
+    public function getCommentairesByJoueur($id_joueur)
+    {
         $sql = "SELECT * FROM commentaire WHERE id_joueur = :id_joueur ORDER BY date_commentaire DESC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(array(':id_joueur' => $id_joueur));
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un commentaire
-    public function ajouterCommentaire($id_joueur, $contenu, $date) {
+    // Ajouter un commentaire (INSERT)
+    public function ajouterCommentaire($id_joueur, $contenu, $date)
+    {
         $sql = "INSERT INTO commentaire (id_joueur, commentaire, date_commentaire) 
                 VALUES (:id_joueur, :contenu, :date)";
-        
+
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute(array(
             ':id_joueur' => $id_joueur,
@@ -29,8 +33,9 @@ class CommentaireDAO {
         ));
     }
 
-    // Supprimer un commentaire
-    public function supprimerCommentaire($id_commentaire) {
+    // Supprimer un commentaire (DELETE)
+    public function supprimerCommentaire($id_commentaire)
+    {
         $sql = "DELETE FROM commentaire WHERE id_commentaire = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute(array(':id' => $id_commentaire));

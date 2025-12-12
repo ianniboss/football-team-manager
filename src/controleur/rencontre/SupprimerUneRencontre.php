@@ -6,11 +6,11 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/RencontreDAO.php';
+require_once __DIR__ . '/../../modele/RencontreDAO.php';
 
 if (isset($_POST['id_rencontre']) || isset($_GET['id'])) {
     $id = isset($_POST['id_rencontre']) ? $_POST['id_rencontre'] : $_GET['id'];
-    
+
     $dao = new RencontreDAO();
     // supprimer les participations liées 
     $dao->supprimerRencontre($id);

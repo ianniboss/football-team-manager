@@ -9,7 +9,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 // 2. Inclusion du DAO
-require_once __DIR__ . '/../../modele/DAO/JoueurDAO.php';
+require_once __DIR__ . '/../../modele/JoueurDAO.php';
 
 // 3. Récupération des données
 $dao = new JoueurDAO();

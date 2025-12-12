@@ -1,27 +1,30 @@
 <?php
-require_once __DIR__ . '/../../modele/Connexion.php'; // Adaptation du chemin selon votre structure
+require_once __DIR__ . '/ConnexionBD.php';
 
-class JoueurDAO {
+class JoueurDAO
+{
     private $pdo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pdo = Connexion::getInstance()->getPDO();
     }
 
-    // Récupérer tous les joueurs (pour la liste)
-    public function getJoueurs() {
+    // Récupérer tous les joueurs (SELECT)
+    public function getJoueurs()
+    {
         $req = $this->pdo->query('SELECT * FROM joueur ORDER BY nom, prenom');
-        return $req->fetchAll(PDO::FETCH_ASSOC); 
+        return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un joueur
-    public function ajouterJoueur($nom, $prenom, $num_licence, $date_naissance, $taille, $poids, $statut) {
+    // Ajouter un joueur (INSERT)
+    public function ajouterJoueur($nom, $prenom, $num_licence, $date_naissance, $taille, $poids, $statut)
+    {
         $sql = "INSERT INTO joueur (nom, prenom, num_licence, date_naissance, taille, poids, statut) 
                 VALUES (:nom, :prenom, :num_licence, :date_naissance, :taille, :poids, :statut)";
-        
+
         $stmt = $this->pdo->prepare($sql);
-        
-        // Exécution avec le tableau associatif
+
         return $stmt->execute(array(
             ':nom' => $nom,
             ':prenom' => $prenom,
@@ -33,24 +36,24 @@ class JoueurDAO {
         ));
     }
 
-    // Récupérer un joueur par son ID (pour pré-remplir le formulaire de modification)
-    public function getJoueurById($id_joueur) {
+    // Récupérer un joueur par son ID (SELECT)
+    public function getJoueurById($id_joueur)
+    {
         $sql = "SELECT * FROM joueur WHERE id_joueur = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(array(':id' => $id_joueur));
-        
-        // fetch pour une seule ligne (page 73)
+
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Modifier un joueur
-    public function modifierJoueur($id_joueur, $nom, $prenom, $num_licence, $date_naissance, $taille, $poids, $statut) {
-        // Modification d'un enregistrement
+    // Modifier un joueur (UPDATE)
+    public function modifierJoueur($id_joueur, $nom, $prenom, $num_licence, $date_naissance, $taille, $poids, $statut)
+    {
         $sql = "UPDATE joueur 
                 SET nom = :nom, prenom = :prenom, num_licence = :licence, 
                     date_naissance = :naissance, taille = :taille, poids = :poids, statut = :statut 
                 WHERE id_joueur = :id";
-        
+
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute(array(
             ':nom' => $nom,
@@ -64,16 +67,17 @@ class JoueurDAO {
         ));
     }
 
-    // Supprimer un joueur
-    public function supprimerJoueur($id_joueur) {
-        // Cf. Page 79 du cours : Suppression
+    // Supprimer un joueur (DELETE)
+    public function supprimerJoueur($id_joueur)
+    {
         $sql = "DELETE FROM joueur WHERE id_joueur = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute(array(':id' => $id_joueur));
     }
-    
-    // Fonction spécifique pour la liste des joueurs actifs (pour la sélection de match)
-    public function getJoueursActifs() {
+
+    // Récupérer les joueurs actifs (SELECT)
+    public function getJoueursActifs()
+    {
         $sql = "SELECT * FROM joueur WHERE statut = 'Actif' ORDER BY nom";
         $req = $this->pdo->query($sql);
         return $req->fetchAll(PDO::FETCH_ASSOC);
