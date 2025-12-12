@@ -14,7 +14,8 @@ require_once __DIR__ . '/../../modele/JoueurDAO.php';
 // 3. Récupération des données
 $dao = new JoueurDAO();
 $joueurs = $dao->getJoueurs();
+$_SESSION['joueurs'] = $joueurs;
 
-// 4. Appel de la vue
-require __DIR__ . '/../../vue/joueurs/listeJoueurs.php';
+header("Location: ../../vue/joueurs/listeJoueurs.php");
+exit;
 ?>
