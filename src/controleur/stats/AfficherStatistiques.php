@@ -32,9 +32,12 @@ $statsGlobales = [
 foreach ($tousLesMatchs as $match) {
     if ($match['resultat'] !== null) {
         $statsGlobales['total_joues']++;
-        if ($match['resultat'] === 'Victoire') $statsGlobales['victoires']++;
-        elseif ($match['resultat'] === 'Defaite') $statsGlobales['defaites']++;
-        elseif ($match['resultat'] === 'Nul') $statsGlobales['nuls']++;
+        if ($match['resultat'] === 'Victoire')
+            $statsGlobales['victoires']++;
+        elseif ($match['resultat'] === 'Defaite')
+            $statsGlobales['defaites']++;
+        elseif ($match['resultat'] === 'Nul')
+            $statsGlobales['nuls']++;
     }
 }
 
@@ -51,7 +54,7 @@ $tableauJoueurs = [];
 
 foreach ($tousLesJoueurs as $joueur) {
     $id = $joueur['id_joueur'];
-    
+
     // On récupère les données brutes via le DAO
     $infos = $participerDAO->getStatsJoueur($id);
     $pourcentageGagne = $participerDAO->getPourcentageGagne($id);
@@ -73,5 +76,5 @@ foreach ($tousLesJoueurs as $joueur) {
 }
 
 // 3. Appel de la vue
-require __DIR__ . '/../../vue/stats/statistiques.php';
+require __DIR__ . '/../../vue/stats/index.php';
 ?>

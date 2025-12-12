@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Feuille de Match</title>
-    <link rel="stylesheet" href="../../vue/style/styles.css">
-</head>
-<body>
-    <div class="container">
+<?php require_once __DIR__ . '/../header.php'; ?>
         <h2>Sélection pour le match vs <?php echo htmlspecialchars($rencontre['nom_equipe_adverse']); ?></h2>
         
         <form method="POST" action="EnregistrerSelection.php">
