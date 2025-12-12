@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,15 +16,21 @@
         <th>ID</th>
         <th>Nom</th>
         <th>Prénom</th>
-        <th>Poste</th>
+        <th>N° Licence</th>
+        <th>Statut</th>
+        <th>Actions</th>
     </tr>
 
     <?php foreach ($joueurs as $j) : ?>
         <tr>
-            <td><?= htmlspecialchars($j['id']); ?></td>
+            <td><?= htmlspecialchars($j['id_joueur']); ?></td>
             <td><?= htmlspecialchars($j['nom']); ?></td>
             <td><?= htmlspecialchars($j['prenom']); ?></td>
-            <td><?= htmlspecialchars($j['poste']); ?></td>
+            <td><?= htmlspecialchars($j['num_licence']); ?></td>
+            <td><?= htmlspecialchars($j['statut']); ?></td>
+            <td>
+                <a href="../../controleur/joueur/ObtenirUnJoueur.php?id=<?= $j['id_joueur']; ?>">Voir</a>
+            </td>
         </tr>
     <?php endforeach; ?>
 
