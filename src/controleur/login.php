@@ -20,7 +20,7 @@ $password = $_POST['password'];
 if (array_key_exists($username, $valid_users) && $valid_users[$username] === $password) {
     $_SESSION['logged_in'] = true;
     $_SESSION['username'] = $username;
-    header("Location: ../vue/Vue.php");
+    header("Location: ../vue/accueil.php");
 } else {
     echo "Identifiants invalides<br>";
     echo '<a href="../vue/connexion.html">Réessayer</a>';
