@@ -8,8 +8,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/RencontreDAO.php';
-require_once __DIR__ . '/../../modele/DAO/ParticiperDAO.php';
+require_once __DIR__ . '/../../modele/RencontreDAO.php';
+require_once __DIR__ . '/../../modele/ParticiperDAO.php';
 
 $rencontreDAO = new RencontreDAO();
 $participerDAO = new ParticiperDAO();
@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1. Mise à jour du résultat du match
     $id_rencontre = $_POST['id_rencontre'];
     $resultat = $_POST['resultat']; // Victoire, Defaite, Nul
-    
+
     // Pour modifier le résultat, on a besoin des autres infos obligatoires. 
     // On les récupère d'abord pour ne pas les effacer.
     $matchActuel = $rencontreDAO->getRencontreById($id_rencontre);
-    
+
     if ($matchActuel) {
         $rencontreDAO->modifierRencontre(
             $id_rencontre,
@@ -52,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Affichage du formulaire de saisie des résultats
     $id = $_GET['id'];
     $rencontre = $rencontreDAO->getRencontreById($id);
-    
+
     // On ne note que les joueurs présents sur la feuille de match
-    $joueursFeuille = $participerDAO->getFeuilleMatch($id); 
-    
+    $joueursFeuille = $participerDAO->getFeuilleMatch($id);
+
     require __DIR__ . '/../../vue/rencontres/formResultat.php';
 }
 ?>

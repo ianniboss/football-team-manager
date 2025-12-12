@@ -1,4 +1,4 @@
-<?php 
+<?php
 // affiche la liste des matchs (passés et à venir)
 session_start();
 
@@ -8,7 +8,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/RencontreDAO.php';
+require_once __DIR__ . '/../../modele/RencontreDAO.php';
 
 $dao = new RencontreDAO();
 $rencontres = $dao->getRencontres();

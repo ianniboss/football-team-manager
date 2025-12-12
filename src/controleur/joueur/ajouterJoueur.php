@@ -6,12 +6,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/JoueurDAO.php';
+require_once __DIR__ . '/../../modele/JoueurDAO.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // --- Traitement du formulaire ---
     $dao = new JoueurDAO();
-    
+
     // Nettoyage des entrées
     $nom = htmlspecialchars($_POST['nom']);
     $prenom = htmlspecialchars($_POST['prenom']);

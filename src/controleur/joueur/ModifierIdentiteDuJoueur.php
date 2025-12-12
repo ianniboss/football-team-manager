@@ -7,7 +7,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/JoueurDAO.php';
+require_once __DIR__ . '/../../modele/JoueurDAO.php';
 $dao = new JoueurDAO();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

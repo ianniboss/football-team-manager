@@ -4,20 +4,20 @@ session_start();
 
 // Sécurité : Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../../vue/connexion.html"); 
+    header("Location: ../../vue/connexion.html");
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/CommentaireDAO.php';
+require_once __DIR__ . '/../../modele/CommentaireDAO.php';
 
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérification que les champs requis sont présents
     if (isset($_POST['id_joueur']) && !empty($_POST['commentaire'])) {
-        
+
         $id_joueur = intval($_POST['id_joueur']);
         // Protection XSS : on neutralise les balises HTML potentielles
-        $contenu = htmlspecialchars($_POST['commentaire']); 
+        $contenu = htmlspecialchars($_POST['commentaire']);
         $date = date('Y-m-d'); // Date du jour
 
         $dao = new CommentaireDAO();

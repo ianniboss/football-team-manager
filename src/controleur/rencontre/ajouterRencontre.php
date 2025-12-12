@@ -7,12 +7,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-require_once __DIR__ . '/../../modele/DAO/RencontreDAO.php';
+require_once __DIR__ . '/../../modele/RencontreDAO.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // --- Traitement ---
     $dao = new RencontreDAO();
-    
+
     // Nettoyage
     $date = $_POST['date_rencontre'];
     $heure = $_POST['heure'];
