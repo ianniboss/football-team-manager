@@ -147,5 +147,33 @@ class ParticiperDAO
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
         return $res ? $res['poste'] : 'Aucun';
     }
+
+    /**
+     * Calcule le nombre de matchs consécutifs joués par le joueur (série en cours).
+     * On remonte dans le temps depuis le dernier match joué par l'équipe.
+     */
+    public function getSerieEnCours($id_joueur) {
+        // 1. On récupère TOUS les matchs passés de l'équipe, triés du plus récent au plus ancien
+        $sql = "SELECT r.id_rencontre, 
+                       (SELECT COUNT(*) FROM participer p WHERE p.id_rencontre = r.id_rencontre AND p.id_joueur = :id_joueur) as a_joue
+                FROM rencontre r
+                WHERE r.date_rencontre <= CURDATE()
+                ORDER BY r.date_rencontre DESC";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(array(':id_joueur' => $id_joueur));
+        $matchs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $serie = 0;
+        foreach ($matchs as $match) {
+            if ($match['a_joue'] > 0) {
+                $serie++;
+            } else {
+                // Dès qu'on tombe sur un match où il n'a pas joué, la série s'arrête
+                break;
+            }
+        }
+        return $serie;
+    }
 }
 ?>

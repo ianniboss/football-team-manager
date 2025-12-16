@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 require_once __DIR__ . '/../../modele/ParticiperDAO.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_rencontre'])) {
-    
+
     $id_rencontre = intval($_POST['id_rencontre']);
     $participerDAO = new ParticiperDAO();
 
@@ -23,13 +23,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_rencontre'])) {
     $submittedData = isset($_POST['joueurs']) ? $_POST['joueurs'] : [];
 
     foreach ($submittedData as $id_joueur => $data) {
+        // Only process if the player was selected (checkbox checked)
+        if (!isset($data['selected'])) {
+            // Player was not checked, skip adding but we'll handle removal later
+            continue;
+        }
+
         $poste = htmlspecialchars($data['poste']);
-        $est_titulaire = isset($data['titulaire']) ? 1 : 0; 
+        $est_titulaire = isset($data['titulaire']) ? 1 : 0;
 
         if (array_key_exists($id_joueur, $existingIds)) {
             $id_participation = $existingIds[$id_joueur];
             $participerDAO->modifierParticipation($id_participation, $poste, $est_titulaire);
-            
+
             unset($existingIds[$id_joueur]);
         } else {
             $participerDAO->ajouterParticipation($id_rencontre, $id_joueur, $poste, $est_titulaire);

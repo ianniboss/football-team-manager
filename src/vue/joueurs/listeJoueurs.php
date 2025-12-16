@@ -1,15 +1,11 @@
 <?php
 session_start();
+require_once __DIR__ . '/../header.php';
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Liste des joueurs</title>
-</head>
-<body>
+
 <?php $joueurs = $_SESSION['joueurs'] ?? []; ?>
 <h2>Liste des joueurs</h2>
+<a href="../../controleur/joueur/AjouterJoueur.php" class="btn">Ajouter un joueur</a>
 
 <table border="1">
     <tr>
@@ -21,7 +17,7 @@ session_start();
         <th>Actions</th>
     </tr>
 
-    <?php foreach ($joueurs as $j) : ?>
+    <?php foreach ($joueurs as $j): ?>
         <tr>
             <td><?= htmlspecialchars($j['id_joueur']); ?></td>
             <td><?= htmlspecialchars($j['nom']); ?></td>
@@ -36,5 +32,7 @@ session_start();
 
 </table>
 
+</div>
 </body>
+
 </html>
