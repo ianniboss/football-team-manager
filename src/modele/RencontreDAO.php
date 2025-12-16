@@ -7,7 +7,7 @@ class RencontreDAO
 
     public function __construct()
     {
-        $this->pdo = Connexion::getInstance()->getPDO();
+        $this->pdo = ConnexionBD::getInstance()->getPDO();
     }
 
     // Récupérer toutes les rencontres (SELECT)

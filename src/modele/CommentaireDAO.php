@@ -7,7 +7,7 @@ class CommentaireDAO
 
     public function __construct()
     {
-        $this->pdo = Connexion::getInstance()->getPDO();
+        $this->pdo = ConnexionBD::getInstance()->getPDO();
     }
 
     // Récupérer tous les commentaires d'un joueur (SELECT)

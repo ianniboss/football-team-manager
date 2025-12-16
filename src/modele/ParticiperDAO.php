@@ -7,7 +7,7 @@ class ParticiperDAO
 
     public function __construct()
     {
-        $this->pdo = Connexion::getInstance()->getPDO();
+        $this->pdo = ConnexionBD::getInstance()->getPDO();
     }
 
     /**

@@ -57,11 +57,11 @@
     <nav>
         <div class="logo">FTM</div>
         <div class="nav-links">
-            <a href="/vue/accueil.php">Accueil</a>
-            <a href="/controleur/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
-            <a href="/controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
-            <a href="/controleur/stats/AfficherStatistiques.php">Statistiques</a>
-            <a href="/controleur/logout.php"onclick="return confirm('Vous êtes sur le point de vous déconnecter');">Déconnexion</a>
+            <a href="../accueil.php">Accueil</a>
+            <a href="../controleur/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
+            <a href="../../controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
+            <a href="../../controleur/stats/AfficherStatistiques.php">Statistiques</a>
+            <a href="../../controleur/logout.php"onclick="return confirm('Vous êtes sur le point de vous déconnecter');">Déconnexion</a>
         </div>
     </nav>
     <div class="container">

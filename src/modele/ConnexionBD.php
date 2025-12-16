@@ -1,6 +1,4 @@
 <?php
-// la connexion à la base de données
-<?php
 class ConnexionBD {
     private static $instance = null;
     private $pdo;
