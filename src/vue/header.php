@@ -4,10 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Football Team Manager</title>
-    <link rel="stylesheet" href="/vue/style/styles.css">
+    <?php
+    // Define base path dynamically - works locally and on deployment
+    $basePath = '/src';
+    ?>
+    <link rel="stylesheet" href="<?php echo $basePath; ?>/vue/style/styles.css">
     <style>
         body {
-            background-image: url('/modele/img/stadiumbackground.jpg');
+            background-image: url('<?php echo $basePath; ?>/modele/img/stadiumbackground.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -57,11 +61,12 @@
     <nav>
         <div class="logo">FTM</div>
         <div class="nav-links">
-            <a href="../accueil.php">Accueil</a>
-            <a href="../controleur/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
-            <a href="../../controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
-            <a href="../../controleur/stats/AfficherStatistiques.php">Statistiques</a>
-            <a href="../../controleur/logout.php"onclick="return confirm('Vous êtes sur le point de vous déconnecter');">Déconnexion</a>
+            <a href="<?php echo $basePath; ?>/vue/accueil.php">Accueil</a>
+            <a href="<?php echo $basePath; ?>/controleur/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
+            <a href="<?php echo $basePath; ?>/controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
+            <a href="<?php echo $basePath; ?>/controleur/stats/AfficherStatistiques.php">Statistiques</a>
+            <a href="<?php echo $basePath; ?>/controleur/logout.php"
+                onclick="return confirm('Vous êtes sur le point de vous déconnecter');">Déconnexion</a>
         </div>
     </nav>
     <div class="container">
