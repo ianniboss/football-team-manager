@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/../header.php'; ?>
-<!-- Edit Player Form - Used by ModifierIdentiteDuJoueur.php -->
+<!-- Formulaire de modification de joueur - Utilisé par ModifierIdentiteDuJoueur.php -->
 
 <style>
     .form-card {
@@ -234,33 +234,33 @@
 </style>
 
 <div class="form-card">
-    <h2>Edit Player</h2>
-    <p class="form-subtitle">Update player information</p>
+    <h2>Modifier le Joueur</h2>
+    <p class="form-subtitle">Mettre à jour les informations du joueur</p>
 
     <form method="POST" action="/controleur/joueur/ModifierIdentiteDuJoueur.php">
         <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
 
         <div class="form-grid">
-            <!-- Left Column - Personal Information -->
+            <!-- Left Column - Informations personnelles -->
             <div class="form-section">
-                <h3>Personal Information</h3>
+                <h3>Informations personnelles</h3>
                 
                 <div class="form-group">
-                    <label for="prenom">First Name</label>
+                    <label for="prenom">Prénom</label>
                     <input type="text" name="prenom" id="prenom" 
                            value="<?php echo htmlspecialchars($joueur['prenom']); ?>" 
-                           placeholder="Enter first name..." required>
+                           placeholder="Entrez le prénom..." required>
                 </div>
 
                 <div class="form-group">
-                    <label for="nom">Last Name</label>
+                    <label for="nom">Nom</label>
                     <input type="text" name="nom" id="nom" 
                            value="<?php echo htmlspecialchars($joueur['nom']); ?>" 
-                           placeholder="Enter last name..." required>
+                           placeholder="Entrez le nom..." required>
                 </div>
 
                 <div class="form-group">
-                    <label for="date_naissance">Date of Birth</label>
+                    <label for="date_naissance">Date de naissance</label>
                     <div class="input-with-icon">
                         <input type="date" name="date_naissance" id="date_naissance" 
                                value="<?php echo $joueur['date_naissance']; ?>" required>
@@ -269,53 +269,53 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="num_licence">License Number</label>
+                    <label for="num_licence">Numéro de licence</label>
                     <input type="text" name="num_licence" id="num_licence" 
                            value="<?php echo htmlspecialchars($joueur['num_licence']); ?>" 
                            placeholder="Ex: LIC-2024-001" required>
                 </div>
             </div>
 
-            <!-- Right Column - Physical & Status -->
+            <!-- Right Column - Attributs physiques & Statut -->
             <div class="form-section">
-                <h3>Physical Attributes</h3>
+                <h3>Attributs physiques</h3>
                 
                 <div class="form-group">
-                    <label>Height & Weight</label>
+                    <label>Taille & Poids</label>
                     <div class="input-row">
                         <div class="input-with-unit">
                             <input type="number" name="taille" id="taille" 
                                    value="<?php echo $joueur['taille']; ?>" 
-                                   placeholder="Height" step="1" min="100" max="250" required>
+                                   placeholder="Taille" step="1" min="100" max="250" required>
                             <span class="unit">cm</span>
                         </div>
                         <div class="input-with-unit">
                             <input type="number" name="poids" id="poids" 
                                    value="<?php echo $joueur['poids']; ?>" 
-                                   placeholder="Weight" step="0.1" min="30" max="200" required>
+                                   placeholder="Poids" step="0.1" min="30" max="200" required>
                             <span class="unit">kg</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-top: 30px;">
-                    <h3 style="margin-bottom: 12px;">Status</h3>
-                    <label>Player Status</label>
+                    <h3 style="margin-bottom: 12px;">Statut</h3>
+                    <label>Statut du joueur</label>
                     <div class="radio-group">
                         <label class="radio-option">
                             <input type="radio" name="statut" value="Actif" 
                                    <?php echo ($joueur['statut'] == 'Actif') ? 'checked' : ''; ?>>
-                            <span>Active</span>
+                            <span>Actif</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="statut" value="Blessé"
                                    <?php echo ($joueur['statut'] == 'Blessé') ? 'checked' : ''; ?>>
-                            <span>Injured</span>
+                            <span>Blessé</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="statut" value="Suspendu"
                                    <?php echo ($joueur['statut'] == 'Suspendu') ? 'checked' : ''; ?>>
-                            <span>Suspended</span>
+                            <span>Suspendu</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="statut" value="Absent"
@@ -328,9 +328,9 @@
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Update Player</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
             <a href="/controleur/joueur/ObtenirUnJoueur.php?id=<?php echo $joueur['id_joueur']; ?>" class="btn btn-secondary" style="text-decoration: none; text-align: center;">
-                Cancel
+                Annuler
             </a>
         </div>
     </form>

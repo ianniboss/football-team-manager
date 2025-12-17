@@ -100,7 +100,7 @@
         <div class="nav-links">
             <a href="<?php echo $basePath; ?>/vue/accueil.php">Accueil</a>
             <a href="<?php echo $basePath; ?>/controleur/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
-            <a href="<?php echo $basePath; ?>/controleur/rencontre/ObtenirToutesLesRencontres.php">Rencontres</a>
+            <a href="<?php echo $basePath; ?>/controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
             <a href="<?php echo $basePath; ?>/controleur/stats/AfficherStatistiques.php">Statistiques</a>
             <a href="<?php echo $basePath; ?>/controleur/logout.php"
                 onclick="return confirm('Vous allez vous deconnecter');">Déconnexion</a>

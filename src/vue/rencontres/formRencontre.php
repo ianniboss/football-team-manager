@@ -206,8 +206,8 @@
 </style>
 
 <div class="form-card">
-    <h2><?php echo isset($rencontre) ? 'Modifier le Match' : 'New Match'; ?></h2>
-    <p class="form-subtitle">General Information</p>
+    <h2><?php echo isset($rencontre) ? 'Modifier la Rencontre' : 'Nouvelle Rencontre'; ?></h2>
+    <p class="form-subtitle">Informations générales</p>
 
     <form method="POST" action="<?php echo isset($rencontre) ? 'ModifierUneRencontre.php' : 'ajouterRencontre.php'; ?>">
         <?php if (isset($rencontre)): ?>
@@ -215,18 +215,17 @@
         <?php endif; ?>
 
         <div class="form-grid">
-            <!-- Left Column - General Information -->
+            <!-- Left Column - Informations générales -->
             <div class="form-section">
-                <h3>General Information</h3>
+                <h3>Informations générales</h3>
                 
                 <div class="form-group">
-                    <label for="nom_equipe_adverse">Opponent Team</label>
+                    <label for="nom_equipe_adverse">Équipe adverse</label>
                     <div class="input-with-icon">
-                        <select name="nom_equipe_adverse" id="nom_equipe_adverse" required>
-                            <option value="" disabled <?php echo !isset($rencontre) ? 'selected' : ''; ?>>Select opponent...</option>
-                            <option value="<?php echo $rencontre['nom_equipe_adverse'] ?? ''; ?>" <?php echo isset($rencontre) ? 'selected' : ''; ?>><?php echo $rencontre['nom_equipe_adverse'] ?? ''; ?></option>
-                        </select>
-                        <span class="icon">▲</span>
+                        <input type="text" name="nom_equipe_adverse" id="nom_equipe_adverse" 
+                               value="<?php echo $rencontre['nom_equipe_adverse'] ?? ''; ?>"
+                               placeholder="Ex: FC Paris" required>
+                        <span class="icon">⚽</span>
                     </div>
                 </div>
 
@@ -234,14 +233,13 @@
                     <label for="date_rencontre">Date</label>
                     <div class="input-with-icon">
                         <input type="date" name="date_rencontre" id="date_rencontre" 
-                               value="<?php echo $rencontre['date_rencontre'] ?? ''; ?>" 
-                               placeholder="Ex: FC Paris" required>
+                               value="<?php echo $rencontre['date_rencontre'] ?? ''; ?>" required>
                         <span class="icon">📅</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="heure">Time</label>
+                    <label for="heure">Heure</label>
                     <div class="input-with-icon">
                         <input type="time" name="heure" id="heure" 
                                value="<?php echo $rencontre['heure'] ?? ''; ?>" required>
@@ -250,41 +248,41 @@
                 </div>
             </div>
 
-            <!-- Right Column - Location -->
+            <!-- Right Column - Lieu -->
             <div class="form-section">
-                <h3>Location</h3>
+                <h3>Lieu</h3>
                 
                 <div class="form-group">
-                    <label>Venue</label>
+                    <label>Type de rencontre</label>
                     <div class="radio-group">
                         <label class="radio-option">
                             <input type="radio" name="lieu" value="Domicile" 
                                    <?php echo (!isset($rencontre) || $rencontre['lieu'] == 'Domicile') ? 'checked' : ''; ?>>
-                            <span>Home</span>
+                            <span>Domicile</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="lieu" value="Exterieur"
                                    <?php echo (isset($rencontre) && $rencontre['lieu'] == 'Exterieur') ? 'checked' : ''; ?>>
-                            <span>Away</span>
+                            <span>Extérieur</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="adresse">Match Address</label>
+                    <label for="adresse">Adresse du stade</label>
                     <input type="text" name="adresse" id="adresse" 
                            value="<?php echo $rencontre['adresse'] ?? ''; ?>" 
-                           placeholder="Enter full stadium address..." required>
+                           placeholder="Entrez l'adresse complète du stade..." required>
                 </div>
             </div>
         </div>
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">
-                <?php echo isset($rencontre) ? 'Update Match' : 'Create Match'; ?>
+                <?php echo isset($rencontre) ? 'Modifier' : 'Créer la rencontre'; ?>
             </button>
             <a href="/controleur/rencontre/ObtenirToutesLesRencontres.php" class="btn btn-secondary" style="text-decoration: none; text-align: center;">
-                Cancel
+                Annuler
             </a>
         </div>
     </form>

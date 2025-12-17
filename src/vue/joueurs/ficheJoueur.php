@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/../header.php'; ?>
-<!-- Player Details View - Used by ObtenirUnJoueur.php -->
+<!-- Fiche détaillée du joueur - Utilisé par ObtenirUnJoueur.php -->
 
 <style>
     .player-card {
@@ -159,7 +159,7 @@
             grid-template-columns: 1fr;
             gap: 20px;
         }
-        
+
         .player-card {
             margin: 20px;
             padding: 30px 25px;
@@ -181,40 +181,40 @@
 
 <div class="player-card">
     <h2><?php echo htmlspecialchars($joueur['prenom'] . ' ' . $joueur['nom']); ?></h2>
-    <p class="player-subtitle">Player Profile</p>
+    <p class="player-subtitle">Fiche du joueur</p>
 
     <div class="info-grid">
-        <!-- Left Column - Personal Information -->
+        <!-- Left Column - Informations personnelles -->
         <div class="info-section">
-            <h3>Personal Information</h3>
-            
+            <h3>Informations personnelles</h3>
+
             <div class="info-item">
-                <label>First Name</label>
+                <label>Prénom</label>
                 <div class="value"><?php echo htmlspecialchars($joueur['prenom']); ?></div>
             </div>
 
             <div class="info-item">
-                <label>Last Name</label>
+                <label>Nom</label>
                 <div class="value"><?php echo htmlspecialchars($joueur['nom']); ?></div>
             </div>
 
             <div class="info-item">
-                <label>Date of Birth</label>
+                <label>Date de naissance</label>
                 <div class="value"><?php echo htmlspecialchars($joueur['date_naissance']); ?></div>
             </div>
 
             <div class="info-item">
-                <label>License Number</label>
+                <label>Numéro de licence</label>
                 <div class="value"><?php echo htmlspecialchars($joueur['num_licence']); ?></div>
             </div>
         </div>
 
-        <!-- Right Column - Physical & Status -->
+        <!-- Right Column - Attributs physiques & Statut -->
         <div class="info-section">
-            <h3>Physical Attributes</h3>
-            
+            <h3>Attributs physiques</h3>
+
             <div class="info-item">
-                <label>Height & Weight</label>
+                <label>Taille & Poids</label>
                 <div class="info-row">
                     <div class="value"><?php echo htmlspecialchars($joueur['taille']); ?> cm</div>
                     <div class="value"><?php echo htmlspecialchars($joueur['poids']); ?> kg</div>
@@ -222,13 +222,16 @@
             </div>
 
             <div class="info-item" style="margin-top: 30px;">
-                <label>Status</label>
+                <label>Statut</label>
                 <?php
-                    $statut = $joueur['statut'];
-                    $statusClass = 'status-actif';
-                    if ($statut == 'Blessé') $statusClass = 'status-blesse';
-                    else if ($statut == 'Suspendu') $statusClass = 'status-suspendu';
-                    else if ($statut == 'Absent') $statusClass = 'status-absent';
+                $statut = $joueur['statut'];
+                $statusClass = 'status-actif';
+                if ($statut == 'Blessé')
+                    $statusClass = 'status-blesse';
+                else if ($statut == 'Suspendu')
+                    $statusClass = 'status-suspendu';
+                else if ($statut == 'Absent')
+                    $statusClass = 'status-absent';
                 ?>
                 <div class="status-badge <?php echo $statusClass; ?>">
                     <?php echo htmlspecialchars($statut); ?>
@@ -238,15 +241,17 @@
     </div>
 
     <div class="card-actions">
-        <a href="/controleur/joueur/ModifierIdentiteDuJoueur.php?id=<?php echo $joueur['id_joueur']; ?>" class="btn btn-primary">
+        <a href="/controleur/joueur/ModifierIdentiteDuJoueur.php?id=<?php echo $joueur['id_joueur']; ?>"
+            class="btn btn-primary">
             Modifier
         </a>
         <a href="/controleur/joueur/ObtenirTousLesJoueurs.php" class="btn btn-secondary">
-            Back to List
+            Retour à la liste
         </a>
     </div>
 </div>
 
 </div>
 </body>
+
 </html>

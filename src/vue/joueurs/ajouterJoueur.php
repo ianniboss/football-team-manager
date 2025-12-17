@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/../header.php'; ?>
-<!-- Add New Player Form - Used by AjouterJoueur.php -->
+<!-- Formulaire d'ajout de joueur - Utilisé par AjouterJoueur.php -->
 
 <style>
     .form-card {
@@ -234,27 +234,27 @@
 </style>
 
 <div class="form-card">
-    <h2>New Player</h2>
-    <p class="form-subtitle">Add a new player to your team</p>
+    <h2>Nouveau Joueur</h2>
+    <p class="form-subtitle">Ajouter un nouveau joueur à l'équipe</p>
 
     <form method="POST" action="/controleur/joueur/AjouterJoueur.php">
         <div class="form-grid">
-            <!-- Left Column - Personal Information -->
+            <!-- Left Column - Informations personnelles -->
             <div class="form-section">
-                <h3>Personal Information</h3>
+                <h3>Informations personnelles</h3>
 
                 <div class="form-group">
-                    <label for="prenom">First Name</label>
-                    <input type="text" name="prenom" id="prenom" placeholder="Enter first name..." required>
+                    <label for="prenom">Prénom</label>
+                    <input type="text" name="prenom" id="prenom" placeholder="Entrez le prénom..." required>
                 </div>
 
                 <div class="form-group">
-                    <label for="nom">Last Name</label>
-                    <input type="text" name="nom" id="nom" placeholder="Enter last name..." required>
+                    <label for="nom">Nom</label>
+                    <input type="text" name="nom" id="nom" placeholder="Entrez le nom..." required>
                 </div>
 
                 <div class="form-group">
-                    <label for="date_naissance">Date of Birth</label>
+                    <label for="date_naissance">Date de naissance</label>
                     <div class="input-with-icon">
                         <input type="date" name="date_naissance" id="date_naissance" required>
                         <span class="icon">📅</span>
@@ -262,25 +262,25 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="num_licence">License Number</label>
+                    <label for="num_licence">Numéro de licence</label>
                     <input type="text" name="num_licence" id="num_licence" placeholder="Ex: LIC-2024-001" required>
                 </div>
             </div>
 
-            <!-- Right Column - Physical & Status -->
+            <!-- Right Column - Attributs physiques & Statut -->
             <div class="form-section">
-                <h3>Physical Attributes</h3>
+                <h3>Attributs physiques</h3>
 
                 <div class="form-group">
-                    <label>Height & Weight</label>
+                    <label>Taille & Poids</label>
                     <div class="input-row">
                         <div class="input-with-unit">
-                            <input type="number" name="taille" id="taille" placeholder="Height" step="1" min="100"
+                            <input type="number" name="taille" id="taille" placeholder="Taille" step="1" min="100"
                                 max="250" required>
                             <span class="unit">cm</span>
                         </div>
                         <div class="input-with-unit">
-                            <input type="number" name="poids" id="poids" placeholder="Weight" step="0.1" min="30"
+                            <input type="number" name="poids" id="poids" placeholder="Poids" step="0.1" min="30"
                                 max="200" required>
                             <span class="unit">kg</span>
                         </div>
@@ -288,20 +288,20 @@
                 </div>
 
                 <div class="form-group" style="margin-top: 30px;">
-                    <h3 style="margin-bottom: 12px;">Status</h3>
-                    <label>Player Status</label>
+                    <h3 style="margin-bottom: 12px;">Statut</h3>
+                    <label>Statut du joueur</label>
                     <div class="radio-group">
                         <label class="radio-option">
                             <input type="radio" name="statut" value="Actif" checked>
-                            <span>Active</span>
+                            <span>Actif</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="statut" value="Blessé">
-                            <span>Injured</span>
+                            <span>Blessé</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="statut" value="Suspendu">
-                            <span>Suspended</span>
+                            <span>Suspendu</span>
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="statut" value="Absent">
@@ -313,10 +313,10 @@
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Create Player</button>
+            <button type="submit" class="btn btn-primary">Créer le joueur</button>
             <a href="/controleur/joueur/ObtenirTousLesJoueurs.php" class="btn btn-secondary"
                 style="text-decoration: none; text-align: center;">
-                Cancel
+                Annuler
             </a>
         </div>
     </form>
