@@ -31,6 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Affichage du formulaire pré-rempli
     $joueur = $dao->getJoueurById($_GET['id']);
     // On réutilise le même formulaire que pour l'ajout, mais avec les valeurs remplies
-    require __DIR__ . '/../../vue/joueurs/ficheJoueur.php';
+    require __DIR__ . '/../../vue/joueurs/modifierJoueur.php';
 }
 ?>

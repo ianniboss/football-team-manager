@@ -30,6 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } else {
     // --- Affichage du formulaire ---
-    require __DIR__ . '/../../vue/joueurs/ficheJoueur.php';
+    require __DIR__ . '/../../vue/joueurs/ajouterJoueur.php';
 }
 ?>
