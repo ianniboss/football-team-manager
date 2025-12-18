@@ -4,7 +4,8 @@ session_start();
 // Identifiants stockés en clair (exemple)
 $valid_users = [
     "admin" => "1234",
-    "lucas" => "password"
+    "lucas" => "password",
+    "user"=> "iutinfo",
 ];
 
 // Vérification du formulaire

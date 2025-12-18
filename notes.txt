@@ -12,3 +12,27 @@ Une classe DAO se compose des éléments suivants :
     Un attribut privé de type PDO, permettant la connexion à la base de données
     Un constructeur
     Une méthode par opération à mener sur la base de données (insert, update, delete, select)
+
+    🎨 UI/Design Improvements (High Impact)
+
+2. Improve the login page
+
+✨ Feature Additions (Functionality)
+4. Player search/filter
+Add a search bar to quickly find players by name or license number.
+
+5. Delete confirmation modal
+Replace the basic JavaScript confirm() with a styled modal.
+
+6. Match result entry
+Add a page to enter match scores/results after the game.
+
+7. Player statistics
+Show individual player stats (matches played, evaluations, etc.)
+
+🛡️ Code Quality (Important for your uni project)
+8. Better error messages
+Show user-friendly error messages instead of technical errors.
+
+9. Form validation
+Add client-side validation with helpful error messages.
