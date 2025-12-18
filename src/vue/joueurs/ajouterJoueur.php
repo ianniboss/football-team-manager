@@ -263,7 +263,7 @@
 
                 <div class="form-group">
                     <label for="num_licence">Numéro de licence</label>
-                    <input type="text" name="num_licence" id="num_licence" placeholder="Ex: LIC-2024-001" required>
+                    <input type="text" name="num_licence" id="num_licence" placeholder="Ex: TC001" required>
                 </div>
             </div>
 
