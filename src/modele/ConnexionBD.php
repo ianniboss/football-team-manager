@@ -5,10 +5,10 @@ class ConnexionBD {
 
     private function __construct()
     {
-        $host = '127.0.0.1';
-        $db = 'ftm-projet';
-        $user = 'root';
-        $pass = '';
+        $host = 'sql100.infinityfree.com';
+        $db = 'if0_40713656_ftm';
+        $user = 'if0_40713656';
+        $pass = 'EJ8uoCbnPqYCxl';
 
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
