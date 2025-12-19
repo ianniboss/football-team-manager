@@ -42,6 +42,12 @@
             font-style: italic;
             color: #1db988;
             letter-spacing: 0.5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            color: #25d9a0;
         }
 
         .nav-links {
@@ -96,7 +102,7 @@
 
 <body>
     <nav>
-        <div class="logo">FTM</div>
+        <a href="<?php echo $basePath; ?>/vue/accueil.php" class="logo">Football Team Manager</a>
         <div class="nav-links">
             <a href="<?php echo $basePath; ?>/vue/accueil.php">Accueil</a>
             <a href="<?php echo $basePath; ?>/controleur/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
