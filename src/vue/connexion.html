@@ -11,7 +11,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         *,
@@ -32,43 +32,63 @@
             font-size: 14px;
             line-height: 1.5;
             color: #333;
-            background-color: #e9ecef;
+            background-image: url('../modele/img/stadiumbackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            position: relative;
         }
 
         .login-container {
             width: 100%;
             max-width: 420px;
+            position: relative;
+            z-index: 1;
         }
 
-
-
         .login-card {
-            background-color: #ffffff;
-            border-radius: 6px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            padding: 35px 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 45px 40px;
+            backdrop-filter: blur(10px);
         }
 
         .logo-container {
             display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 35px;
         }
 
         .logo-container img {
-            max-width: 150px;
+            max-width: 120px;
             height: auto;
+            margin-bottom: 15px;
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-align: center;
+        }
+
+        .app-subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 5px;
         }
 
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
 
         .input-group {
@@ -80,25 +100,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            min-width: 44px;
-            background-color: #e9ecef;
-            border: 1px solid #ced4da;
+            width: 50px;
+            min-width: 50px;
+            background-color: #2d3436;
+            border: 2px solid #2d3436;
             border-right: none;
-            border-radius: 4px 0 0 4px;
-            color: #6c757d;
+            border-radius: 10px 0 0 10px;
+            color: #ffffff;
             font-size: 14px;
         }
 
         .input-group input {
             flex: 1;
-            padding: 10px 14px;
-            font-size: 14px;
+            padding: 14px 18px;
+            font-size: 15px;
             font-family: inherit;
-            color: #495057;
+            color: #333;
             background-color: #fff;
-            border: 1px solid #ced4da;
-            border-radius: 0 4px 4px 0;
+            border: 2px solid #e0e0e0;
+            border-left: none;
+            border-radius: 0 10px 10px 0;
             outline: none;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
@@ -107,52 +128,58 @@
             color: #adb5bd;
         }
 
-        .input-group input:focus {
-            border-color: #80bdff;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+        .input-group:focus-within .input-icon {
+            background-color: #1db988;
+            border-color: #1db988;
+        }
+
+        .input-group:focus-within input {
+            border-color: #1db988;
+            box-shadow: 0 0 0 3px rgba(29, 185, 136, 0.15);
         }
 
         .btn-container {
             display: flex;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .btn-connect {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 10px 28px;
-            font-size: 14px;
-            font-weight: 500;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
             font-family: inherit;
             color: #ffffff;
-            background-color: #28a745;
+            background: linear-gradient(135deg, #1db988 0%, #17a077 100%);
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .btn-connect:hover {
-            background-color: #218838;
-            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(29, 185, 136, 0.4);
         }
 
         .btn-connect:active {
-            transform: scale(0.98);
-            background-color: #1e7e34;
+            transform: translateY(0);
         }
 
         .btn-connect i {
-            font-size: 13px;
+            font-size: 14px;
         }
 
+        /* Footer */
         .login-footer {
             text-align: center;
-            margin-top: 20px;
-            padding-top: 15px;
+            margin-top: 25px;
+            padding-top: 20px;
             border-top: 1px solid #eee;
         }
 
@@ -167,12 +194,11 @@
             }
 
             .login-card {
-                padding: 25px 20px;
+                padding: 30px 25px;
             }
 
-            .alert-warning {
-                font-size: 12px;
-                padding: 10px 12px;
+            .app-title {
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -180,17 +206,19 @@
 
 <body>
     <div class="login-container">
-
         <div class="login-card">
             <div class="logo-container">
                 <img src="../modele/img/logoFTM.png" alt="Logo Football Team Manager">
+                <h1 class="app-title">Football Team Manager</h1>
+                <p class="app-subtitle">Gérez votre équipe</p>
             </div>
+
             <form class="login-form" action="../controleur/login.php" method="POST">
                 <div class="input-group">
                     <span class="input-icon">
                         <i class="fas fa-user"></i>
                     </span>
-                    <input type="text" id="username" name="username" placeholder="Login" required
+                    <input type="text" id="username" name="username" placeholder="Identifiant" required
                         autocomplete="username">
                 </div>
 
