@@ -5,12 +5,12 @@ session_start();
 $valid_users = [
     "admin" => "1234",
     "lucas" => "password",
-    "user"=> "iutinfo",
+    "user" => "iutinfo",
 ];
 
 // Vérification du formulaire
 if (!isset($_POST['username'], $_POST['password'])) {
-    header("Location: ../vue/connexion.html");
+    header("Location: ../vue/connexion.php");
     exit;
 }
 
@@ -23,7 +23,7 @@ if (array_key_exists($username, $valid_users) && $valid_users[$username] === $pa
     $_SESSION['username'] = $username;
     header("Location: ../vue/accueil.php");
 } else {
-    echo "Identifiants invalides<br>";
-    echo '<a href="../vue/connexion.html">Réessayer</a>';
+    header("Location: ../vue/connexion.php?error=invalid");
+    exit;
 }
 ?>

@@ -175,6 +175,26 @@
             font-size: 14px;
         }
 
+        /* Error message */
+        .error-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 12px 16px;
+            background-color: #fee2e2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            color: #dc2626;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .error-message i {
+            font-size: 16px;
+        }
+
         /* Footer */
         .login-footer {
             text-align: center;
@@ -236,6 +256,13 @@
                         Se connecter
                     </button>
                 </div>
+
+                <?php if (isset($_GET['error']) && $_GET['error'] === 'invalid'): ?>
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Identifiants invalides
+                    </div>
+                <?php endif; ?>
             </form>
 
             <div class="login-footer">
