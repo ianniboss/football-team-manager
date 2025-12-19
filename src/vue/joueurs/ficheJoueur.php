@@ -9,6 +9,37 @@
         max-width: 750px;
         margin: 40px auto;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        position: relative;
+    }
+
+    .player-image {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        width: 130px;
+        height: 130px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        border: 3px solid #1db988;
+        background-color: #f0f0f0;
+    }
+
+    .player-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .player-image-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+        color: #999;
+        font-size: 3rem;
     }
 
     .player-card h2 {
@@ -155,6 +186,13 @@
     }
 
     @media (max-width: 700px) {
+        .player-image {
+            position: static;
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
         .info-grid {
             grid-template-columns: 1fr;
             gap: 20px;
@@ -179,7 +217,26 @@
     }
 </style>
 
+<?php
+// Build image path based on player's last name (lowercase)
+$imageName = strtolower($joueur['nom']) . '.jpg';
+$imagePath = '/modele/img/joueurs/' . $imageName;
+$fullImagePath = $_SERVER['DOCUMENT_ROOT'] . $imagePath;
+$imageExists = file_exists($fullImagePath);
+?>
+
 <div class="player-card">
+    <div class="player-image">
+        <?php if ($imageExists): ?>
+            <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                alt="Photo de <?php echo htmlspecialchars($joueur['prenom'] . ' ' . $joueur['nom']); ?>">
+        <?php else: ?>
+            <div class="player-image-placeholder">
+                <?php echo strtoupper(substr($joueur['prenom'], 0, 1) . substr($joueur['nom'], 0, 1)); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+
     <h2><?php echo htmlspecialchars($joueur['prenom'] . ' ' . $joueur['nom']); ?></h2>
     <p class="player-subtitle">Fiche du joueur</p>
 
@@ -197,11 +254,7 @@
                 <label>Nom</label>
                 <div class="value"><?php echo htmlspecialchars($joueur['nom']); ?></div>
             </div>
-    <div class="info-item">
-                <label>Photo</label>
-                <?php $img = "src/modele/img/joueurs/" . htmlspecialchars($joueur['nom']) . ".jpg" ?>
-                <div class="value"><?php readfile($img) ?></div>
-            </div>
+
             <div class="info-item">
                 <label>Date de naissance</label>
                 <div class="value"><?php echo htmlspecialchars($joueur['date_naissance']); ?></div>

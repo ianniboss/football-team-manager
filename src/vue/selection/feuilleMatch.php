@@ -309,16 +309,16 @@
                                 <td>
                                     <select name="joueurs[<?php echo $id; ?>][poste]" class="position-input">
                                         <option value="">-- Sélectionner --</option>
-                                        <option value="Gardien" <?= $val_poste === 'Gardien' ? 'selected' : '' ?>>🧤 Gardien</option>
-                                        <option value="Défenseur Central" <?= $val_poste === 'Défenseur Central' ? 'selected' : '' ?>>🛡️ Défenseur Central</option>
-                                        <option value="Défenseur Latéral Droit" <?= $val_poste === 'Défenseur Latéral Droit' ? 'selected' : '' ?>>🛡️ Latéral Droit</option>
-                                        <option value="Défenseur Latéral Gauche" <?= $val_poste === 'Défenseur Latéral Gauche' ? 'selected' : '' ?>>🛡️ Latéral Gauche</option>
-                                        <option value="Milieu Défensif" <?= $val_poste === 'Milieu Défensif' ? 'selected' : '' ?>>⚙️ Milieu Défensif</option>
-                                        <option value="Milieu Central" <?= $val_poste === 'Milieu Central' ? 'selected' : '' ?>>⚙️ Milieu Central</option>
-                                        <option value="Milieu Offensif" <?= $val_poste === 'Milieu Offensif' ? 'selected' : '' ?>>⚙️ Milieu Offensif</option>
-                                        <option value="Ailier Droit" <?= $val_poste === 'Ailier Droit' ? 'selected' : '' ?>>⚡ Ailier Droit</option>
-                                        <option value="Ailier Gauche" <?= $val_poste === 'Ailier Gauche' ? 'selected' : '' ?>>⚡ Ailier Gauche</option>
-                                        <option value="Attaquant" <?= $val_poste === 'Attaquant' ? 'selected' : '' ?>>⚽ Attaquant</option>
+                                        <option value="Gardien" <?= $val_poste === 'Gardien' ? 'selected' : '' ?>>Gardien</option>
+                                        <option value="Défenseur Central" <?= $val_poste === 'Défenseur Central' ? 'selected' : '' ?>>Défenseur Central</option>
+                                        <option value="Défenseur Latéral Droit" <?= $val_poste === 'Défenseur Latéral Droit' ? 'selected' : '' ?>>Défenseur Latéral Droit</option>
+                                        <option value="Défenseur Latéral Gauche" <?= $val_poste === 'Défenseur Latéral Gauche' ? 'selected' : '' ?>>Défenseur Latéral Gauche</option>
+                                        <option value="Milieu Défensif" <?= $val_poste === 'Milieu Défensif' ? 'selected' : '' ?>>Milieu Défensif</option>
+                                        <option value="Milieu Central" <?= $val_poste === 'Milieu Central' ? 'selected' : '' ?>>Milieu Central</option>
+                                        <option value="Milieu Offensif" <?= $val_poste === 'Milieu Offensif' ? 'selected' : '' ?>>Milieu Offensif</option>
+                                        <option value="Ailier Droit" <?= $val_poste === 'Ailier Droit' ? 'selected' : '' ?>>Ailier Droit</option>
+                                        <option value="Ailier Gauche" <?= $val_poste === 'Ailier Gauche' ? 'selected' : '' ?>>Ailier Gauche</option>
+                                        <option value="Attaquant" <?= $val_poste === 'Attaquant' ? 'selected' : '' ?>>Attaquant</option>
                                     </select>
                                 </td>
                                 <td>
