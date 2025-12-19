@@ -197,7 +197,11 @@
                 <label>Nom</label>
                 <div class="value"><?php echo htmlspecialchars($joueur['nom']); ?></div>
             </div>
-
+    <div class="info-item">
+                <label>Photo</label>
+                <?php $img = "src/modele/img/joueurs/" . htmlspecialchars($joueur['nom']) . ".jpg" ?>
+                <div class="value"><?php readfile($img) ?></div>
+            </div>
             <div class="info-item">
                 <label>Date de naissance</label>
                 <div class="value"><?php echo htmlspecialchars($joueur['date_naissance']); ?></div>
