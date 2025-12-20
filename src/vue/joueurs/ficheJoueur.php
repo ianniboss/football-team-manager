@@ -218,17 +218,14 @@
 </style>
 
 <?php
-// Build image path based on player's last name (lowercase)
-$imageName = strtolower($joueur['nom']) . '.jpg';
-$imagePath = '/modele/img/joueurs/' . $imageName;
-$fullImagePath = $_SERVER['DOCUMENT_ROOT'] . $imagePath;
-$imageExists = file_exists($fullImagePath);
+$hasImage = !empty($joueur['image']);
+$imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['image']) : '';
 ?>
 
 <div class="player-card">
     <div class="player-image">
-        <?php if ($imageExists): ?>
-            <img src="<?php echo htmlspecialchars($imagePath); ?>"
+        <?php if ($hasImage): ?>
+            <img src="<?php echo $imagePath; ?>"
                 alt="Photo de <?php echo htmlspecialchars($joueur['prenom'] . ' ' . $joueur['nom']); ?>">
         <?php else: ?>
             <div class="player-image-placeholder">

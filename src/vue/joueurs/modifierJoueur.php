@@ -237,11 +237,10 @@
     <h2>Modifier le Joueur</h2>
     <p class="form-subtitle">Mettre à jour les informations du joueur</p>
 
-    <form method="POST" action="/controleur/joueur/ModifierIdentiteDuJoueur.php">
+    <form method="POST" action="/controleur/joueur/ModifierIdentiteDuJoueur.php" enctype="multipart/form-data">
         <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
 
         <div class="form-grid">
-            <!-- Left Column - Informations personnelles -->
             <div class="form-section">
                 <h3>Informations personnelles</h3>
                 
@@ -296,6 +295,21 @@
                             <span class="unit">kg</span>
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 12px;">Photo du joueur</h3>
+                    <?php if (!empty($joueur['image'])): ?>
+                        <div style="margin-bottom: 10px;">
+                            <img src="/modele/img/players/<?php echo htmlspecialchars($joueur['image']); ?>" 
+                                 alt="Photo actuelle" 
+                                 style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 2px solid #ddd;">
+                            <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Photo actuelle</p>
+                        </div>
+                    <?php endif; ?>
+                    <label for="image">Changer l'image (optionnel)</label>
+                    <input type="file" name="image" id="image" accept="image/*" 
+                           style="width: 100%; padding: 12px; border: 1.5px dashed #ccc; border-radius: 10px; background: #fafafa; cursor: pointer;">
                 </div>
 
                 <div class="form-group" style="margin-top: 30px;">

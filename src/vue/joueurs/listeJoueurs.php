@@ -97,7 +97,6 @@ require_once __DIR__ . '/../header.php';
         font-size: 0.85rem;
     }
 
-    /* Status badges */
     .status-badge {
         display: inline-block;
         padding: 6px 12px;
@@ -126,7 +125,6 @@ require_once __DIR__ . '/../header.php';
         color: #383d41;
     }
 
-    /* Action buttons */
     .action-btn {
         display: inline-block;
         padding: 8px 16px;
@@ -169,7 +167,6 @@ require_once __DIR__ . '/../header.php';
         gap: 8px;
     }
 
-    /* Empty state */
     .empty-state {
         text-align: center;
         padding: 60px 20px;
@@ -182,7 +179,6 @@ require_once __DIR__ . '/../header.php';
         margin-bottom: 10px;
     }
 
-    /* Stats bar */
     .stats-bar {
         display: flex;
         gap: 20px;
@@ -242,7 +238,6 @@ require_once __DIR__ . '/../header.php';
 </div>
 
 <?php
-// Calculate stats
 $totalJoueurs = count($joueurs);
 $joueursActifs = count(array_filter($joueurs, fn($j) => $j['statut'] === 'Actif'));
 $joueursBlessés = count(array_filter($joueurs, fn($j) => $j['statut'] === 'Blessé'));
@@ -284,7 +279,18 @@ $joueursBlessés = count(array_filter($joueurs, fn($j) => $j['statut'] === 'Bles
             <?php foreach ($joueurs as $j): ?>
                 <tr>
                     <td>
-                        <span class="player-name"><?= htmlspecialchars($j['prenom'] . ' ' . $j['nom']); ?></span>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <?php if (!empty($j['image'])): ?>
+                                <img src="/modele/img/players/<?= htmlspecialchars($j['image']); ?>" alt="Photo"
+                                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">
+                            <?php else: ?>
+                                <div
+                                    style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #1db988, #17a077); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">
+                                    <?= strtoupper(substr($j['prenom'], 0, 1) . substr($j['nom'], 0, 1)); ?>
+                                </div>
+                            <?php endif; ?>
+                            <span class="player-name"><?= htmlspecialchars($j['prenom'] . ' ' . $j['nom']); ?></span>
+                        </div>
                     </td>
                     <td>
                         <span class="player-license"><?= htmlspecialchars($j['num_licence']); ?></span>

@@ -8,6 +8,15 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
+
+function sanitizeFilename($string)
+{
+    $string = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
+    $string = strtolower(str_replace(' ', '_', $string));
+    $string = preg_replace('/[^a-z0-9_]/', '', $string);
+    return $string;
+}
+
 $dao = new JoueurDAO();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,18 +28,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date_naissance = $_POST['date_naissance'];
     $taille = $_POST['taille'];
     $poids = $_POST['poids'];
-    $statut = $_POST['statut']; // On garde le statut ici aussi si le formulaire est global
+    $statut = $_POST['statut'];
 
-    $dao->modifierJoueur($id, $nom, $prenom, $licence, $date_naissance, $taille, $poids, $statut);
+    $imageName = null;
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . '/../../modele/img/players/';
 
-    // Retour au détail du joueur
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        $oldPlayer = $dao->getJoueurById($id);
+        if (!empty($oldPlayer['image'])) {
+            $oldImagePath = $uploadDir . $oldPlayer['image'];
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        }
+
+        $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $imageName = sanitizeFilename($prenom) . '_' . sanitizeFilename($nom) . '_' . $id . '.' . $extension;
+
+        $targetPath = $uploadDir . $imageName;
+        move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
+    }
+
+    $dao->modifierJoueur($id, $nom, $prenom, $licence, $date_naissance, $taille, $poids, $statut, $imageName);
+
     header("Location: ObtenirUnJoueur.php?id=" . $id);
     exit;
 
 } elseif (isset($_GET['id'])) {
-    // Affichage du formulaire pré-rempli
     $joueur = $dao->getJoueurById($_GET['id']);
-    // On réutilise le même formulaire que pour l'ajout, mais avec les valeurs remplies
     require __DIR__ . '/../../vue/joueurs/modifierJoueur.php';
 }
 ?>

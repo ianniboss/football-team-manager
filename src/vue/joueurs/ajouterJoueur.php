@@ -237,7 +237,7 @@
     <h2>Nouveau Joueur</h2>
     <p class="form-subtitle">Ajouter un nouveau joueur à l'équipe</p>
 
-    <form method="POST" action="/controleur/joueur/AjouterJoueur.php">
+    <form method="POST" action="/controleur/joueur/AjouterJoueur.php" enctype="multipart/form-data">
         <div class="form-grid">
             <!-- Left Column - Informations personnelles -->
             <div class="form-section">
@@ -285,6 +285,13 @@
                             <span class="unit">kg</span>
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 12px;">Photo du joueur</h3>
+                    <label for="image">Sélectionner une image (optionnel)</label>
+                    <input type="file" name="image" id="image" accept="image/*"
+                        style="width: 100%; padding: 12px; border: 1.5px dashed #ccc; border-radius: 10px; background: #fafafa; cursor: pointer;">
                 </div>
 
                 <div class="form-group" style="margin-top: 30px;">

@@ -33,15 +33,7 @@
         overflow: hidden;
     }
 
-    .match-header::before {
-        content: '⚽';
-        position: absolute;
-        right: 30px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 6rem;
-        opacity: 0.1;
-    }
+
 
     .match-header h1 {
         font-size: 1.8rem;
@@ -292,7 +284,13 @@
     </a>
 
     <!-- Match Header -->
-    <div class="match-header">
+    <?php
+    $hasStadiumImage = !empty($rencontre['image_stade']);
+    $stadiumStyle = $hasStadiumImage
+        ? "background: linear-gradient(135deg, rgba(45, 52, 54, 0.9) 0%, rgba(0, 0, 0, 0.85) 100%), url('/modele/img/matchs/" . htmlspecialchars($rencontre['image_stade']) . "'); background-size: cover; background-position: center;"
+        : "background: linear-gradient(135deg, #2d3436 0%, #000000 100%);";
+    ?>
+    <div class="match-header" style="<?= $stadiumStyle ?>">
         <h1>Match contre <?php echo htmlspecialchars($rencontre['nom_equipe_adverse']); ?></h1>
 
         <div class="match-meta">

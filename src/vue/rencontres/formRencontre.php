@@ -209,7 +209,7 @@
     <h2><?php echo isset($rencontre) ? 'Modifier la Rencontre' : 'Nouvelle Rencontre'; ?></h2>
     <p class="form-subtitle">Informations générales</p>
 
-    <form method="POST" action="<?php echo isset($rencontre) ? 'ModifierUneRencontre.php' : 'ajouterRencontre.php'; ?>">
+    <form method="POST" action="<?php echo isset($rencontre) ? 'ModifierUneRencontre.php' : 'ajouterRencontre.php'; ?>" enctype="multipart/form-data">
         <?php if (isset($rencontre)): ?>
             <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
         <?php endif; ?>
@@ -273,6 +273,21 @@
                     <input type="text" name="adresse" id="adresse" 
                            value="<?php echo $rencontre['adresse'] ?? ''; ?>" 
                            placeholder="Entrez l'adresse complète du stade..." required>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 12px;">Image du stade</h3>
+                    <?php if (isset($rencontre) && !empty($rencontre['image_stade'])): ?>
+                        <div style="margin-bottom: 10px;">
+                            <img src="/modele/img/matchs/<?php echo htmlspecialchars($rencontre['image_stade']); ?>" 
+                                 alt="Photo du stade" 
+                                 style="width: 120px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
+                            <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Image actuelle</p>
+                        </div>
+                    <?php endif; ?>
+                    <label for="image_stade">Sélectionner une image (optionnel)</label>
+                    <input type="file" name="image_stade" id="image_stade" accept="image/*" 
+                           style="width: 100%; padding: 12px; border: 1.5px dashed #ccc; border-radius: 10px; background: #fafafa; cursor: pointer;">
                 </div>
             </div>
         </div>
