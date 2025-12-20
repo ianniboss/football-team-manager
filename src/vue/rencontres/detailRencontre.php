@@ -369,9 +369,15 @@
                 <?php foreach ($joueursParticipe as $j): ?>
                     <li class="player-item">
                         <div class="player-info">
-                            <div class="player-avatar">
-                                <?= strtoupper(substr($j['prenom'], 0, 1) . substr($j['nom'], 0, 1)) ?>
-                            </div>
+                            <?php if (!empty($j['image'])): ?>
+                                <img src="/modele/img/players/<?php echo htmlspecialchars($j['image']); ?>"
+                                    alt="Photo de <?php echo htmlspecialchars($j['prenom']); ?>"
+                                    style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">
+                            <?php else: ?>
+                                <div class="player-avatar">
+                                    <?= strtoupper(substr($j['prenom'], 0, 1) . substr($j['nom'], 0, 1)) ?>
+                                </div>
+                            <?php endif; ?>
                             <div>
                                 <div class="player-name"><?php echo htmlspecialchars($j['prenom'] . ' ' . $j['nom']); ?></div>
                                 <div class="player-role"><?php echo htmlspecialchars($j['poste']); ?></div>

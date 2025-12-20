@@ -21,9 +21,6 @@ Une classe DAO se compose des éléments suivants :
 4. Player search/filter
 Add a search bar to quickly find players by name or license number.
 
-5. Delete confirmation modal
-Replace the basic JavaScript confirm() with a styled modal.
-
 6. Match result entry
 Add a page to enter match scores/results after the game.
 
