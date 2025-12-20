@@ -185,6 +185,129 @@
         box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
     }
 
+    /* Comments Section (Full Width) */
+    .comments-section {
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 2px solid #f0f0f0;
+    }
+
+    .comments-section h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin: 0 0 20px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .comments-section h3::before {
+        content: "💬";
+    }
+
+    .comment-form {
+        margin-bottom: 25px;
+    }
+
+    .comment-form textarea {
+        width: 100%;
+        min-height: 100px;
+        padding: 14px 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: inherit;
+        resize: vertical;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .comment-form textarea:focus {
+        outline: none;
+        border-color: #1db988;
+        box-shadow: 0 0 0 3px rgba(29, 185, 136, 0.1);
+    }
+
+    .comment-form textarea::placeholder {
+        color: #aaa;
+    }
+
+    .comment-form .btn-submit {
+        margin-top: 12px;
+        padding: 12px 30px;
+        background-color: #1db988;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .comment-form .btn-submit:hover {
+        background-color: #17a077;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(29, 185, 136, 0.3);
+    }
+
+    .comments-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .comment-item {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 16px 20px;
+        border-left: 4px solid #1db988;
+        position: relative;
+    }
+
+    .comment-date {
+        font-size: 0.8rem;
+        color: #888;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .comment-text {
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.5;
+        padding-right: 30px;
+    }
+
+    .comment-delete {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: none;
+        border: none;
+        color: #dc3545;
+        cursor: pointer;
+        font-size: 1.1rem;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+        padding: 4px 8px;
+    }
+
+    .comment-delete:hover {
+        opacity: 1;
+    }
+
+    .no-comments {
+        text-align: center;
+        padding: 30px;
+        color: #888;
+        font-style: italic;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        font-size: 0.9rem;
+    }
+
     @media (max-width: 700px) {
         .player-image {
             position: static;
@@ -291,6 +414,51 @@ $imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['imag
                     <?php echo htmlspecialchars($statut); ?>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Comments Section (Full Width) -->
+    <div class="comments-section">
+        <h3>Commentaires</h3>
+
+        <!-- Add Comment Form -->
+        <form class="comment-form" action="/controleur/commentaire/AjouterUnCommentaireAuJoueur.php" method="POST">
+            <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
+            <textarea name="commentaire" placeholder="Ajouter une note personnelle sur ce joueur..."
+                required></textarea>
+            <button type="submit" class="btn-submit">Ajouter le commentaire</button>
+        </form>
+
+        <!-- Comments List -->
+        <div class="comments-list">
+            <?php if (!empty($commentaires)): ?>
+                <?php foreach ($commentaires as $commentaire): ?>
+                    <div class="comment-item">
+                        <div class="comment-date">
+                            <?php
+                            $date = new DateTime($commentaire['date_commentaire']);
+                            echo $date->format('d/m/Y');
+                            ?>
+                        </div>
+                        <div class="comment-text">
+                            <?php echo htmlspecialchars($commentaire['commentaire']); ?>
+                        </div>
+                        <form action="/controleur/commentaire/SupprimerUnCommentaireDuJoueur.php" method="POST"
+                            style="display: inline;">
+                            <input type="hidden" name="id_commentaire" value="<?php echo $commentaire['id_commentaire']; ?>">
+                            <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
+                            <button type="submit" class="comment-delete" title="Supprimer ce commentaire"
+                                onclick="return confirm('Voulez-vous vraiment supprimer ce commentaire ?');">
+                                ✕
+                            </button>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-comments">
+                    Aucun commentaire pour ce joueur. Ajoutez vos premières notes !
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
