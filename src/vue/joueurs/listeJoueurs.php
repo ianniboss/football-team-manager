@@ -3,7 +3,11 @@ session_start();
 require_once __DIR__ . '/../header.php';
 ?>
 
-<?php $joueurs = $_SESSION['joueurs'] ?? []; ?>
+<?php
+$joueurs = $_SESSION['joueurs'] ?? [];
+$searchQuery = $_SESSION['search_query'] ?? '';
+$statusFilter = $_SESSION['status_filter'] ?? '';
+?>
 
 <style>
     .page-header {
@@ -44,6 +48,111 @@ require_once __DIR__ . '/../header.php';
         background-color: #17a077;
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(29, 185, 136, 0.3);
+    }
+
+    /* Search Section */
+    .search-section {
+        background: white;
+        border-radius: 12px;
+        padding: 20px 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-form {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .search-input-group {
+        flex: 1;
+        min-width: 250px;
+        position: relative;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 12px 16px 12px 45px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        transition: border-color 0.2s ease;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #1db988;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.1rem;
+    }
+
+    .filter-select {
+        padding: 12px 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        min-width: 150px;
+        cursor: pointer;
+        transition: border-color 0.2s ease;
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: #1db988;
+    }
+
+    .btn-search {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #1db988 0%, #17a077 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn-search:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(29, 185, 136, 0.3);
+    }
+
+    .btn-reset {
+        padding: 12px 20px;
+        background: #f0f0f0;
+        color: #555;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-reset:hover {
+        background: #e0e0e0;
+    }
+
+    .search-results-info {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #f0f0f0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .search-results-info strong {
+        color: #1db988;
     }
 
     .players-table {
@@ -216,6 +325,15 @@ require_once __DIR__ . '/../header.php';
             flex-wrap: wrap;
         }
 
+        .search-form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .search-input-group {
+            min-width: 100%;
+        }
+
         .players-table {
             display: block;
             overflow-x: auto;
@@ -238,9 +356,13 @@ require_once __DIR__ . '/../header.php';
 </div>
 
 <?php
-$totalJoueurs = count($joueurs);
-$joueursActifs = count(array_filter($joueurs, fn($j) => $j['statut'] === 'Actif'));
-$joueursBlessés = count(array_filter($joueurs, fn($j) => $j['statut'] === 'Blessé'));
+// Get total counts from unfiltered data (by re-querying)
+require_once __DIR__ . '/../../modele/JoueurDAO.php';
+$dao = new JoueurDAO();
+$allJoueurs = $dao->getJoueurs();
+$totalJoueurs = count($allJoueurs);
+$joueursActifs = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'Actif'));
+$joueursBlessés = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'Blessé'));
 ?>
 
 <div class="stats-bar">
@@ -256,6 +378,41 @@ $joueursBlessés = count(array_filter($joueurs, fn($j) => $j['statut'] === 'Bles
         <div class="stat-number"><?= $joueursBlessés ?></div>
         <div class="stat-label">Blessés</div>
     </div>
+</div>
+
+<!-- Search Section -->
+<div class="search-section">
+    <form action="/controleur/joueur/ObtenirTousLesJoueurs.php" method="GET" class="search-form">
+        <div class="search-input-group">
+            <span class="search-icon">🔍</span>
+            <input type="text" name="search" class="search-input" placeholder="Rechercher par nom ou n° licence..."
+                value="<?= htmlspecialchars($searchQuery) ?>">
+        </div>
+        <select name="statut" class="filter-select">
+            <option value="">Tous les statuts</option>
+            <option value="Actif" <?= $statusFilter === 'Actif' ? 'selected' : '' ?>>Actif</option>
+            <option value="Blessé" <?= $statusFilter === 'Blessé' ? 'selected' : '' ?>>Blessé</option>
+            <option value="Suspendu" <?= $statusFilter === 'Suspendu' ? 'selected' : '' ?>>Suspendu</option>
+            <option value="Absent" <?= $statusFilter === 'Absent' ? 'selected' : '' ?>>Absent</option>
+        </select>
+        <button type="submit" class="btn-search">Rechercher</button>
+        <a href="/controleur/joueur/ObtenirTousLesJoueurs.php" class="btn-reset">Réinitialiser</a>
+    </form>
+
+    <?php if (!empty($searchQuery) || !empty($statusFilter)): ?>
+        <div class="search-results-info">
+            <?php
+            $resultCount = count($joueurs);
+            $filterInfo = [];
+            if (!empty($searchQuery))
+                $filterInfo[] = "« " . htmlspecialchars($searchQuery) . " »";
+            if (!empty($statusFilter))
+                $filterInfo[] = "statut: " . htmlspecialchars($statusFilter);
+            ?>
+            <strong><?= $resultCount ?></strong> joueur(s) trouvé(s)
+            pour <?= implode(', ', $filterInfo) ?>
+        </div>
+    <?php endif; ?>
 </div>
 
 <?php if (empty($joueurs)): ?>
