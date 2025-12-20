@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
+        }
 
         $extension = pathinfo($_FILES['image_stade']['name'], PATHINFO_EXTENSION);
         $imageStade = sanitizeStadiumName($adresse) . '.' . $extension;
