@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: connexion.html");
+    header("Location: connexion.php");
     exit;
 }
 
@@ -434,7 +434,8 @@ require_once __DIR__ . '/header.php';
                     <div class="match-details">
                         <h4>vs <?= htmlspecialchars($prochainMatch['nom_equipe_adverse']) ?></h4>
                         <p><?= htmlspecialchars($prochainMatch['heure']) ?> -
-                            <?= htmlspecialchars($prochainMatch['adresse']) ?></p>
+                            <?= htmlspecialchars($prochainMatch['adresse']) ?>
+                        </p>
                         <span class="venue-badge"><?= htmlspecialchars($prochainMatch['lieu']) ?></span>
                     </div>
                 </div>

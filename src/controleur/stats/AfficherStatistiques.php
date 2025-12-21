@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../../vue/connexion.html");
+    header("Location: ../../vue/connexion.php");
     exit;
 }
 
