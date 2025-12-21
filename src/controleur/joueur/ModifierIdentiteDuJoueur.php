@@ -3,7 +3,7 @@ session_start();
 // Gère la modification des infos générales (Nom, Prénom, Taille, etc.).
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../login.php");
+    header("Location: ../../vue/connexion.php");
     exit;
 }
 
@@ -20,7 +20,6 @@ function sanitizeFilename($string)
 $dao = new JoueurDAO();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Enregistrement des modifications
     $id = $_POST['id_joueur'];
     $nom = htmlspecialchars($_POST['nom']);
     $prenom = htmlspecialchars($_POST['prenom']);

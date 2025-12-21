@@ -2,7 +2,6 @@
 // récupère le texte envoyé depuis la page "Détail Joueur" et l'enregistre via la DAO
 session_start();
 
-// Sécurité : Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: ../../vue/connexion.php");
     exit;
@@ -16,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['id_joueur']) && !empty($_POST['commentaire'])) {
 
         $id_joueur = intval($_POST['id_joueur']);
-        // Protection XSS : on neutralise les balises HTML potentielles
         $contenu = htmlspecialchars($_POST['commentaire']);
         $date = date('Y-m-d'); // Date du jour
 
@@ -31,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Erreur : Le commentaire ne peut pas être vide.";
     }
 } else {
-    // Si on essaie d'accéder à cette page sans POST, on renvoie vers la liste des joueurs
     header("Location: ../joueur/ObtenirTousLesJoueurs.php");
     exit;
 }

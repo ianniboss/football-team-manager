@@ -1,21 +1,14 @@
 <?php
-// afficher la liste principale
 session_start();
 
-// 1. Vérification de sécurité (Authentification)
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../login.php");
+    header("Location: ../../vue/connexion.php");
     exit;
 }
-
-// 2. Inclusion du DAO
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
-
-// 3. Récupération des données
 $dao = new JoueurDAO();
 $joueurs = $dao->getJoueurs();
 
-// 4. Filtrage par recherche (si un terme de recherche est fourni)
 $searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
 $statusFilter = isset($_GET['statut']) ? $_GET['statut'] : '';
 
@@ -24,7 +17,6 @@ if (!empty($searchQuery) || !empty($statusFilter)) {
         $matchSearch = true;
         $matchStatus = true;
 
-        // Filtrer par nom, prénom ou numéro de licence
         if (!empty($searchQuery)) {
             $searchLower = strtolower($searchQuery);
             $nomComplet = strtolower($joueur['prenom'] . ' ' . $joueur['nom']);
@@ -36,7 +28,6 @@ if (!empty($searchQuery) || !empty($statusFilter)) {
                 (strpos($licence, $searchLower) !== false);
         }
 
-        // Filtrer par statut
         if (!empty($statusFilter)) {
             $matchStatus = ($joueur['statut'] === $statusFilter);
         }

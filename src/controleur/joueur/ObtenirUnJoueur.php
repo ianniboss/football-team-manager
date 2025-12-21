@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../login.php");
+    header("Location: ../../vue/connexion.php");
     exit;
 }
 
@@ -26,7 +26,6 @@ if (isset($_GET['id'])) {
         echo "Joueur introuvable.";
     }
 } else {
-    // Si pas d'ID, retour à la liste
     header("Location: ObtenirTousLesJoueurs.php");
     exit;
 }

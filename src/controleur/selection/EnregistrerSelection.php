@@ -9,7 +9,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 require_once __DIR__ . '/../../modele/ParticiperDAO.php';
 
-// Minimum number of titulaires required (11 for football)
+// titulaires minimum pour un match
 define('MIN_TITULAIRES', 11);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_rencontre'])) {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_rencontre'])) {
 
     $submittedData = isset($_POST['joueurs']) ? $_POST['joueurs'] : [];
 
-    // Count the number of titulaires in the submitted data
+    // nombre de titulaires dans les données soumises
     $titulairesCount = 0;
     foreach ($submittedData as $id_joueur => $data) {
         if (isset($data['selected']) && isset($data['titulaire'])) {
@@ -27,22 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_rencontre'])) {
         }
     }
 
-    // Validate minimum titulaires
+    // validation du nombre minimum de titulaires
     if ($titulairesCount < MIN_TITULAIRES) {
-        // Store submitted data in session so user changes are preserved
+        // Stockage des données soumises dans la session pour conserver les modifications
         $_SESSION['pending_selection'] = $submittedData;
         $_SESSION['pending_selection_match'] = $id_rencontre;
 
-        // Redirect back with error
+        // redirection avec erreur
         header("Location: AfficherSelection.php?id_rencontre=" . $id_rencontre . "&error=min_titulaires&count=" . $titulairesCount);
         exit;
     }
 
-    // Clear any pending selection from session (validation passed)
+    // suppression des données en attente de validation
     unset($_SESSION['pending_selection']);
     unset($_SESSION['pending_selection_match']);
 
-    // Get existing selections to compare
+    // Obtenir les selections existantes pour les comparer
     $existingList = $participerDAO->getFeuilleMatch($id_rencontre);
     $existingIds = [];
     foreach ($existingList as $p) {
@@ -50,9 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_rencontre'])) {
     }
 
     foreach ($submittedData as $id_joueur => $data) {
-        // Only process if the player was selected (checkbox checked)
+        // traitement si le joueur a été sélectionné (case à cocher cochée)
         if (!isset($data['selected'])) {
-            // Player was not checked, skip adding but we'll handle removal later
+            // le joueur n'a pas été coché, on passe à la suivante
             continue;
         }
 

@@ -82,8 +82,7 @@
 ```
 football-team-manager/
 ├── data/                          # Scripts SQL
-│   ├── ftm-projet.sql             # Structure de la base de données
-│   └── ftm-projet-avec-data.sql   # Structure + données de test
+│   └── latest-ftm-database.sql    # Structure + données de la base
 ├── src/
 │   ├── controleur/                # Contrôleurs PHP
 │   │   ├── joueur/                # Actions sur les joueurs
@@ -127,8 +126,7 @@ football-team-manager/
    ```
 
 2. **Créer la base de données**
-   - Importez le fichier `data/ftm-projet-avec-data.sql` dans votre serveur MySQL
-   - Ou utilisez `data/ftm-projet.sql` pour une base vide
+   - Importez le fichier `data/latest-ftm-database.sql` dans votre serveur MySQL
 
 3. **Configurer la connexion**
    - Modifiez le fichier `src/modele/ConnexionBD.php`

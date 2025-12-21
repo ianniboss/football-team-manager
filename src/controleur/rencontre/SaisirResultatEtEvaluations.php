@@ -4,7 +4,7 @@
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../login.php");
+    header("Location: ../../vue/connexion.php");
     exit;
 }
 
@@ -19,8 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_rencontre = $_POST['id_rencontre'];
     $resultat = $_POST['resultat']; // Victoire, Defaite, Nul
 
-    // Pour modifier le résultat, on a besoin des autres infos obligatoires. 
-    // On les récupère d'abord pour ne pas les effacer.
     $matchActuel = $rencontreDAO->getRencontreById($id_rencontre);
 
     if ($matchActuel) {
@@ -38,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 2. Mise à jour des évaluations des joueurs
     if (isset($_POST['evaluations']) && is_array($_POST['evaluations'])) {
         foreach ($_POST['evaluations'] as $id_participation => $note) {
-            // La note doit être entre 1 et 5 (ou NULL si vide)
             if ($note !== "" && is_numeric($note)) {
                 $participerDAO->noterJoueur($id_participation, intval($note));
             }
