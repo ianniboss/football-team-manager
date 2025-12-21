@@ -22,7 +22,6 @@
         color: #17a077;
     }
 
-    /* Match Header */
     .match-info-header {
         background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
         border-radius: 16px;
@@ -43,7 +42,6 @@
         margin: 0;
     }
 
-    /* Result Selection Card */
     .result-card {
         background: white;
         border-radius: 16px;
@@ -123,7 +121,6 @@
         background-color: #e2e3e5;
     }
 
-    /* Evaluations Card */
     .evaluations-card {
         background: white;
         border-radius: 16px;
@@ -191,7 +188,6 @@
         color: #888;
     }
 
-    /* Star Rating */
     .star-rating {
         display: flex;
         align-items: center;
@@ -219,7 +215,6 @@
         font-size: 1.2rem;
     }
 
-    /* Submit Button */
     .form-actions {
         display: flex;
         justify-content: center;
@@ -295,7 +290,6 @@
         ← Retour aux détails
     </a>
 
-    <!-- Match Header -->
     <div class="match-info-header">
         <h1>📊 Résultat & Évaluations</h1>
         <p>Match contre <?php echo htmlspecialchars($rencontre['nom_equipe_adverse']); ?> - <?php echo $rencontre['date_rencontre']; ?></p>
@@ -304,7 +298,6 @@
     <form method="POST" action="SaisirResultatEtEvaluations.php">
         <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
 
-        <!-- Result Selection -->
         <div class="result-card">
             <h3>🏆 Résultat du match</h3>
             <div class="result-options">
@@ -335,7 +328,6 @@
             </div>
         </div>
 
-        <!-- Player Evaluations -->
         <div class="evaluations-card">
             <h3>⭐ Évaluer les joueurs</h3>
             
@@ -373,7 +365,6 @@
             <?php endif; ?>
         </div>
 
-        <!-- Submit -->
         <div class="form-actions">
             <button type="submit" class="btn-submit">
                 ✓ Enregistrer le résultat

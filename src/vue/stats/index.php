@@ -16,7 +16,6 @@ require_once __DIR__ . '/../header.php';
         margin: 0 0 30px 0;
     }
 
-    /* Global Stats Cards */
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -80,7 +79,6 @@ require_once __DIR__ . '/../header.php';
         margin-top: 8px;
     }
 
-    /* Section Title */
     .section-title {
         font-size: 1.3rem;
         font-weight: 600;
@@ -91,7 +89,6 @@ require_once __DIR__ . '/../header.php';
         gap: 10px;
     }
 
-    /* Player Stats Table */
     .stats-table-container {
         background: white;
         border-radius: 16px;
@@ -140,7 +137,6 @@ require_once __DIR__ . '/../header.php';
         border-bottom: none;
     }
 
-    /* Player Cell */
     .player-cell {
         display: flex;
         align-items: center;
@@ -166,7 +162,6 @@ require_once __DIR__ . '/../header.php';
         color: #1a1a1a;
     }
 
-    /* Status Badge */
     .status-badge {
         display: inline-block;
         padding: 4px 10px;
@@ -195,7 +190,6 @@ require_once __DIR__ . '/../header.php';
         color: #383d41;
     }
 
-    /* Position Badge */
     .position-badge {
         display: inline-block;
         padding: 4px 10px;
@@ -206,7 +200,6 @@ require_once __DIR__ . '/../header.php';
         font-weight: 500;
     }
 
-    /* Rating Stars */
     .rating {
         display: inline-flex;
         align-items: center;
@@ -215,7 +208,6 @@ require_once __DIR__ . '/../header.php';
         color: #f39c12;
     }
 
-    /* Percentage with Progress */
     .pct-cell {
         display: flex;
         flex-direction: column;
@@ -242,7 +234,6 @@ require_once __DIR__ . '/../header.php';
         border-radius: 3px;
     }
 
-    /* Series Badge */
     .serie-badge {
         display: inline-block;
         padding: 4px 10px;
@@ -266,7 +257,6 @@ require_once __DIR__ . '/../header.php';
         color: #383d41;
     }
 
-    /* Number highlight */
     .num-highlight {
         font-weight: 700;
         color: #1a1a1a;
@@ -298,7 +288,6 @@ require_once __DIR__ . '/../header.php';
 <div class="stats-container">
     <h1 class="page-title">📊 Statistiques Globales</h1>
 
-    <!-- Global Stats Cards -->
     <div class="stats-grid">
         <div class="stat-card victories">
             <h3>🏆 Victoires</h3>
@@ -322,7 +311,6 @@ require_once __DIR__ . '/../header.php';
         </div>
     </div>
 
-    <!-- Player Stats -->
     <h2 class="section-title">👥 Performances par Joueur</h2>
 
     <div class="stats-table-container">

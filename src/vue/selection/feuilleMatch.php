@@ -22,7 +22,6 @@
         color: #17a077;
     }
 
-    /* Match Header */
     .match-header {
         background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
         border-radius: 16px;
@@ -43,7 +42,6 @@
         margin: 0;
     }
 
-    /* Instructions */
     .instructions {
         background: #e8f5e9;
         border: 1px solid #a5d6a7;
@@ -57,7 +55,6 @@
         color: #2e7d32;
     }
 
-    /* Error Message */
     .error-message {
         background: #f8d7da;
         border: 1px solid #f5c6cb;
@@ -71,7 +68,6 @@
         color: #721c24;
     }
 
-    /* Players Panel */
     .players-panel {
         background: white;
         border-radius: 16px;
@@ -90,7 +86,6 @@
         gap: 10px;
     }
 
-    /* Player Cards Grid */
     .players-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -115,7 +110,6 @@
         background: #f0fdf9;
     }
 
-    /* Player Header */
     .player-card-header {
         display: flex;
         align-items: flex-start;
@@ -188,7 +182,6 @@
         color: #1a1a1a;
     }
 
-    /* Player Stats Row */
     .player-stats-row {
         display: flex;
         gap: 10px;
@@ -221,7 +214,6 @@
         color: #888;
     }
 
-    /* Comments History */
     .player-comments {
         background: white;
         border-radius: 8px;
@@ -274,7 +266,6 @@
         font-style: italic;
     }
 
-    /* Selection Controls */
     .selection-controls {
         display: flex;
         align-items: center;
@@ -324,7 +315,6 @@
         border-color: #1db988;
     }
 
-    /* Form Actions */
     .form-actions {
         display: flex;
         justify-content: center;
@@ -394,13 +384,11 @@
         ← Retour aux détails du match
     </a>
 
-    <!-- Match Header -->
     <div class="match-header">
         <h1>📋 Feuille de Match</h1>
         <p>Sélection pour le match contre <?php echo htmlspecialchars($rencontre['nom_equipe_adverse']); ?> - <?php echo $rencontre['date_rencontre']; ?></p>
     </div>
 
-    <!-- Error Message (if validation failed) -->
     <?php if (isset($_GET['error']) && $_GET['error'] === 'min_titulaires'): ?>
         <div class="error-message">
             ⚠️ <strong>Erreur :</strong> Vous devez sélectionner au moins <strong>11 titulaires</strong> pour valider la feuille de match. 
@@ -408,7 +396,6 @@
         </div>
     <?php endif; ?>
 
-    <!-- Instructions -->
     <div class="instructions">
         💡 <strong>Instructions :</strong> Cochez les joueurs à convoquer, indiquez leur poste, et marquez-les comme titulaires (minimum 11 requis). Consultez leurs statistiques et commentaires pour faire votre choix.
     </div>
@@ -416,7 +403,6 @@
     <form method="POST" action="EnregistrerSelection.php">
         <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
 
-        <!-- Players Panel -->
         <div class="players-panel">
             <h3>👥 Effectif disponible</h3>
             
@@ -429,14 +415,11 @@
                     <?php foreach ($tousLesJoueurs as $j): 
                         $id = $j['id_joueur'];
                         
-                        // Check if we have pending selection data (from failed validation)
                         if ($pendingSelection !== null) {
-                            // Use pending data from the failed form submission
                             $is_selected = isset($pendingSelection[$id]['selected']);
                             $val_poste = isset($pendingSelection[$id]['poste']) ? $pendingSelection[$id]['poste'] : '';
                             $is_titulaire = isset($pendingSelection[$id]['titulaire']);
                         } else {
-                            // Use database data
                             $is_selected = isset($selectionActuelle[$id]);
                             $val_poste = $is_selected ? $selectionActuelle[$id]['poste'] : '';
                             $is_titulaire = ($is_selected && $selectionActuelle[$id]['titulaire'] == 1);
@@ -447,7 +430,6 @@
                         $stats = isset($joueursStats[$id]) ? $joueursStats[$id] : null;
                     ?>
                         <div class="player-card <?php echo $is_selected ? 'selected' : ''; ?>">
-                            <!-- Player Header with Photo -->
                             <div class="player-card-header">
                                 <div class="player-photo">
                                     <?php if ($hasImage): ?>
@@ -469,7 +451,6 @@
                                 </div>
                             </div>
 
-                            <!-- Player Stats -->
                             <div class="player-stats-row">
                                 <?php if ($stats && $stats['total_matchs'] > 0): ?>
                                     <span class="stat-badge matches">
@@ -488,7 +469,6 @@
                                 <?php endif; ?>
                             </div>
 
-                            <!-- Comments History -->
                             <div class="player-comments">
                                 <div class="comments-title">💬 Commentaires récents</div>
                                 <?php if (!empty($comments)): ?>
@@ -503,7 +483,6 @@
                                 <?php endif; ?>
                             </div>
 
-                            <!-- Selection Controls -->
                             <div class="selection-controls">
                                 <div class="control-group">
                                     <input type="checkbox" 
@@ -544,7 +523,6 @@
             <?php endif; ?>
         </div>
 
-        <!-- Submit -->
         <div class="form-actions">
             <button type="submit" class="btn-submit" id="submitBtn">
                 ✓ Valider la sélection

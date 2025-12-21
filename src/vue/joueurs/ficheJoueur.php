@@ -101,7 +101,6 @@
         gap: 16px;
     }
 
-    /* Status badge */
     .status-badge {
         display: inline-block;
         padding: 8px 20px;
@@ -130,7 +129,6 @@
         color: #383d41;
     }
 
-    /* Buttons */
     .card-actions {
         display: flex;
         gap: 16px;
@@ -185,7 +183,6 @@
         box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
     }
 
-    /* Comments Section (Full Width) */
     .comments-section {
         margin-top: 40px;
         padding-top: 30px;
@@ -361,7 +358,6 @@ $imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['imag
     <p class="player-subtitle">Fiche du joueur</p>
 
     <div class="info-grid">
-        <!-- Left Column - Informations personnelles -->
         <div class="info-section">
             <h3>Informations personnelles</h3>
 
@@ -386,7 +382,6 @@ $imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['imag
             </div>
         </div>
 
-        <!-- Right Column - Attributs physiques & Statut -->
         <div class="info-section">
             <h3>Attributs physiques</h3>
 
@@ -417,11 +412,9 @@ $imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['imag
         </div>
     </div>
 
-    <!-- Comments Section (Full Width) -->
     <div class="comments-section">
         <h3>Commentaires</h3>
 
-        <!-- Add Comment Form -->
         <form class="comment-form" action="/controleur/commentaire/AjouterUnCommentaireAuJoueur.php" method="POST">
             <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
             <textarea name="commentaire" placeholder="Ajouter une note personnelle sur ce joueur..."
@@ -429,7 +422,6 @@ $imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['imag
             <button type="submit" class="btn-submit">Ajouter le commentaire</button>
         </form>
 
-        <!-- Comments List -->
         <div class="comments-list">
             <?php if (!empty($commentaires)): ?>
                 <?php foreach ($commentaires as $commentaire): ?>

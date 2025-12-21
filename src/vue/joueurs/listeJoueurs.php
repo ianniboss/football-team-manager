@@ -50,7 +50,6 @@ $statusFilter = $_SESSION['status_filter'] ?? '';
         box-shadow: 0 4px 12px rgba(29, 185, 136, 0.3);
     }
 
-    /* Search Section */
     .search-section {
         background: white;
         border-radius: 12px;
@@ -356,7 +355,6 @@ $statusFilter = $_SESSION['status_filter'] ?? '';
 </div>
 
 <?php
-// Get total counts from unfiltered data (by re-querying)
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
 $dao = new JoueurDAO();
 $allJoueurs = $dao->getJoueurs();
@@ -380,7 +378,6 @@ $joueursBlessés = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'B
     </div>
 </div>
 
-<!-- Search Section -->
 <div class="search-section">
     <form action="/controleur/joueur/ObtenirTousLesJoueurs.php" method="GET" class="search-form">
         <div class="search-input-group">

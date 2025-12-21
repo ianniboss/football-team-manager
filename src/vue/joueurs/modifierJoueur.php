@@ -123,7 +123,6 @@
         color: #555;
     }
 
-    /* Input row for height/weight */
     .input-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -148,7 +147,6 @@
         pointer-events: none;
     }
 
-    /* Icon styling for inputs */
     .input-with-icon {
         position: relative;
     }
@@ -167,7 +165,6 @@
         pointer-events: none;
     }
 
-    /* Buttons */
     .form-actions {
         display: flex;
         gap: 16px;
@@ -275,7 +272,6 @@
                 </div>
             </div>
 
-            <!-- Right Column - Attributs physiques & Statut -->
             <div class="form-section">
                 <h3>Attributs physiques</h3>
                 

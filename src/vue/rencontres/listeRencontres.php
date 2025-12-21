@@ -42,7 +42,6 @@
         box-shadow: 0 4px 12px rgba(29, 185, 136, 0.3);
     }
 
-    /* Stats bar */
     .stats-bar {
         display: flex;
         gap: 20px;
@@ -81,7 +80,6 @@
         letter-spacing: 0.5px;
     }
 
-    /* Table styling */
     .matches-table {
         width: 100%;
         background: white;
@@ -120,7 +118,6 @@
         border-bottom: none;
     }
 
-    /* Match info styling */
     .match-date {
         display: flex;
         flex-direction: column;
@@ -159,7 +156,6 @@
         color: #f57c00;
     }
 
-    /* Result badges */
     .result-badge {
         display: inline-block;
         padding: 6px 14px;
@@ -188,7 +184,6 @@
         color: #004085;
     }
 
-    /* Action buttons */
     .action-btn {
         display: inline-block;
         padding: 8px 14px;
@@ -232,7 +227,6 @@
         flex-wrap: wrap;
     }
 
-    /* Empty state */
     .empty-state {
         text-align: center;
         padding: 60px 20px;
@@ -280,7 +274,6 @@
 </div>
 
 <?php
-// Calculate stats
 $totalMatchs = count($rencontres);
 $victoires = count(array_filter($rencontres, fn($r) => $r['resultat'] === 'Victoire'));
 $defaites = count(array_filter($rencontres, fn($r) => $r['resultat'] === 'Defaite'));

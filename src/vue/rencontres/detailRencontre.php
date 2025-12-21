@@ -22,7 +22,6 @@
         margin: 0 auto;
     }
 
-    /* Match Header Card */
     .match-header {
         background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
         border-radius: 16px;
@@ -65,7 +64,6 @@
         font-weight: 500;
     }
 
-    /* Result Badge */
     .result-badge {
         display: inline-block;
         padding: 8px 20px;
@@ -94,7 +92,6 @@
         color: white;
     }
 
-    /* Venue Badge */
     .venue-badge {
         display: inline-block;
         padding: 6px 14px;
@@ -113,7 +110,6 @@
         color: white;
     }
 
-    /* Action Cards */
     .actions-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -156,7 +152,6 @@
         margin: 0;
     }
 
-    /* Players Section */
     .players-section {
         background: white;
         border-radius: 16px;
@@ -283,7 +278,6 @@
         ← Retour au calendrier
     </a>
 
-    <!-- Match Header -->
     <?php
     $hasStadiumImage = !empty($rencontre['image_stade']);
     $stadiumStyle = $hasStadiumImage
@@ -334,7 +328,6 @@
         </div>
     </div>
 
-    <!-- Action Cards -->
     <div class="actions-grid">
         <a href="/controleur/rencontre/ModifierUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>"
             class="action-card">
@@ -356,7 +349,6 @@
         </a>
     </div>
 
-    <!-- Players Section -->
     <div class="players-section">
         <h3>📋 Feuille de match</h3>
 

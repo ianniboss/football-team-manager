@@ -76,7 +76,6 @@
         color: #aaa;
     }
 
-    /* Radio buttons styling */
     .radio-group {
         display: flex;
         flex-direction: column;
@@ -123,7 +122,6 @@
         color: #555;
     }
 
-    /* Buttons */
     .form-actions {
         display: flex;
         gap: 16px;
@@ -164,7 +162,6 @@
         border-color: #ccc;
     }
 
-    /* Icon styling for inputs */
     .input-with-icon {
         position: relative;
     }
@@ -215,7 +212,6 @@
         <?php endif; ?>
 
         <div class="form-grid">
-            <!-- Left Column - Informations générales -->
             <div class="form-section">
                 <h3>Informations générales</h3>
                 
@@ -248,7 +244,6 @@
                 </div>
             </div>
 
-            <!-- Right Column - Lieu -->
             <div class="form-section">
                 <h3>Lieu</h3>
                 

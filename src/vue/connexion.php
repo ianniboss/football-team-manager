@@ -175,7 +175,6 @@
             font-size: 14px;
         }
 
-        /* Error message */
         .error-message {
             display: flex;
             align-items: center;
@@ -195,7 +194,6 @@
             font-size: 16px;
         }
 
-        /* Footer */
         .login-footer {
             text-align: center;
             margin-top: 25px;

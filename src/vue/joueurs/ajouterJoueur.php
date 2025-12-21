@@ -148,7 +148,6 @@
         pointer-events: none;
     }
 
-    /* Icon styling for inputs */
     .input-with-icon {
         position: relative;
     }
@@ -167,7 +166,6 @@
         pointer-events: none;
     }
 
-    /* Buttons */
     .form-actions {
         display: flex;
         gap: 16px;
@@ -239,7 +237,6 @@
 
     <form method="POST" action="/controleur/joueur/AjouterJoueur.php" enctype="multipart/form-data">
         <div class="form-grid">
-            <!-- Left Column - Informations personnelles -->
             <div class="form-section">
                 <h3>Informations personnelles</h3>
 
@@ -267,7 +264,6 @@
                 </div>
             </div>
 
-            <!-- Right Column - Attributs physiques & Statut -->
             <div class="form-section">
                 <h3>Attributs physiques</h3>
 
