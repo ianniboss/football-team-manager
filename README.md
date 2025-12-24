@@ -98,7 +98,7 @@ football-team-manager/
 │   │   └── CommentaireDAO.php     # CRUD commentaires
 │   └── vue/                       # Fichiers de présentation
 │       ├── header.php             # En-tête avec navigation
-│       ├── connexion.php          # Page de login
+│       ├── index.php          # Page de login
 │       ├── accueil.php            # Page d'accueil
 │       ├── joueurs/               # Vues joueurs
 │       ├── rencontres/            # Vues matchs
@@ -134,7 +134,7 @@ football-team-manager/
 
 4. **Lancer l'application**
    - Placez le projet dans le dossier de votre serveur web (htdocs, www, etc.)
-   - Accédez à `http://localhost/football-team-manager/src/vue/connexion.php`
+   - Accédez à `http://localhost/football-team-manager/src/vue/index.php`
 
 ---
 
