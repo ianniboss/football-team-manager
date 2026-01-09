@@ -1,5 +1,7 @@
-<?php require_once __DIR__ . '/../header.php'; ?>
-<!-- utilise ObtenirToutesLesRencontres.php -->
+<?php
+require_once __DIR__ . '/../header.php';
+$rencontres = $_SESSION['rencontres'] ?? [];
+?>
 
 <style>
     .page-header {

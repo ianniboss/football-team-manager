@@ -59,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } elseif (isset($_GET['id'])) {
     $rencontre = $dao->getRencontreById($_GET['id']);
-    require __DIR__ . '/../../vue/rencontres/formRencontre.php';
+    $_SESSION['rencontre_modify'] = $rencontre;
+    header("Location: ../../vue/rencontres/formRencontre.php");
+    exit;
 }
 ?>

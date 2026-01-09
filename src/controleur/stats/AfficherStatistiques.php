@@ -68,6 +68,9 @@ foreach ($tousLesJoueurs as $joueur) {
         'serie_cours' => $serie
     ];
 }
+$_SESSION['statsGlobales'] = $statsGlobales;
+$_SESSION['tableauJoueurs'] = $tableauJoueurs;
 
-require __DIR__ . '/../../vue/stats/index.php';
+header("Location: ../../vue/stats/index.php");
+exit;
 ?>

@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 
 } else {
-    require __DIR__ . '/../../vue/rencontres/formRencontre.php';
+    header("Location: ../../vue/rencontres/formRencontre.php");
+    exit;
 }
 ?>

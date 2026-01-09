@@ -60,7 +60,15 @@ if (isset($_GET['id_rencontre'])) {
         $joueursStats[$id] = $participerDAO->getStatsJoueur($id);
     }
 
-    require __DIR__ . '/../../vue/selection/feuilleMatch.php';
+    $_SESSION['rencontre_selection'] = $rencontre;
+    $_SESSION['tous_les_joueurs_selection'] = $tousLesJoueurs;
+    $_SESSION['selection_actuelle'] = $selectionActuelle;
+    $_SESSION['pending_selection_data'] = $pendingSelection;
+    $_SESSION['joueurs_commentaires_selection'] = $joueursCommentaires;
+    $_SESSION['joueurs_stats_selection'] = $joueursStats;
+
+    header("Location: ../../vue/selection/feuilleMatch.php");
+    exit;
 
 } else {
     header("Location: ../rencontre/ObtenirToutesLesRencontres.php");

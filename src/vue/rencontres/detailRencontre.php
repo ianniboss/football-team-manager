@@ -1,4 +1,14 @@
-<?php require_once __DIR__ . '/../header.php'; ?>
+<?php
+require_once __DIR__ . '/../header.php';
+
+$rencontre = $_SESSION['rencontre_detail'] ?? null;
+$joueursParticipe = $_SESSION['joueurs_participe'] ?? [];
+
+if (!$rencontre) {
+    header("Location: /vue/rencontres/listeRencontres.php");
+    exit;
+}
+?>
 <!-- utilise RechercherUneRencontre.php -->
 
 <style>
