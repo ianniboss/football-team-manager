@@ -18,10 +18,11 @@ class ConnexionBD
             $pass = '';
         } else {
             // InfinityFree deployment
-            $host = 'sql100.infinityfree.com';
-            $db = 'if0_40713656_ftm';
-            $user = 'if0_40713656';
-            $pass = 'EJ8uoCbnPqYCxl';
+            include("credentials.php");
+            $host = HOST;
+            $db = DB;
+            $user = USER;
+            $pass = PASS;
         }
 
         try {
