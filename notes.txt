@@ -49,6 +49,9 @@ match dont la date est passée -> mettre dans l'accueil qu'il faut saisir le ré
 
 
 rajouter des données (joueurs, matchs, commentaires, notes...)
+
+vérifier respect du MVC (affichage des pages par des controleurs actuellement)
+
 ---
 
 ## 📄 Cahier des Charges
