@@ -3,29 +3,56 @@
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../../vue/connexion.html");
+    header("Location: ../../vue/index.php");
     exit;
 }
 
 require_once __DIR__ . '/../../modele/ParticiperDAO.php';
+
+// titulaires minimum pour un match
+define('MIN_TITULAIRES', 11);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_rencontre'])) {
 
     $id_rencontre = intval($_POST['id_rencontre']);
     $participerDAO = new ParticiperDAO();
 
+    $submittedData = isset($_POST['joueurs']) ? $_POST['joueurs'] : [];
+
+    // nombre de titulaires dans les données soumises
+    $titulairesCount = 0;
+    foreach ($submittedData as $id_joueur => $data) {
+        if (isset($data['selected']) && isset($data['titulaire'])) {
+            $titulairesCount++;
+        }
+    }
+
+    // validation du nombre minimum de titulaires
+    if ($titulairesCount < MIN_TITULAIRES) {
+        // Stockage des données soumises dans la session pour conserver les modifications
+        $_SESSION['pending_selection'] = $submittedData;
+        $_SESSION['pending_selection_match'] = $id_rencontre;
+
+        // redirection avec erreur
+        header("Location: AfficherSelection.php?id_rencontre=" . $id_rencontre . "&error=min_titulaires&count=" . $titulairesCount);
+        exit;
+    }
+
+    // suppression des données en attente de validation
+    unset($_SESSION['pending_selection']);
+    unset($_SESSION['pending_selection_match']);
+
+    // Obtenir les selections existantes pour les comparer
     $existingList = $participerDAO->getFeuilleMatch($id_rencontre);
     $existingIds = [];
     foreach ($existingList as $p) {
         $existingIds[$p['id_joueur']] = $p['id_participation'];
     }
 
-    $submittedData = isset($_POST['joueurs']) ? $_POST['joueurs'] : [];
-
     foreach ($submittedData as $id_joueur => $data) {
-        // Only process if the player was selected (checkbox checked)
+        // traitement si le joueur a été sélectionné (case à cocher cochée)
         if (!isset($data['selected'])) {
-            // Player was not checked, skip adding but we'll handle removal later
+            // le joueur n'a pas été coché, on passe à la suivante
             continue;
         }
 
@@ -46,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_rencontre'])) {
         $participerDAO->supprimerParticipation($id_participation);
     }
 
-    header("Location: ../rencontre/RechercherUneRencontre.php?id=" . $id_rencontre);
+    header("Location: ../rencontre/RechercherUneRencontre.php?id=" . $id_rencontre . "&success=selection_saved");
     exit;
 
 } else {

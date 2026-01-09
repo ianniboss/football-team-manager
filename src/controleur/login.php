@@ -10,7 +10,7 @@ $valid_users = [
 
 // Vérification du formulaire
 if (!isset($_POST['username'], $_POST['password'])) {
-    header("Location: ../vue/connexion.php");
+    header("Location: ../vue/index.php");
     exit;
 }
 
@@ -23,7 +23,7 @@ if (array_key_exists($username, $valid_users) && $valid_users[$username] === $pa
     $_SESSION['username'] = $username;
     header("Location: ../vue/accueil.php");
 } else {
-    header("Location: ../vue/connexion.php?error=invalid");
+    header("Location: ../vue/index.php?error=invalid");
     exit;
 }
 ?>

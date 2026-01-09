@@ -15,7 +15,7 @@ class ParticiperDAO
      */
     public function getFeuilleMatch($id_rencontre)
     {
-        $sql = "SELECT p.*, j.nom, j.prenom, j.num_licence, j.poids, j.taille 
+        $sql = "SELECT p.*, j.nom, j.prenom, j.num_licence, j.poids, j.taille, j.image 
                 FROM participer p
                 JOIN joueur j ON p.id_joueur = j.id_joueur
                 WHERE p.id_rencontre = :id_rencontre
@@ -152,14 +152,15 @@ class ParticiperDAO
      * Calcule le nombre de matchs consécutifs joués par le joueur (série en cours).
      * On remonte dans le temps depuis le dernier match joué par l'équipe.
      */
-    public function getSerieEnCours($id_joueur) {
+    public function getSerieEnCours($id_joueur)
+    {
         // 1. On récupère TOUS les matchs passés de l'équipe, triés du plus récent au plus ancien
         $sql = "SELECT r.id_rencontre, 
                        (SELECT COUNT(*) FROM participer p WHERE p.id_rencontre = r.id_rencontre AND p.id_joueur = :id_joueur) as a_joue
                 FROM rencontre r
                 WHERE r.date_rencontre <= CURDATE()
                 ORDER BY r.date_rencontre DESC";
-        
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(array(':id_joueur' => $id_joueur));
         $matchs = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -1,3 +1,14 @@
+<?php
+// Session authentication check - redirect to login if not authenticated
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: /vue/index.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -7,7 +18,6 @@
     <?php
     $basePath = '';
     ?>
-    <link rel="stylesheet" href="<?php echo $basePath; ?>/vue/style/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {

@@ -10,18 +10,16 @@ class JoueurDAO
         $this->pdo = ConnexionBD::getInstance()->getPDO();
     }
 
-    // Récupérer tous les joueurs (SELECT)
     public function getJoueurs()
     {
         $req = $this->pdo->query('SELECT * FROM joueur ORDER BY nom, prenom');
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter un joueur (INSERT)
-    public function ajouterJoueur($nom, $prenom, $num_licence, $date_naissance, $taille, $poids, $statut)
+    public function ajouterJoueur($nom, $prenom, $num_licence, $date_naissance, $taille, $poids, $statut, $image = null)
     {
-        $sql = "INSERT INTO joueur (nom, prenom, num_licence, date_naissance, taille, poids, statut) 
-                VALUES (:nom, :prenom, :num_licence, :date_naissance, :taille, :poids, :statut)";
+        $sql = "INSERT INTO joueur (nom, prenom, num_licence, date_naissance, taille, poids, statut, image) 
+                VALUES (:nom, :prenom, :num_licence, :date_naissance, :taille, :poids, :statut, :image)";
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -32,11 +30,16 @@ class JoueurDAO
             ':date_naissance' => $date_naissance,
             ':taille' => $taille,
             ':poids' => $poids,
-            ':statut' => $statut
+            ':statut' => $statut,
+            ':image' => $image
         ));
     }
 
-    // Récupérer un joueur par son ID (SELECT)
+    public function getLastInsertId()
+    {
+        return $this->pdo->lastInsertId();
+    }
+
     public function getJoueurById($id_joueur)
     {
         $sql = "SELECT * FROM joueur WHERE id_joueur = :id";
@@ -46,16 +49,22 @@ class JoueurDAO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Modifier un joueur (UPDATE)
-    public function modifierJoueur($id_joueur, $nom, $prenom, $num_licence, $date_naissance, $taille, $poids, $statut)
+    public function modifierJoueur($id_joueur, $nom, $prenom, $num_licence, $date_naissance, $taille, $poids, $statut, $image = null)
     {
-        $sql = "UPDATE joueur 
-                SET nom = :nom, prenom = :prenom, num_licence = :licence, 
-                    date_naissance = :naissance, taille = :taille, poids = :poids, statut = :statut 
-                WHERE id_joueur = :id";
+        if ($image !== null) {
+            $sql = "UPDATE joueur 
+                    SET nom = :nom, prenom = :prenom, num_licence = :licence, 
+                        date_naissance = :naissance, taille = :taille, poids = :poids, statut = :statut, image = :image 
+                    WHERE id_joueur = :id";
+        } else {
+            $sql = "UPDATE joueur 
+                    SET nom = :nom, prenom = :prenom, num_licence = :licence, 
+                        date_naissance = :naissance, taille = :taille, poids = :poids, statut = :statut 
+                    WHERE id_joueur = :id";
+        }
 
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute(array(
+        $params = array(
             ':nom' => $nom,
             ':prenom' => $prenom,
             ':licence' => $num_licence,
@@ -64,10 +73,15 @@ class JoueurDAO
             ':poids' => $poids,
             ':statut' => $statut,
             ':id' => $id_joueur
-        ));
+        );
+        
+        if ($image !== null) {
+            $params[':image'] = $image;
+        }
+        
+        return $stmt->execute($params);
     }
 
-    // Supprimer un joueur (DELETE)
     public function supprimerJoueur($id_joueur)
     {
         $sql = "DELETE FROM joueur WHERE id_joueur = :id";
@@ -75,7 +89,6 @@ class JoueurDAO
         return $stmt->execute(array(':id' => $id_joueur));
     }
 
-    // Récupérer les joueurs actifs (SELECT)
     public function getJoueursActifs()
     {
         $sql = "SELECT * FROM joueur WHERE statut = 'Actif' ORDER BY nom";

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: connexion.html");
+    header("Location: index.php");
     exit;
 }
 
@@ -258,7 +258,6 @@ require_once __DIR__ . '/header.php';
         font-weight: 600;
     }
 
-    /* Recent Results */
     .recent-results-card {
         background: white;
         border-radius: 16px;
@@ -335,7 +334,6 @@ require_once __DIR__ . '/header.php';
         <p class="subtitle">Voici un aperçu de votre équipe</p>
     </div>
 
-    <!-- Stats Grid -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon players">👥</div>
@@ -381,7 +379,6 @@ require_once __DIR__ . '/header.php';
         </div>
     </div>
 
-    <!-- Quick Actions -->
     <h2 class="section-title">Actions Rapides</h2>
     <div class="quick-actions">
         <a href="/controleur/joueur/AjouterJoueur.php" class="action-card">
@@ -414,10 +411,8 @@ require_once __DIR__ . '/header.php';
         </a>
     </div>
 
-    <!-- Next Match & Recent Results -->
     <h2 class="section-title">Aperçu des Matchs</h2>
     <div class="next-match-section">
-        <!-- Next Match -->
         <div class="next-match-card">
             <h3>⏱ Prochain Match</h3>
             <?php if ($prochainMatch): ?>
@@ -434,7 +429,8 @@ require_once __DIR__ . '/header.php';
                     <div class="match-details">
                         <h4>vs <?= htmlspecialchars($prochainMatch['nom_equipe_adverse']) ?></h4>
                         <p><?= htmlspecialchars($prochainMatch['heure']) ?> -
-                            <?= htmlspecialchars($prochainMatch['adresse']) ?></p>
+                            <?= htmlspecialchars($prochainMatch['adresse']) ?>
+                        </p>
                         <span class="venue-badge"><?= htmlspecialchars($prochainMatch['lieu']) ?></span>
                     </div>
                 </div>
@@ -445,7 +441,6 @@ require_once __DIR__ . '/header.php';
             <?php endif; ?>
         </div>
 
-        <!-- Recent Results -->
         <div class="recent-results-card">
             <h3>📊 Derniers Résultats</h3>
             <?php

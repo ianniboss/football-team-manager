@@ -22,7 +22,6 @@
         margin: 0 auto;
     }
 
-    /* Match Header Card */
     .match-header {
         background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
         border-radius: 16px;
@@ -33,15 +32,7 @@
         overflow: hidden;
     }
 
-    .match-header::before {
-        content: '⚽';
-        position: absolute;
-        right: 30px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 6rem;
-        opacity: 0.1;
-    }
+
 
     .match-header h1 {
         font-size: 1.8rem;
@@ -73,7 +64,6 @@
         font-weight: 500;
     }
 
-    /* Result Badge */
     .result-badge {
         display: inline-block;
         padding: 8px 20px;
@@ -102,7 +92,6 @@
         color: white;
     }
 
-    /* Venue Badge */
     .venue-badge {
         display: inline-block;
         padding: 6px 14px;
@@ -121,7 +110,6 @@
         color: white;
     }
 
-    /* Action Cards */
     .actions-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -164,7 +152,6 @@
         margin: 0;
     }
 
-    /* Players Section */
     .players-section {
         background: white;
         border-radius: 16px;
@@ -291,8 +278,13 @@
         ← Retour au calendrier
     </a>
 
-    <!-- Match Header -->
-    <div class="match-header">
+    <?php
+    $hasStadiumImage = !empty($rencontre['image_stade']);
+    $stadiumStyle = $hasStadiumImage
+        ? "background: linear-gradient(135deg, rgba(45, 52, 54, 0.9) 0%, rgba(0, 0, 0, 0.85) 100%), url('/modele/img/matchs/" . htmlspecialchars($rencontre['image_stade']) . "'); background-size: cover; background-position: center;"
+        : "background: linear-gradient(135deg, #2d3436 0%, #000000 100%);";
+    ?>
+    <div class="match-header" style="<?= $stadiumStyle ?>">
         <h1>Match contre <?php echo htmlspecialchars($rencontre['nom_equipe_adverse']); ?></h1>
 
         <div class="match-meta">
@@ -336,7 +328,6 @@
         </div>
     </div>
 
-    <!-- Action Cards -->
     <div class="actions-grid">
         <a href="/controleur/rencontre/ModifierUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>"
             class="action-card">
@@ -358,7 +349,6 @@
         </a>
     </div>
 
-    <!-- Players Section -->
     <div class="players-section">
         <h3>📋 Feuille de match</h3>
 
@@ -371,9 +361,15 @@
                 <?php foreach ($joueursParticipe as $j): ?>
                     <li class="player-item">
                         <div class="player-info">
-                            <div class="player-avatar">
-                                <?= strtoupper(substr($j['prenom'], 0, 1) . substr($j['nom'], 0, 1)) ?>
-                            </div>
+                            <?php if (!empty($j['image'])): ?>
+                                <img src="/modele/img/players/<?php echo htmlspecialchars($j['image']); ?>"
+                                    alt="Photo de <?php echo htmlspecialchars($j['prenom']); ?>"
+                                    style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">
+                            <?php else: ?>
+                                <div class="player-avatar">
+                                    <?= strtoupper(substr($j['prenom'], 0, 1) . substr($j['nom'], 0, 1)) ?>
+                                </div>
+                            <?php endif; ?>
                             <div>
                                 <div class="player-name"><?php echo htmlspecialchars($j['prenom'] . ' ' . $j['nom']); ?></div>
                                 <div class="player-role"><?php echo htmlspecialchars($j['poste']); ?></div>
