@@ -4,8 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Auto-detect environment
+$isLocalCheck = ($_SERVER['SERVER_NAME'] ?? 'localhost') === 'localhost'
+    || ($_SERVER['SERVER_ADDR'] ?? '127.0.0.1') === '127.0.0.1';
+$loginRedirect = $isLocalCheck ? '/src/vue/index.php' : '/vue/index.php';
+
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /vue/index.php");
+    header("Location: " . $loginRedirect);
     exit;
 }
 ?>
@@ -16,7 +21,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <meta charset="UTF-8">
     <title>Football Team Manager</title>
     <?php
-    $basePath = '';
+    // Auto-detect environment for correct paths
+    $isLocal = ($_SERVER['SERVER_NAME'] ?? 'localhost') === 'localhost'
+        || ($_SERVER['SERVER_ADDR'] ?? '127.0.0.1') === '127.0.0.1';
+
+    // On localhost, the project is in /src/. On InfinityFree, it's at the root.
+    $basePath = $isLocal ? '/src' : '';
     ?>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
