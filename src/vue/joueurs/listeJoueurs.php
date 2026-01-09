@@ -357,10 +357,10 @@ $statusFilter = $_SESSION['status_filter'] ?? '';
 <?php
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
 $dao = new JoueurDAO();
-$allJoueurs = $dao->getJoueurs();
-$totalJoueurs = count($allJoueurs);
-$joueursActifs = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'Actif'));
-$joueursBlessés = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'Blessé'));
+$playerStats = $dao->getPlayerStats();
+$totalJoueurs = $playerStats['total'];
+$joueursActifs = $playerStats['actifs'];
+$joueursBlessés = $playerStats['blesses'];
 ?>
 
 <div class="stats-bar">
