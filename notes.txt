@@ -20,6 +20,7 @@ Une classe DAO se compose des éléments suivants :
 ✨ Feature Additions (Functionality)
 4. Player search/filter
 Add a search bar to quickly find players by name or license number.
+fait
 
 5. Delete confirmation modal
 Replace the basic JavaScript confirm() with a styled modal.
@@ -29,10 +30,25 @@ Add a page to enter match scores/results after the game.
 
 7. Player statistics
 Show individual player stats (matches played, evaluations, etc.)
+en partie fait (peut-être que la série de victoire importe pas trop, moins que matches played
+en tout cas par exemple)
 
 🛡️ Code Quality (Important for your uni project)
 8. Better error messages
 Show user-friendly error messages instead of technical errors.
+on a quoi comme erreurs qui s'affichent ?
 
 9. Form validation
 Add client-side validation with helpful error messages.
+
+Peut-être (pas urgent) :
+le bouton déconnexion devrait être un peu différent des autres boutons de la navbar
+changer le style de la navbar pour qu'elle ressemble plus au reste de la page
+changer le style des carrés qui donnent des infos car ils sont dans le même style 
+que les carrés qui font des actions et du coup on a envie de cliquer et ça marche pas. 
+Ou alors faire en sorte que les carrés qui donnent des infos sont des actions et redirigent
+vers des pages judicieuses (genre 12 joueurs -> liste des joueurs, 6 matchs -> liste des matchs)
+match dont la date est passée -> mettre dans l'accueil qu'il faut saisir le résultat ?
+
+
+rajouter des données (joueurs, matchs, commentaires, notes...)
