@@ -1,4 +1,13 @@
-<?php require_once __DIR__ . '/../header.php'; ?>
+<?php
+require_once __DIR__ . '/../header.php';
+$rencontre = $_SESSION['rencontre_resultat'] ?? null;
+$joueursFeuille = $_SESSION['joueurs_feuille_resultat'] ?? [];
+
+if (!$rencontre) {
+    header("Location: /vue/rencontres/listeRencontres.php");
+    exit;
+}
+?>
 <!-- utilise SaisirResultatEtEvaluations.php -->
 
 <style>

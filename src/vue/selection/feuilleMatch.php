@@ -1,4 +1,18 @@
-<?php require_once __DIR__ . '/../header.php'; ?>
+<?php
+require_once __DIR__ . '/../header.php';
+
+$rencontre = $_SESSION['rencontre_selection'] ?? null;
+$tousLesJoueurs = $_SESSION['tous_les_joueurs_selection'] ?? [];
+$selectionActuelle = $_SESSION['selection_actuelle'] ?? [];
+$pendingSelection = $_SESSION['pending_selection_data'] ?? null;
+$joueursCommentaires = $_SESSION['joueurs_commentaires_selection'] ?? [];
+$joueursStats = $_SESSION['joueurs_stats_selection'] ?? [];
+
+if (!$rencontre) {
+    header("Location: /vue/rencontres/listeRencontres.php");
+    exit;
+}
+?>
 <!-- utilise AfficherSelection.php -->
 
 <style>

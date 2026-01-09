@@ -1,4 +1,11 @@
-<?php require_once __DIR__ . '/../header.php'; ?>
+<?php
+require_once __DIR__ . '/../header.php';
+$joueur = $_SESSION['joueur_modify'] ?? null;
+if (!$joueur) {
+    header("Location: /vue/joueurs/listeJoueurs.php");
+    exit;
+}
+?>
 <!-- Formulaire de modification de joueur - Utilisé par ModifierIdentiteDuJoueur.php -->
 
 <style>

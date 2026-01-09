@@ -1,4 +1,14 @@
-<?php require_once __DIR__ . '/../header.php'; ?>
+<?php
+require_once __DIR__ . '/../header.php';
+
+$joueur = $_SESSION['joueur_detail'] ?? null;
+$commentaires = $_SESSION['joueur_commentaires'] ?? [];
+
+if (!$joueur) {
+    header("Location: /vue/index.php"); // Or back to list
+    exit;
+}
+?>
 <!-- Fiche détaillée du joueur - Utilisé par ObtenirUnJoueur.php -->
 
 <style>

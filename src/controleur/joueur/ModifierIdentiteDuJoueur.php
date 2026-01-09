@@ -59,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } elseif (isset($_GET['id'])) {
     $joueur = $dao->getJoueurById($_GET['id']);
-    require __DIR__ . '/../../vue/joueurs/modifierJoueur.php';
+    $_SESSION['joueur_modify'] = $joueur;
+    header("Location: ../../vue/joueurs/modifierJoueur.php");
+    exit;
 }
 ?>

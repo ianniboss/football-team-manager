@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 } else {
-    require __DIR__ . '/../../vue/joueurs/ajouterJoueur.php';
+    header("Location: ../../vue/joueurs/ajouterJoueur.php");
+    exit;
 }
 ?>

@@ -21,7 +21,10 @@ if (isset($_GET['id'])) {
     $commentaires = $commentaireDAO->getCommentairesByJoueur($id);
 
     if ($joueur) {
-        require __DIR__ . '/../../vue/joueurs/ficheJoueur.php';
+        $_SESSION['joueur_detail'] = $joueur;
+        $_SESSION['joueur_commentaires'] = $commentaires;
+        header("Location: ../../vue/joueurs/ficheJoueur.php");
+        exit;
     } else {
         echo "Joueur introuvable.";
     }

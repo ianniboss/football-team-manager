@@ -12,6 +12,10 @@ require_once __DIR__ . '/../../modele/RencontreDAO.php';
 $dao = new RencontreDAO();
 $rencontres = $dao->getRencontres();
 
-// Appel de la vue
-require __DIR__ . '/../../vue/rencontres/listeRencontres.php';
+// Sauvegarde dans la session pour la vue
+$_SESSION['rencontres'] = $rencontres;
+
+// Redirection vers la vue pour mettre à jour l'URL
+header("Location: ../../vue/rencontres/listeRencontres.php");
+exit;
 ?>

@@ -24,7 +24,10 @@ if (isset($_GET['id'])) {
     $joueursParticipe = $participerDAO->getFeuilleMatch($id);
 
     if ($rencontre) {
-        require __DIR__ . '/../../vue/rencontres/detailRencontre.php';
+        $_SESSION['rencontre_detail'] = $rencontre;
+        $_SESSION['joueurs_participe'] = $joueursParticipe;
+        header("Location: ../../vue/rencontres/detailRencontre.php");
+        exit;
     } else {
         echo "Rencontre introuvable.";
     }

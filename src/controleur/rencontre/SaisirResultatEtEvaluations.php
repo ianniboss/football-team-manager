@@ -53,6 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // On ne note que les joueurs présents sur la feuille de match
     $joueursFeuille = $participerDAO->getFeuilleMatch($id);
 
-    require __DIR__ . '/../../vue/rencontres/formResultat.php';
+    $_SESSION['rencontre_resultat'] = $rencontre;
+    $_SESSION['joueurs_feuille_resultat'] = $joueursFeuille;
+
+    header("Location: ../../vue/rencontres/formResultat.php");
+    exit;
 }
 ?>
