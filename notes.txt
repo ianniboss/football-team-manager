@@ -155,3 +155,9 @@ Mettre en place un menu qui sera affiché sur chaque page pour permettre à l'ut
 Utiliser les feuilles de style (CSS) et les bases d'ergonomie logicielle pour faire en sorte que l'utilisation de l'application soit la plus agréable et intuitive possible.
 
 N.B : La priorité reste le code et les fonctionnalités, attention à ne pas perdre trop de temps sur la forme.
+
+
+
+modifier un match -> la date ne doit pas être dans le passé
+empecher la modification d'un match joué
+statistiques : le poste le plus fréquent pour chaque joueur
