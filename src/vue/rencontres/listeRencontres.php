@@ -276,11 +276,14 @@ $rencontres = $_SESSION['rencontres'] ?? [];
 </div>
 
 <?php
-$totalMatchs = count($rencontres);
-$victoires = count(array_filter($rencontres, fn($r) => $r['resultat'] === 'Victoire'));
-$defaites = count(array_filter($rencontres, fn($r) => $r['resultat'] === 'Defaite'));
-$nuls = count(array_filter($rencontres, fn($r) => $r['resultat'] === 'Nul'));
-$aVenir = count(array_filter($rencontres, fn($r) => $r['resultat'] === null));
+require_once __DIR__ . '/../../modele/RencontreDAO.php';
+$rencontreDAO = new RencontreDAO();
+$matchStats = $rencontreDAO->getMatchStats();
+$totalMatchs = $matchStats['total'];
+$victoires = $matchStats['victoires'];
+$defaites = $matchStats['defaites'];
+$nuls = $matchStats['nuls'];
+$aVenir = $matchStats['a_venir'];
 ?>
 
 <div class="stats-bar">

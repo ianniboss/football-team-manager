@@ -74,11 +74,11 @@ class JoueurDAO
             ':statut' => $statut,
             ':id' => $id_joueur
         );
-        
+
         if ($image !== null) {
             $params[':image'] = $image;
         }
-        
+
         return $stmt->execute($params);
     }
 
@@ -94,6 +94,43 @@ class JoueurDAO
         $sql = "SELECT * FROM joueur WHERE statut = 'Actif' ORDER BY nom";
         $req = $this->pdo->query($sql);
         return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Compte le nombre total de joueurs
+     */
+    public function countJoueurs()
+    {
+        $sql = "SELECT COUNT(*) as total FROM joueur";
+        $req = $this->pdo->query($sql);
+        return $req->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+
+    /**
+     * Compte le nombre de joueurs par statut
+     */
+    public function countJoueursByStatut($statut)
+    {
+        $sql = "SELECT COUNT(*) as total FROM joueur WHERE statut = :statut";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':statut' => $statut]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+
+    /**
+     * Compte le total de statuts
+     */
+    public function getPlayerStats()
+    {
+        $sql = "SELECT 
+                    COUNT(*) as total,
+                    SUM(CASE WHEN statut = 'Actif' THEN 1 ELSE 0 END) as actifs,
+                    SUM(CASE WHEN statut = 'Blessé' THEN 1 ELSE 0 END) as blesses,
+                    SUM(CASE WHEN statut = 'Suspendu' THEN 1 ELSE 0 END) as suspendus,
+                    SUM(CASE WHEN statut = 'Absent' THEN 1 ELSE 0 END) as absents
+                FROM joueur";
+        $req = $this->pdo->query($sql);
+        return $req->fetch(PDO::FETCH_ASSOC);
     }
 }
 ?>

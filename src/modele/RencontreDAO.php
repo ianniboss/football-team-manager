@@ -91,5 +91,45 @@ class RencontreDAO
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute(array(':id' => $id_rencontre));
     }
+
+    /**
+     * Compte le nombre total de rencontres
+     */
+    public function countRencontres()
+    {
+        $sql = "SELECT COUNT(*) as total FROM rencontre";
+        $req = $this->pdo->query($sql);
+        return $req->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+
+    /**
+     * Compte le nombre de rencontres par resultat (Victoire, Defaite, Nul, ou null pour les futures)
+     */
+    public function countByResultat($resultat)
+    {
+        if ($resultat === null) {
+            $sql = "SELECT COUNT(*) as total FROM rencontre WHERE resultat IS NULL";
+            $req = $this->pdo->query($sql);
+        } else {
+            $sql = "SELECT COUNT(*) as total FROM rencontre WHERE resultat = :resultat";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':resultat' => $resultat]);
+            return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+        }
+        return $req->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+
+    public function getMatchStats()
+    {
+        $sql = "SELECT 
+                    COUNT(*) as total,
+                    SUM(CASE WHEN resultat = 'Victoire' THEN 1 ELSE 0 END) as victoires,
+                    SUM(CASE WHEN resultat = 'Defaite' THEN 1 ELSE 0 END) as defaites,
+                    SUM(CASE WHEN resultat = 'Nul' THEN 1 ELSE 0 END) as nuls,
+                    SUM(CASE WHEN resultat IS NULL THEN 1 ELSE 0 END) as a_venir
+                FROM rencontre";
+        $req = $this->pdo->query($sql);
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>
