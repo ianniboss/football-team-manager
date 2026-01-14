@@ -234,9 +234,11 @@ unset($_SESSION['rencontre_modify']);
                     <label for="date_rencontre">Date</label>
                     <div class="input-with-icon">
                         <input type="date" name="date_rencontre" id="date_rencontre" 
-                               value="<?php echo $rencontre['date_rencontre'] ?? ''; ?>" required>
+                               value="<?php echo $rencontre['date_rencontre'] ?? ''; ?>" 
+                               min="<?php echo date('Y-m-d'); ?>" required>
                         <span class="icon">📅</span>
                     </div>
+                    <small style="color: #888; font-size: 0.8rem;">La date doit être aujourd'hui ou dans le futur</small>
                 </div>
 
                 <div class="form-group">

@@ -30,6 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lieu = $_POST['lieu'];
     $resultat = isset($_POST['resultat']) ? $_POST['resultat'] : null;
 
+    // Server-side validation: date must not be in the past
+    $inputDate = new DateTime($date);
+    $today = new DateTime('today');
+    if ($inputDate < $today) {
+        $_SESSION['error'] = "La date du match ne peut pas être dans le passé.";
+        header("Location: RechercherUneRencontre.php?id=" . $id);
+        exit;
+    }
+
     $imageStade = null;
     if (isset($_FILES['image_stade']) && $_FILES['image_stade']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . '/../../modele/img/matchs/';
@@ -59,6 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } elseif (isset($_GET['id'])) {
     $rencontre = $dao->getRencontreById($_GET['id']);
+
+    // Prevent modification of past matches
+    $matchDate = new DateTime($rencontre['date_rencontre']);
+    $today = new DateTime('today');
+    if ($matchDate < $today) {
+        $_SESSION['error'] = "Impossible de modifier un match passé.";
+        header("Location: RechercherUneRencontre.php?id=" . $_GET['id']);
+        exit;
+    }
+
     $_SESSION['rencontre_modify'] = $rencontre;
     header("Location: ../../vue/rencontres/formRencontre.php");
     exit;
