@@ -5,9 +5,24 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Auto-detect environment
-$isLocalCheck = ($_SERVER['SERVER_NAME'] ?? 'localhost') === 'localhost'
-    || ($_SERVER['SERVER_ADDR'] ?? '127.0.0.1') === '127.0.0.1';
-$loginRedirect = $isLocalCheck ? '/src/vue/index.php' : '/vue/index.php';
+// When running PHP built-in server from src/, document root is already src/
+// So we should NOT add /src/ prefix. Only add it if running from parent directory.
+$isLocal = ($_SERVER['SERVER_NAME'] ?? 'localhost') === 'localhost'
+    || ($_SERVER['SERVER_ADDR'] ?? '127.0.0.1') === '127.0.0.1'
+    || strpos($_SERVER['SERVER_NAME'] ?? '', '::1') !== false;
+
+// Check if we're running from src/ directory (document root ends with /src or \src)
+$docRoot = $_SERVER['DOCUMENT_ROOT'] ?? '';
+$isRunningFromSrc = preg_match('/[\/\\\\]src[\/\\\\]?$/', $docRoot);
+
+// For localhost: use /src/ only if NOT running from src/ directory
+// For production (InfinityFree): no prefix needed
+$basePath = '';
+if ($isLocal && !$isRunningFromSrc) {
+    $basePath = '/src';
+}
+
+$loginRedirect = $basePath . '/vue/index.php';
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: " . $loginRedirect);
@@ -21,13 +36,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <meta charset="UTF-8">
     <title>Football Team Manager</title>
     <?php
-    // Auto-detect environment for correct paths
-    $isLocal = ($_SERVER['SERVER_NAME'] ?? 'localhost') === 'localhost'
-        || ($_SERVER['SERVER_ADDR'] ?? '127.0.0.1') === '127.0.0.1';
-
-    // On localhost, the project is in /src/. On InfinityFree, it's at the root.
-    $basePath = $isLocal ? '/src' : '';
+    // basePath is already defined above
     ?>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
