@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-// Identifiants stockés en clair (exemple)
+// Identifiants
 $valid_users = [
     "admin" => "1234",
     "lucas" => "password",
-    "user" => "iutinfo",
+    "coach" => "iutinfo",
 ];
 
 // Vérification du formulaire
