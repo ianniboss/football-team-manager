@@ -268,6 +268,36 @@ if (!$rencontre) {
         margin: 0;
     }
 
+    .action-card.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
+        background: #f5f5f5;
+    }
+
+    .action-card.disabled:hover {
+        transform: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        border-color: transparent;
+    }
+
+    .match-locked-notice {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+        border: 1px solid #ffc107;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #856404;
+        font-size: 0.9rem;
+    }
+
+    .match-locked-notice .icon {
+        font-size: 1.3rem;
+    }
+
     @media (max-width: 768px) {
         .match-header {
             padding: 25px;
@@ -338,9 +368,23 @@ if (!$rencontre) {
         </div>
     </div>
 
+    <?php
+    // Check if the match date is in the past
+    $matchDate = new DateTime($rencontre['date_rencontre']);
+    $today = new DateTime('today');
+    $isMatchPast = $matchDate < $today;
+    ?>
+
+    <?php if ($isMatchPast): ?>
+        <div class="match-locked-notice">
+            <span class="icon">🔒</span>
+            <span>Ce match est passé. Seule la saisie du résultat et des évaluations est disponible.</span>
+        </div>
+    <?php endif; ?>
+
     <div class="actions-grid">
-        <a href="/controleur/rencontre/ModifierUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>"
-            class="action-card">
+        <a href="<?php echo $isMatchPast ? '#' : '/controleur/rencontre/ModifierUneRencontre.php?id=' . $rencontre['id_rencontre']; ?>"
+            class="action-card <?php echo $isMatchPast ? 'disabled' : ''; ?>">
             <div class="icon">✏️</div>
             <h4>Modifier infos</h4>
             <p>Éditer les détails du match</p>
@@ -351,8 +395,8 @@ if (!$rencontre) {
             <h4>Saisir Résultat</h4>
             <p>Entrer le score et les notes</p>
         </a>
-        <a href="/controleur/selection/AfficherSelection.php?id_rencontre=<?php echo $rencontre['id_rencontre']; ?>"
-            class="action-card">
+        <a href="<?php echo $isMatchPast ? '#' : '/controleur/selection/AfficherSelection.php?id_rencontre=' . $rencontre['id_rencontre']; ?>"
+            class="action-card <?php echo $isMatchPast ? 'disabled' : ''; ?>">
             <div class="icon">👥</div>
             <h4>Gérer la sélection</h4>
             <p>Convoquer les joueurs</p>
