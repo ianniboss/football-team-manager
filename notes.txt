@@ -169,3 +169,5 @@ statistiques : le poste le plus fréquent pour chaque joueur
 
 pour après le projet : peut-être faire un mode invité car là n'importe qui qui regarde
 notre git a accès au site, peut ajouter des matchs, des joueurs...
+genre les mots "Mode invité" sous le bouton Se connecter qui permet de pouvoir voir mais qui peut
+pas modifier des trucs. Je suppose qu'il faudra gérer deux types de session du coup
