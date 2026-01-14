@@ -304,7 +304,7 @@ if (!$rencontre) {
         <p>Match contre <?php echo htmlspecialchars($rencontre['nom_equipe_adverse']); ?> - <?php echo $rencontre['date_rencontre']; ?></p>
     </div>
 
-    <form method="POST" action="SaisirResultatEtEvaluations.php">
+    <form method="POST" action="/controleur/rencontre/SaisirResultatEtEvaluations.php">
         <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
 
         <div class="result-card">
