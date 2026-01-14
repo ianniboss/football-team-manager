@@ -211,7 +211,7 @@ unset($_SESSION['rencontre_modify']);
     <h2><?php echo isset($rencontre) ? 'Modifier la Rencontre' : 'Nouvelle Rencontre'; ?></h2>
     <p class="form-subtitle">Informations générales</p>
 
-    <form method="POST" action="<?php echo isset($rencontre) ? 'ModifierUneRencontre.php' : 'ajouterRencontre.php'; ?>" enctype="multipart/form-data">
+    <form method="POST" action="<?php echo isset($rencontre) ? '/controleur/rencontre/ModifierUneRencontre.php' : '/controleur/rencontre/ajouterRencontre.php'; ?>" enctype="multipart/form-data">
         <?php if (isset($rencontre)): ?>
             <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
         <?php endif; ?>
