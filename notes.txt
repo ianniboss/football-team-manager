@@ -158,13 +158,13 @@ N.B : La priorité reste le code et les fonctionnalités, attention à ne pas pe
 
 
 
-modifier un match -> la date ne doit pas être dans le passé
+modifier ou créer un match -> la date ne doit pas être dans le passé
 empecher la modification d'un match joué (donc date passée) : pourquoi pas désactiver le
 bouton de modifications des détails du match et le bouton de sélection des joueurs 
 (uniquement le bouton de sélection du résultats est activé)
 -> du coup aussi vérifier que lors de la création d'un match la date soit pas passée
 statistiques : le poste le plus fréquent pour chaque joueur
-pour l'instant ajouter un match c'est 404
+
 
 
 pour après le projet : peut-être faire un mode invité car là n'importe qui qui regarde
