@@ -5,6 +5,9 @@
 -- HeidiSQL Version:             12.8.0.6908
 -- --------------------------------------------------------
 
+-- IMPORTANT: Disable foreign key checks FIRST to allow dropping tables
+SET FOREIGN_KEY_CHECKS = 0;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
