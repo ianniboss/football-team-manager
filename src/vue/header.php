@@ -1,5 +1,4 @@
 <?php
-// Session authentication check - redirect to login if not authenticated
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

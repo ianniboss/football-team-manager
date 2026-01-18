@@ -1,6 +1,6 @@
 <?php
+// Gère la modification des infos générales (nom, prénom, taille, etc.).
 session_start();
-// Gère la modification des infos générales (Nom, Prénom, Taille, etc.).
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: ../../vue/index.php");

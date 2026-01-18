@@ -1,6 +1,6 @@
 <?php
-session_start();
 // pour changer rapidement le statut (Actif/Blessé/etc.)
+session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: ../../vue/index.php");
     exit;

@@ -1,6 +1,4 @@
-/* ============================================================
-   SELECTION (MATCH SHEET) STYLES - Football Team Manager
-   ============================================================ */
+/* selection */
 
 .selection-container {
     max-width: 1200px;
@@ -305,7 +303,7 @@
     }
 }
 
-/* Form Actions */
+/* Form actions */
 .form-actions {
     display: flex;
     justify-content: center;

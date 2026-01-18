@@ -1,5 +1,5 @@
 <?php
-// retirer une note
+// retirer un commentaire
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {

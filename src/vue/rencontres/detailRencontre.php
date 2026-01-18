@@ -68,7 +68,6 @@ if (!$rencontre) {
     </div>
 
     <?php
-    // Check if the match date is in the past
     $matchDate = new DateTime($rencontre['date_rencontre']);
     $today = new DateTime('today');
     $isMatchPast = $matchDate < $today;

@@ -10,7 +10,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
 require_once __DIR__ . '/../../modele/CommentaireDAO.php';
 
-// Vérification qu'un ID est bien passé dans l'URL
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
 

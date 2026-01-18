@@ -154,7 +154,7 @@ class ParticiperDAO
      */
     public function getSerieEnCours($id_joueur)
     {
-        // 1. On récupère TOUS les matchs passés de l'équipe, triés du plus récent au plus ancien
+        // 1. On récupère tous les matchs passés de l'équipe, triés du plus récent au plus ancien
         $sql = "SELECT r.id_rencontre, 
                        (SELECT COUNT(*) FROM participer p WHERE p.id_rencontre = r.id_rencontre AND p.id_joueur = :id_joueur) as a_joue
                 FROM rencontre r

@@ -15,7 +15,6 @@ $rencontres = $dao->getRencontres();
 // Sauvegarde dans la session pour la vue
 $_SESSION['rencontres'] = $rencontres;
 
-// Redirection vers la vue pour mettre à jour l'URL
 header("Location: ../../vue/rencontres/listeRencontres.php");
 exit;
 ?>
