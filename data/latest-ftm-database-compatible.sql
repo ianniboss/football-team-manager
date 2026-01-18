@@ -30,56 +30,57 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table commentaire: French comments for each player
+-- Comment dates aligned with match schedule (2025-10 to 2026-01)
 INSERT INTO `commentaire` (`id_commentaire`, `id_joueur`, `commentaire`, `date_commentaire`) VALUES
 	-- Mbappé (id_joueur: 1)
-	(1, 1, 'Vitesse exceptionnelle sur les contre-attaques. Continue à progresser dans le jeu de tête.', '2024-01-05'),
-	(2, 1, 'A marqué un doublé contre Lyon. Leadership remarquable sur le terrain.', '2024-01-06'),
+	(1, 1, 'Vitesse exceptionnelle sur les contre-attaques. Continue à progresser dans le jeu de tête.', '2025-10-16'),
+	(2, 1, 'A marqué un doublé contre Lyon. Leadership remarquable sur le terrain.', '2025-12-06'),
 	
 	-- Griezmann (id_joueur: 2)
-	(3, 2, 'Excellent dans les combinaisons offensives. Toujours disponible pour ses coéquipiers.', '2023-12-15'),
-	(4, 2, 'Doit améliorer son efficacité devant le but. Trop de frappes non cadrées.', '2024-01-05'),
+	(3, 2, 'Excellent dans les combinaisons offensives. Toujours disponible pour ses coéquipiers.', '2025-10-16'),
+	(4, 2, 'Doit améliorer son efficacité devant le but. Trop de frappes non cadrées.', '2025-12-05'),
 	
 	-- Ramos (id_joueur: 3)
-	(5, 3, 'Solide en défense centrale. Son expérience est précieuse pour les jeunes joueurs.', '2023-12-10'),
-	(6, 3, 'Attention aux cartons jaunes. Déjà 3 avertissements cette saison.', '2024-01-02'),
+	(5, 3, 'Solide en défense centrale. Son expérience est précieuse pour les jeunes joueurs.', '2025-10-15'),
+	(6, 3, 'Attention aux cartons jaunes. Déjà 3 avertissements cette saison.', '2025-12-21'),
 	
 	-- Messi (id_joueur: 4)
-	(7, 4, 'Magie sur le ballon. Ses passes décisives changent le cours des matchs.', '2023-12-18'),
-	(8, 4, 'A besoin de plus de repos entre les matchs. Fatigue visible en fin de match.', '2024-01-05'),
+	(7, 4, 'Magie sur le ballon. Ses passes décisives changent le cours des matchs.', '2025-11-09'),
+	(8, 4, 'A besoin de plus de repos entre les matchs. Fatigue visible en fin de match.', '2025-12-05'),
 	
 	-- Modric (id_joueur: 5)
-	(9, 5, 'Métronome du milieu de terrain. Vision de jeu exceptionnelle.', '2023-12-10'),
-	(10, 5, 'Continue de performer à un très haut niveau malgré son âge. Exemplaire.', '2025-12-20'),
+	(9, 5, 'Métronome du milieu de terrain. Vision de jeu exceptionnelle.', '2025-10-15'),
+	(10, 5, 'Continue de performer à un très haut niveau malgré son âge. Exemplaire.', '2025-12-21'),
 	
 	-- Donnarumma (id_joueur: 6)
-	(11, 6, 'Excellente performance contre Paris SG. Plusieurs arrêts décisifs.', '2023-12-18'),
-	(12, 6, 'Doit mieux communiquer avec sa défense sur les corners.', '2025-12-26'),
+	(11, 6, 'Excellente performance contre Paris SG. Plusieurs arrêts décisifs.', '2025-11-09'),
+	(12, 6, 'Doit mieux communiquer avec sa défense sur les corners.', '2026-01-11'),
 	
 	-- Haaland (id_joueur: 7)
-	(13, 7, 'Machine à marquer. Instinct de buteur naturel.', '2023-12-10'),
-	(14, 7, 'Doit participer davantage au jeu collectif en dehors de la surface.', '2024-01-05'),
-	(15, 7, 'Forme physique parfaite. Prêt pour le match contre Barcelone.', '2025-12-28'),
+	(13, 7, 'Machine à marquer. Instinct de buteur naturel.', '2025-10-16'),
+	(14, 7, 'Doit participer davantage au jeu collectif en dehors de la surface.', '2025-12-06'),
+	(15, 7, 'Forme physique parfaite. Prêt pour le match contre Barcelone.', '2026-01-18'),
 	
 	-- Ronaldo (id_joueur: 8)
-	(16, 8, 'Professionnalisme exemplaire à l''entraînement. Toujours le premier arrivé.', '2023-12-15'),
-	(17, 8, 'Efficace en tant que remplaçant. Apporte de l''énergie en fin de match.', '2024-01-05'),
+	(16, 8, 'Professionnalisme exemplaire à l''entraînement. Toujours le premier arrivé.', '2025-11-10'),
+	(17, 8, 'Efficace en tant que remplaçant. Apporte de l''énergie en fin de match.', '2025-12-05'),
 	
 	-- Zidane (id_joueur: 9)
-	(18, 9, 'Technique irréprochable. Un modèle pour les jeunes du centre de formation.', '2023-12-10'),
-	(19, 9, 'Calme sous pression. Gère bien les situations de stress.', '2025-12-20'),
+	(18, 9, 'Technique irréprochable. Un modèle pour les jeunes du centre de formation.', '2025-10-15'),
+	(19, 9, 'Calme sous pression. Gère bien les situations de stress.', '2025-12-21'),
 	
 	-- Van Dijk (id_joueur: 10)
-	(20, 10, 'Tour de contrôle en défense. Aucun attaquant ne passe facilement.', '2023-12-10'),
-	(21, 10, 'Excellent dans le jeu aérien. 100% des duels gagnés contre Lyon.', '2024-01-05'),
+	(20, 10, 'Tour de contrôle en défense. Aucun attaquant ne passe facilement.', '2025-10-15'),
+	(21, 10, 'Excellent dans le jeu aérien. 100% des duels gagnés contre Lyon.', '2025-12-06'),
 	
 	-- Maignan (id_joueur: 11)
-	(22, 11, 'Gardien de grande classe. Relance au pied remarquable.', '2024-01-05'),
-	(23, 11, 'Blessure mineure à surveiller. Prévoir du repos si nécessaire.', '2025-12-27'),
+	(22, 11, 'Gardien de grande classe. Relance au pied remarquable.', '2025-12-05'),
+	(23, 11, 'Blessure mineure à surveiller. Prévoir du repos si nécessaire.', '2026-01-12'),
 	
 	-- Salah (id_joueur: 12)
-	(24, 12, 'Très bon sur son côté droit. Centres précis et dangereux.', '2023-12-10'),
-	(25, 12, 'Peut jouer à gauche également. Polyvalence appréciée.', '2024-01-05'),
-	(26, 12, 'Doit améliorer son pied faible pour être plus imprévisible.', '2025-12-26');
+	(24, 12, 'Très bon sur son côté droit. Centres précis et dangereux.', '2025-10-16'),
+	(25, 12, 'Peut jouer à gauche également. Polyvalence appréciée.', '2025-12-05'),
+	(26, 12, 'Doit améliorer son pied faible pour être plus imprévisible.', '2026-01-11');
 
 -- Dumping structure for table joueur
 DROP TABLE IF EXISTS `joueur`;
@@ -244,13 +245,15 @@ CREATE TABLE IF NOT EXISTS `rencontre` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table rencontre: ~7 rows
+-- Current date reference: 2026-01-18
+-- Past matches have results, upcoming matches have NULL
 INSERT INTO `rencontre` (`id_rencontre`, `date_rencontre`, `heure`, `adresse`, `nom_equipe_adverse`, `lieu`, `resultat`, `image_stade`) VALUES
-	(1, '2023-12-10', '15:00:00', 'Stade Municipal, Toulouse', 'FC Paris', 'Domicile', 'Victoire', 'stade_municipal.avif'),
-	(2, '2023-12-18', '20:45:00', 'Parc des Princes, Paris', 'Paris SG', 'Exterieur', 'Defaite', 'parc_des_princes.jpeg'),
-	(3, '2024-01-05', '14:00:00', 'Stade Municipal, Toulouse', 'Olympique Lyon', 'Domicile', 'Victoire', 'stade_municipal.avif'),
-	(4, '2025-12-19', '16:00:00', 'Stade Vélodrome, Marseille', 'Olympique Marseille', 'Exterieur', NULL, 'stade_velodrome.png'),
-	(5, '2025-12-26', '21:00:00', 'Stade Municipal, Toulouse', 'AS Monaco', 'Domicile', 'Defaite', 'stade_municipal.avif'),
-	(6, '2026-01-01', '10:00:00', 'Camp Nou', 'Barcelona FC', 'Domicile', NULL, 'camp_nou.png'),
+	(1, '2025-10-15', '15:00:00', 'Stade Municipal, Toulouse', 'FC Paris', 'Domicile', 'Victoire', 'stade_municipal.avif'),
+	(2, '2025-11-08', '20:45:00', 'Parc des Princes, Paris', 'Paris SG', 'Exterieur', 'Defaite', 'parc_des_princes.jpeg'),
+	(3, '2025-12-05', '14:00:00', 'Stade Municipal, Toulouse', 'Olympique Lyon', 'Domicile', 'Victoire', 'stade_municipal.avif'),
+	(4, '2025-12-20', '16:00:00', 'Stade Vélodrome, Marseille', 'Olympique Marseille', 'Exterieur', 'Nul', 'stade_velodrome.png'),
+	(5, '2026-01-10', '21:00:00', 'Stade Municipal, Toulouse', 'AS Monaco', 'Domicile', 'Defaite', 'stade_municipal.avif'),
+	(6, '2026-01-25', '20:00:00', 'Camp Nou', 'Barcelona FC', 'Exterieur', NULL, 'camp_nou.png'),
 	(7, '2026-02-15', '20:00:00', 'Santiago Bernabéu, Madrid', 'Real Madrid', 'Exterieur', NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
