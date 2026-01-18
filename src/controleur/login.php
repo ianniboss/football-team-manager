@@ -1,11 +1,12 @@
 <?php
 session_start();
 
-// Identifiants stockés en clair (exemple)
+include(__DIR__ . "/credentials.php");
+$login = LOGIN;
+$password = PASSWORD;
+// Identifiant
 $valid_users = [
-    "admin" => "1234",
-    "lucas" => "password",
-    "coach" => "iutinfo",
+    $login => $password,
 ];
 
 // Vérification du formulaire
