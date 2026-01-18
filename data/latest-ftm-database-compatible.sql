@@ -24,14 +24,59 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id_commentaire`),
   KEY `fk_commentaire_joueur` (`id_joueur`),
   CONSTRAINT `fk_commentaire_joueur` FOREIGN KEY (`id_joueur`) REFERENCES `joueur` (`id_joueur`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table commentaire: ~4 rows
+-- Dumping data for table commentaire: French comments for each player
 INSERT INTO `commentaire` (`id_commentaire`, `id_joueur`, `commentaire`, `date_commentaire`) VALUES
-	(2, 7, 'dasdasdas', '2025-12-20'),
-	(3, 7, 'dasdasdasdas', '2025-12-20'),
-	(4, 2, 'good boy', '2025-12-20'),
-	(5, 6, 'not good boy !', '2025-12-20');
+	-- Mbappé (id_joueur: 1)
+	(1, 1, 'Vitesse exceptionnelle sur les contre-attaques. Continue à progresser dans le jeu de tête.', '2024-01-05'),
+	(2, 1, 'A marqué un doublé contre Lyon. Leadership remarquable sur le terrain.', '2024-01-06'),
+	
+	-- Griezmann (id_joueur: 2)
+	(3, 2, 'Excellent dans les combinaisons offensives. Toujours disponible pour ses coéquipiers.', '2023-12-15'),
+	(4, 2, 'Doit améliorer son efficacité devant le but. Trop de frappes non cadrées.', '2024-01-05'),
+	
+	-- Ramos (id_joueur: 3)
+	(5, 3, 'Solide en défense centrale. Son expérience est précieuse pour les jeunes joueurs.', '2023-12-10'),
+	(6, 3, 'Attention aux cartons jaunes. Déjà 3 avertissements cette saison.', '2024-01-02'),
+	
+	-- Messi (id_joueur: 4)
+	(7, 4, 'Magie sur le ballon. Ses passes décisives changent le cours des matchs.', '2023-12-18'),
+	(8, 4, 'A besoin de plus de repos entre les matchs. Fatigue visible en fin de match.', '2024-01-05'),
+	
+	-- Modric (id_joueur: 5)
+	(9, 5, 'Métronome du milieu de terrain. Vision de jeu exceptionnelle.', '2023-12-10'),
+	(10, 5, 'Continue de performer à un très haut niveau malgré son âge. Exemplaire.', '2025-12-20'),
+	
+	-- Donnarumma (id_joueur: 6)
+	(11, 6, 'Excellente performance contre Paris SG. Plusieurs arrêts décisifs.', '2023-12-18'),
+	(12, 6, 'Doit mieux communiquer avec sa défense sur les corners.', '2025-12-26'),
+	
+	-- Haaland (id_joueur: 7)
+	(13, 7, 'Machine à marquer. Instinct de buteur naturel.', '2023-12-10'),
+	(14, 7, 'Doit participer davantage au jeu collectif en dehors de la surface.', '2024-01-05'),
+	(15, 7, 'Forme physique parfaite. Prêt pour le match contre Barcelone.', '2025-12-28'),
+	
+	-- Ronaldo (id_joueur: 8)
+	(16, 8, 'Professionnalisme exemplaire à l''entraînement. Toujours le premier arrivé.', '2023-12-15'),
+	(17, 8, 'Efficace en tant que remplaçant. Apporte de l''énergie en fin de match.', '2024-01-05'),
+	
+	-- Zidane (id_joueur: 9)
+	(18, 9, 'Technique irréprochable. Un modèle pour les jeunes du centre de formation.', '2023-12-10'),
+	(19, 9, 'Calme sous pression. Gère bien les situations de stress.', '2025-12-20'),
+	
+	-- Van Dijk (id_joueur: 10)
+	(20, 10, 'Tour de contrôle en défense. Aucun attaquant ne passe facilement.', '2023-12-10'),
+	(21, 10, 'Excellent dans le jeu aérien. 100% des duels gagnés contre Lyon.', '2024-01-05'),
+	
+	-- Maignan (id_joueur: 11)
+	(22, 11, 'Gardien de grande classe. Relance au pied remarquable.', '2024-01-05'),
+	(23, 11, 'Blessure mineure à surveiller. Prévoir du repos si nécessaire.', '2025-12-27'),
+	
+	-- Salah (id_joueur: 12)
+	(24, 12, 'Très bon sur son côté droit. Centres précis et dangereux.', '2023-12-10'),
+	(25, 12, 'Peut jouer à gauche également. Polyvalence appréciée.', '2024-01-05'),
+	(26, 12, 'Doit améliorer son pied faible pour être plus imprévisible.', '2025-12-26');
 
 -- Dumping structure for table joueur
 DROP TABLE IF EXISTS `joueur`;
@@ -81,31 +126,105 @@ CREATE TABLE IF NOT EXISTS `participer` (
   CONSTRAINT `chk_evaluation` CHECK (((`evaluation` between 1 and 5) or (`evaluation` is null)))
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table participer: ~23 rows
+-- Dumping data for table participer: Demo data with varied positions
+-- Player positions reference:
+-- 1-Mbappé: Attaquant/Ailier Droit
+-- 2-Griezmann: Milieu Offensif/Attaquant
+-- 3-Ramos: Défenseur Central
+-- 4-Messi: Ailier Droit/Milieu Offensif
+-- 5-Modric: Milieu Central/Milieu Défensif
+-- 6-Donnarumma: Gardien
+-- 7-Haaland: Attaquant
+-- 8-Ronaldo: Attaquant/Ailier Gauche
+-- 9-Zidane: Milieu Central/Milieu Offensif
+-- 10-Van Dijk: Défenseur Central
+-- 11-Maignan: Gardien
+-- 12-Salah: Ailier Droit/Attaquant
+
 INSERT INTO `participer` (`id_participation`, `id_rencontre`, `id_joueur`, `poste`, `titulaire`, `evaluation`) VALUES
-	(2, 6, 2, 'Attaquant', 1, 3),
-	(3, 6, 7, 'Attaquant', 1, NULL),
-	(4, 6, 11, 'Défenseur Central', 1, NULL),
-	(5, 6, 1, 'Attaquant', 1, NULL),
-	(6, 6, 4, 'Ailier Gauche', 1, NULL),
-	(7, 6, 5, 'Milieu Offensif', 1, NULL),
-	(8, 6, 3, 'Gardien', 1, NULL),
-	(9, 6, 8, 'Défenseur Central', 1, NULL),
-	(10, 6, 12, 'Défenseur Latéral Droit', 1, NULL),
-	(11, 6, 10, 'Milieu Offensif', 1, NULL),
-	(12, 6, 9, 'Milieu Central', 1, NULL),
-	(13, 6, 6, '', 0, NULL),
-	(14, 3, 6, '', 1, 5),
-	(15, 3, 2, '', 1, 5),
-	(16, 3, 7, '', 1, 5),
-	(17, 3, 11, '', 1, 5),
-	(18, 3, 1, '', 1, 5),
-	(19, 3, 4, '', 1, 5),
-	(20, 3, 5, '', 1, 5),
-	(21, 3, 3, '', 1, 5),
-	(22, 3, 8, '', 1, 5),
-	(23, 3, 10, '', 1, 5),
-	(24, 3, 9, '', 1, 5);
+	-- Match 1: vs FC Paris (Victoire) - 2023-12-10
+	(1, 1, 6, 'Gardien', 1, 4),
+	(2, 1, 3, 'Défenseur Central', 1, 5),
+	(3, 1, 10, 'Défenseur Central', 1, 4),
+	(4, 1, 5, 'Milieu Défensif', 1, 4),
+	(5, 1, 9, 'Milieu Central', 1, 5),
+	(6, 1, 2, 'Milieu Offensif', 1, 4),
+	(7, 1, 4, 'Ailier Droit', 1, 5),
+	(8, 1, 12, 'Ailier Gauche', 1, 4),
+	(9, 1, 1, 'Attaquant', 1, 5),
+	(10, 1, 7, 'Attaquant', 1, 4),
+	(11, 1, 8, 'Attaquant', 0, 3),
+	(12, 1, 11, 'Gardien', 0, NULL),
+	
+	-- Match 2: vs Paris SG (Defaite) - 2023-12-18
+	(13, 2, 6, 'Gardien', 1, 3),
+	(14, 2, 3, 'Défenseur Central', 1, 2),
+	(15, 2, 10, 'Défenseur Central', 1, 3),
+	(16, 2, 5, 'Milieu Central', 1, 3),
+	(17, 2, 9, 'Milieu Offensif', 1, 2),
+	(18, 2, 2, 'Attaquant', 1, 3),
+	(19, 2, 4, 'Milieu Offensif', 1, 3),
+	(20, 2, 12, 'Ailier Droit', 1, 2),
+	(21, 2, 1, 'Ailier Droit', 1, 3),
+	(22, 2, 7, 'Attaquant', 1, 2),
+	(23, 2, 8, 'Ailier Gauche', 0, 2),
+	(24, 2, 11, 'Gardien', 0, NULL),
+	
+	-- Match 3: vs Olympique Lyon (Victoire) - 2024-01-05
+	(25, 3, 11, 'Gardien', 1, 5),
+	(26, 3, 3, 'Défenseur Central', 1, 5),
+	(27, 3, 10, 'Défenseur Central', 1, 5),
+	(28, 3, 5, 'Milieu Central', 1, 5),
+	(29, 3, 9, 'Milieu Central', 1, 5),
+	(30, 3, 2, 'Milieu Offensif', 1, 5),
+	(31, 3, 4, 'Ailier Droit', 1, 5),
+	(32, 3, 12, 'Ailier Gauche', 1, 4),
+	(33, 3, 1, 'Attaquant', 1, 5),
+	(34, 3, 7, 'Attaquant', 1, 5),
+	(35, 3, 8, 'Attaquant', 0, 4),
+	(36, 3, 6, 'Gardien', 0, NULL),
+	
+	-- Match 4: vs Olympique Marseille (À venir) - 2025-12-19
+	(37, 4, 6, 'Gardien', 1, NULL),
+	(38, 4, 3, 'Défenseur Central', 1, NULL),
+	(39, 4, 10, 'Défenseur Central', 1, NULL),
+	(40, 4, 5, 'Milieu Défensif', 1, NULL),
+	(41, 4, 9, 'Milieu Central', 1, NULL),
+	(42, 4, 2, 'Milieu Offensif', 1, NULL),
+	(43, 4, 4, 'Ailier Droit', 1, NULL),
+	(44, 4, 12, 'Ailier Droit', 0, NULL),
+	(45, 4, 1, 'Attaquant', 1, NULL),
+	(46, 4, 7, 'Attaquant', 1, NULL),
+	(47, 4, 8, 'Ailier Gauche', 1, NULL),
+	(48, 4, 11, 'Gardien', 0, NULL),
+	
+	-- Match 5: vs AS Monaco (Defaite) - 2025-12-26
+	(49, 5, 11, 'Gardien', 1, 3),
+	(50, 5, 3, 'Défenseur Central', 1, 2),
+	(51, 5, 10, 'Défenseur Central', 1, 2),
+	(52, 5, 5, 'Milieu Central', 1, 2),
+	(53, 5, 9, 'Milieu Offensif', 1, 3),
+	(54, 5, 2, 'Attaquant', 1, 2),
+	(55, 5, 4, 'Milieu Offensif', 1, 3),
+	(56, 5, 12, 'Ailier Gauche', 1, 2),
+	(57, 5, 1, 'Ailier Droit', 1, 3),
+	(58, 5, 7, 'Attaquant', 1, 2),
+	(59, 5, 8, 'Attaquant', 0, 2),
+	(60, 5, 6, 'Gardien', 0, NULL),
+	
+	-- Match 6: vs Barcelona FC (À venir) - 2026-01-01
+	(61, 6, 6, 'Gardien', 1, NULL),
+	(62, 6, 3, 'Défenseur Central', 1, NULL),
+	(63, 6, 10, 'Défenseur Central', 1, NULL),
+	(64, 6, 5, 'Milieu Offensif', 1, NULL),
+	(65, 6, 9, 'Milieu Central', 1, NULL),
+	(66, 6, 2, 'Attaquant', 1, NULL),
+	(67, 6, 4, 'Ailier Droit', 1, NULL),
+	(68, 6, 12, 'Ailier Droit', 0, NULL),
+	(69, 6, 1, 'Attaquant', 1, NULL),
+	(70, 6, 7, 'Attaquant', 1, NULL),
+	(71, 6, 8, 'Ailier Gauche', 1, NULL),
+	(72, 6, 11, 'Gardien', 0, NULL);
 
 -- Dumping structure for table rencontre
 DROP TABLE IF EXISTS `rencontre`;
@@ -119,16 +238,17 @@ CREATE TABLE IF NOT EXISTS `rencontre` (
   `resultat` enum('Victoire','Defaite','Nul') DEFAULT NULL,
   `image_stade` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_rencontre`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table rencontre: ~6 rows
+-- Dumping data for table rencontre: ~7 rows
 INSERT INTO `rencontre` (`id_rencontre`, `date_rencontre`, `heure`, `adresse`, `nom_equipe_adverse`, `lieu`, `resultat`, `image_stade`) VALUES
 	(1, '2023-12-10', '15:00:00', 'Stade Municipal, Toulouse', 'FC Paris', 'Domicile', 'Victoire', 'stade_municipal.avif'),
 	(2, '2023-12-18', '20:45:00', 'Parc des Princes, Paris', 'Paris SG', 'Exterieur', 'Defaite', 'parc_des_princes.jpeg'),
 	(3, '2024-01-05', '14:00:00', 'Stade Municipal, Toulouse', 'Olympique Lyon', 'Domicile', 'Victoire', 'stade_municipal.avif'),
 	(4, '2025-12-19', '16:00:00', 'Stade Vélodrome, Marseille', 'Olympique Marseille', 'Exterieur', NULL, 'stade_velodrome.png'),
 	(5, '2025-12-26', '21:00:00', 'Stade Municipal, Toulouse', 'AS Monaco', 'Domicile', 'Defaite', 'stade_municipal.avif'),
-	(6, '2026-01-01', '10:00:00', 'Camp Nou', 'Barcelona FC', 'Domicile', NULL, 'camp_nou.png');
+	(6, '2026-01-01', '10:00:00', 'Camp Nou', 'Barcelona FC', 'Domicile', NULL, 'camp_nou.png'),
+	(7, '2026-02-15', '20:00:00', 'Santiago Bernabéu, Madrid', 'Real Madrid', 'Exterieur', NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
