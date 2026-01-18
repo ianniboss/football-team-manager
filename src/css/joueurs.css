@@ -1,9 +1,6 @@
-/* ============================================================
-   JOUEURS (PLAYERS) STYLES - Football Team Manager
-   Styles for player list, player detail (fiche), and tables
-   ============================================================ */
+/* joueurs */
 
-/* Search Section */
+/* Search section */
 .search-section {
     background: white;
     border-radius: 12px;
@@ -108,7 +105,7 @@
     color: #1db988;
 }
 
-/* Players Table */
+/* Players table */
 .players-table {
     width: 100%;
     background: white;
@@ -160,7 +157,7 @@
     font-size: 0.85rem;
 }
 
-/* Player Card (Fiche Joueur) */
+/* Player card */
 .player-card {
     background: #ffffff;
     border-radius: 16px;
@@ -269,7 +266,7 @@
     border-top: 1px solid #eee;
 }
 
-/* Comments Section */
+/* Comments section */
 .comments-section {
     margin-top: 40px;
     padding-top: 30px;

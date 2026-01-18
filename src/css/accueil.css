@@ -1,6 +1,4 @@
-/* ============================================================
-   ACCUEIL (DASHBOARD) STYLES - Football Team Manager
-   ============================================================ */
+/* Accueil */
 
 .dashboard {
     max-width: 1200px;
@@ -24,7 +22,7 @@
     margin-top: 5px;
 }
 
-/* Stats Grid */
+/* Stats grid */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -101,7 +99,7 @@
     margin: 0;
 }
 
-/* Quick Actions */
+/* Quick actions */
 .section-title {
     font-size: 1.3rem;
     font-weight: 600;
@@ -159,7 +157,7 @@
     margin: 5px 0 0 0;
 }
 
-/* Next Match Card */
+/* Next match card */
 .next-match-section {
     display: grid;
     grid-template-columns: 1fr 1fr;

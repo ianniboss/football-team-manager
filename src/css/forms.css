@@ -1,7 +1,4 @@
-/* ============================================================
-   FORMS STYLES - Football Team Manager
-   Shared form styles for player and match forms
-   ============================================================ */
+/* formulaires */
 
 .form-card {
     background: #ffffff;
@@ -78,7 +75,7 @@
     color: #aaa;
 }
 
-/* Radio buttons styling */
+/* Radio buttons */
 .radio-group {
     display: flex;
     flex-direction: column;
@@ -125,7 +122,6 @@
     color: #555;
 }
 
-/* Input row for height/weight */
 .input-row {
     display: grid;
     grid-template-columns: 1fr 1fr;

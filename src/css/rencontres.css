@@ -1,9 +1,6 @@
-/* ============================================================
-   RENCONTRES (MATCHES) STYLES - Football Team Manager
-   Styles for match list, match detail, and result forms
-   ============================================================ */
+/* matchs */
 
-/* Matches Table */
+/* Matches table */
 .matches-table {
     width: 100%;
     background: white;
@@ -62,13 +59,13 @@
     color: #1a1a1a;
 }
 
-/* Match Detail Container */
+/* Match detail container */
 .match-detail-container {
     max-width: 900px;
     margin: 0 auto;
 }
 
-/* Match Header */
+/* Match header */
 .match-header {
     background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
     border-radius: 16px;
@@ -109,7 +106,7 @@
     font-weight: 500;
 }
 
-/* Actions Grid */
+/* Actions grid */
 .actions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -165,7 +162,7 @@
     border-color: transparent;
 }
 
-/* Match Locked Notice */
+/* Match locked notice */
 .match-locked-notice {
     background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
     border: 1px solid #ffc107;
@@ -183,7 +180,7 @@
     font-size: 1.3rem;
 }
 
-/* Players Section */
+/* Players section */
 .players-section {
     background: white;
     border-radius: 16px;
@@ -262,7 +259,7 @@
     color: #f39c12;
 }
 
-/* Result Form */
+/* Result form */
 .result-form-container {
     max-width: 800px;
     margin: 0 auto;
@@ -367,7 +364,7 @@
     background-color: #e2e3e5;
 }
 
-/* Evaluations Card */
+/* Evaluations card */
 .evaluations-card {
     background: white;
     border-radius: 16px;
@@ -433,7 +430,7 @@
     font-size: 1.2rem;
 }
 
-/* Submit/Cancel Buttons */
+/* Submit/Cancel buttons */
 .btn-submit {
     display: inline-flex;
     align-items: center;

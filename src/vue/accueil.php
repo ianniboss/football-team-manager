@@ -9,14 +9,13 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 require_once __DIR__ . '/../modele/JoueurDAO.php';
 require_once __DIR__ . '/../modele/RencontreDAO.php';
 
-// Fetch data for dashboard
 $joueurDAO = new JoueurDAO();
 $rencontreDAO = new RencontreDAO();
 
 $joueurs = $joueurDAO->getJoueurs();
 $rencontres = $rencontreDAO->getRencontres();
 
-// Calculate stats
+// calculer les statistiques
 $totalJoueurs = count($joueurs);
 $joueursActifs = count(array_filter($joueurs, fn($j) => $j['statut'] === 'Actif'));
 $joueursBlessés = count(array_filter($joueurs, fn($j) => $j['statut'] === 'Blessé'));
@@ -26,7 +25,7 @@ $victoires = count(array_filter($rencontres, fn($r) => $r['resultat'] === 'Victo
 $defaites = count(array_filter($rencontres, fn($r) => $r['resultat'] === 'Defaite'));
 $nuls = count(array_filter($rencontres, fn($r) => $r['resultat'] === 'Nul'));
 
-// Upcoming matches (no result yet)
+// Matchs à venir
 $matchsAVenir = array_filter($rencontres, fn($r) => $r['resultat'] === null);
 $prochainMatch = !empty($matchsAVenir) ? reset($matchsAVenir) : null;
 

@@ -1,10 +1,9 @@
 <?php
 require_once __DIR__ . '/../header.php';
 $rencontre = $_SESSION['rencontre_modify'] ?? null;
-// Clean the session after reading to avoid cross-contamination when creating new matches
 unset($_SESSION['rencontre_modify']);
 ?>
-<!-- utilise ajouterRencontre.php AND ModifierUneRencontre.php -->
+<!-- utilise ajouterRencontre.php et ModifierUneRencontre.php -->
 <link rel="stylesheet" href="/css/forms.css">
 
 <div class="form-card">

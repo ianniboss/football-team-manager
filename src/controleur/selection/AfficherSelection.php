@@ -26,14 +26,14 @@ if (isset($_GET['id_rencontre'])) {
 
     $tousLesJoueurs = $joueurDAO->getJoueursActifs();
 
-    // 4. Obtenir la sélection actuelle (joueurs déjà inscrits sur la feuille de match)
+    // Obtenir la sélection actuelle (joueurs déjà inscrits sur la feuille de match)
     $feuilleMatchRaw = $participerDAO->getFeuilleMatch($id_rencontre);
     $selectionActuelle = [];
     foreach ($feuilleMatchRaw as $participation) {
         $selectionActuelle[$participation['id_joueur']] = $participation;
     }
 
-    // 5. Vérifier si il y a une sélection en attente (échec de validation)
+    // Vérifier si il y a une sélection en attente (échec de validation)
 // Si oui, utiliser les données en attente au lieu des données de la base de données
     $pendingSelection = null;
     if (
@@ -42,12 +42,11 @@ if (isset($_GET['id_rencontre'])) {
         $_SESSION['pending_selection_match'] == $id_rencontre
     ) {
         $pendingSelection = $_SESSION['pending_selection'];
-        // Clear the session data after using it
         unset($_SESSION['pending_selection']);
         unset($_SESSION['pending_selection_match']);
     }
 
-    // 6. Obtenir les commentaires et les statistiques pour chaque joueur (pour afficher l'interface de sélection)
+    // Obtenir les commentaires et les statistiques pour chaque joueur (pour afficher l'interface de sélection)
     $joueursCommentaires = [];
     $joueursStats = [];
     foreach ($tousLesJoueurs as $joueur) {
@@ -67,7 +66,6 @@ if (isset($_GET['id_rencontre'])) {
     $_SESSION['joueurs_commentaires_selection'] = $joueursCommentaires;
     $_SESSION['joueurs_stats_selection'] = $joueursStats;
 
-    // Build redirect URL with error parameters if present
     $redirectUrl = "../../vue/selection/feuilleMatch.php";
     $queryParams = [];
     

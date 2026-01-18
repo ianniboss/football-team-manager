@@ -1,9 +1,6 @@
-/* ============================================================
-   GLOBAL STYLES - Football Team Manager
-   Common styles shared across all pages
-   ============================================================ */
+/* global */
 
-/* Reset & Base */
+
 * {
     margin: 0;
     padding: 0;
@@ -161,7 +158,7 @@ nav {
     box-shadow: 0 4px 12px rgba(29, 185, 136, 0.3);
 }
 
-/* Action Buttons */
+/* Action buttons */
 .action-btn {
     display: inline-block;
     padding: 8px 16px;
@@ -213,7 +210,7 @@ nav {
     gap: 8px;
 }
 
-/* Status Badges */
+/* Status badges */
 .status-badge {
     display: inline-block;
     padding: 6px 12px;
@@ -242,7 +239,7 @@ nav {
     color: #383d41;
 }
 
-/* Venue Badges */
+/* Venue badges */
 .venue-badge {
     display: inline-block;
     padding: 6px 14px;
@@ -261,7 +258,7 @@ nav {
     color: white;
 }
 
-/* Result Badges */
+/* Result badges */
 .result-badge {
     display: inline-block;
     padding: 6px 14px;
@@ -290,7 +287,7 @@ nav {
     color: #004085;
 }
 
-/* Stats Bar */
+/* Stats bar */
 .stats-bar {
     display: flex;
     gap: 20px;
@@ -329,7 +326,7 @@ nav {
     letter-spacing: 0.5px;
 }
 
-/* Empty State */
+/* Empty state */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -344,7 +341,7 @@ nav {
     margin-bottom: 10px;
 }
 
-/* Back Link */
+/* Back link */
 .back-link {
     display: inline-flex;
     align-items: center;
@@ -360,7 +357,7 @@ nav {
     color: #17a077;
 }
 
-/* Player Avatar */
+/* Player avatar */
 .player-avatar {
     width: 45px;
     height: 45px;
