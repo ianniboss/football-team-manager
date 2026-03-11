@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include(__DIR__ . "/credentials.php");
+include(__DIR__ . "/../modele/credentials.php");
 $login = LOGIN;
 $password = PASSWORD;
 // Identifiant
