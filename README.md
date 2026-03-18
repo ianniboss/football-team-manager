@@ -12,4 +12,27 @@ Utilisateur :
 Mot de passe : 
 
 ---
+
+## Résultat
+
+Page de connexion :
+
+![page de connexion](/images/ftm_connexion.png)
+
+Page d'accueil :
+
+![page d'accueil](/images/ftm_accueil.png)
+
+Page de liste des joueurs :
+
+![page de liste des joueurs](/images/ftm_joueurs.png)
+
+Page de liste des matchs :
+
+![page de liste des matchs](/images/ftm_matchs.png)
+
+Page des statistiques :
+
+![page des statistiques](/images/ftm_stats.png)
+
 *Projet réalisé par Ian et Lucas.*

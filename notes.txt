@@ -1,0 +1,2 @@
+Pour faire les requêtes de l'api vers l'api d'authentification en php utiliser le module curl
+(pas en javascript)
