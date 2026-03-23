@@ -6,7 +6,7 @@ class ConnexionBD
 
     private function __construct()
     {
-        include(__DIR__ . "/credentials.php");
+        require_once(__DIR__ . "/../../../config.php");
         $host = HOST;
         $db = DB;
         $user = USER;
@@ -34,4 +34,3 @@ class ConnexionBD
         return $this->pdo;
     }
 }
-?>

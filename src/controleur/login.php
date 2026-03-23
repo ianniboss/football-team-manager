@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include(__DIR__ . "/../modele/credentials.php");
+include(__DIR__ . "/../../../config.php");
 $login = LOGIN;
 $password = PASSWORD;
 // Identifiant
@@ -27,4 +27,3 @@ if (array_key_exists($username, $valid_users) && $valid_users[$username] === $pa
     header("Location: ../vue/index.php?error=invalid");
     exit;
 }
-?>

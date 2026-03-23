@@ -8,7 +8,7 @@ $joueurs = $_SESSION['joueurs'] ?? [];
 $searchQuery = $_SESSION['search_query'] ?? '';
 $statusFilter = $_SESSION['status_filter'] ?? '';
 ?>
-<link rel="stylesheet" href="/css/joueurs.css">
+<link rel="stylesheet" href="/ftm/css/joueurs.css">
 
 <div class="page-header">
     <div>
