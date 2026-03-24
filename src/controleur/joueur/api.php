@@ -144,6 +144,14 @@ function creerJoueur($data)
 function updateJoueur($id, $data)
 {
     global $joueurDAO;
+
+    // return json_encode([
+    //     "DEBUG_INFO" => "Je suis dans updateJoueur",
+    //     "ID_RECU" => $id,
+    //     "DATA_RECUE" => $data,
+    //     "TYPE_DATA" => gettype($data),
+    //     "PHP_INPUT" => file_get_contents('php://input')
+    // ]);
     $existing = $joueurDAO->getJoueurById($id);
     if (!$existing) return sendError("Joueur non trouvé.", 404);
 
@@ -164,9 +172,14 @@ function updateJoueur($id, $data)
 function updateJoueurStatut($id, $nouveauStatut)
 {
     global $joueurDAO;
+
+    $statutsAutorises = ['Actif', 'Blessé', 'Suspendu', 'Absent'];
     $joueur = $joueurDAO->getJoueurById($id);
     if (!$joueur) return sendError("Joueur non trouvé.", 404);
-
+    $nouveauStatut = ucfirst(strtolower(trim($nouveauStatut)));
+    if (!in_array($nouveauStatut, $statutsAutorises, true)) {
+        return sendError("Statut invalide. Les options sont : " . implode(', ', $statutsAutorises), 400);
+    }
     $joueurDAO->modifierJoueur(
         $id,
         $joueur['nom'],
@@ -175,7 +188,7 @@ function updateJoueurStatut($id, $nouveauStatut)
         $joueur['date_naissance'],
         $joueur['taille'],
         $joueur['poids'],
-        $nouveauStatut
+        $nouveauStatut,
     );
 
     return sendSuccess($joueurDAO->getJoueurById($id));
@@ -219,9 +232,10 @@ function main()
             // Si l'action est présente (ex: ?id=5&action=Blessé)
             if (isset($_GET['statut'])) {
                 return updateJoueurStatut($id, $_GET['statut']);
+            } else {
+                $data = validateJsonInput();
+                return updateJoueur($id, $data);
             }
-            $data = validateJsonInput();
-            return updateJoueur($id, $data);
 
         case "DELETE":
             // $token = get_bearer_token();
