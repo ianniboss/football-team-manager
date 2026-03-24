@@ -45,7 +45,7 @@ $joueursBlessés = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'B
 </div>
 
 <div class="search-section">
-    <form action="/controleur/joueur/ObtenirTousLesJoueurs.php" method="GET" class="search-form">
+    <form action="/ftm/controleur/joueur/ObtenirTousLesJoueurs.php" method="GET" class="search-form">
         <div class="search-input-group">
             <span class="search-icon">🔍</span>
             <input type="text" name="search" class="search-input" placeholder="Rechercher par nom ou n° licence..."
@@ -59,7 +59,7 @@ $joueursBlessés = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'B
             <option value="Absent" <?= $statusFilter === 'Absent' ? 'selected' : '' ?>>Absent</option>
         </select>
         <button type="submit" class="btn-search">Rechercher</button>
-        <a href="/controleur/joueur/ObtenirTousLesJoueurs.php" class="btn-reset">Réinitialiser</a>
+        <a href="/ftm/controleur/joueur/ObtenirTousLesJoueurs.php" class="btn-reset">Réinitialiser</a>
     </form>
 
     <?php if (!empty($searchQuery) || !empty($statusFilter)): ?>
@@ -101,7 +101,7 @@ $joueursBlessés = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'B
                     <td>
                         <div style="display: flex; align-items: center; gap: 12px;">
                             <?php if (!empty($j['image'])): ?>
-                                <img src="/modele/img/players/<?= htmlspecialchars($j['image']); ?>" alt="Photo"
+                                <img src="/ftm/modele/img/players/<?= htmlspecialchars($j['image']); ?>" alt="Photo"
                                     style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">
                             <?php else: ?>
                                 <div
@@ -132,11 +132,11 @@ $joueursBlessés = count(array_filter($allJoueurs, fn($j) => $j['statut'] === 'B
                     </td>
                     <td>
                         <div class="actions-cell">
-                            <a href="/controleur/joueur/ObtenirUnJoueur.php?id=<?= $j['id_joueur']; ?>"
+                            <a href="/ftm/controleur/joueur/ObtenirUnJoueur.php?id=<?= $j['id_joueur']; ?>"
                                 class="action-btn action-btn-view">Voir</a>
-                            <a href="/controleur/joueur/ModifierIdentiteDuJoueur.php?id=<?= $j['id_joueur']; ?>"
+                            <a href="/ftm/controleur/joueur/ModifierIdentiteDuJoueur.php?id=<?= $j['id_joueur']; ?>"
                                 class="action-btn action-btn-edit">Modifier</a>
-                            <a href="/controleur/joueur/SupprimerUnJoueur.php?id=<?= $j['id_joueur']; ?>"
+                            <a href="/ftm/controleur/joueur/SupprimerUnJoueur.php?id=<?= $j['id_joueur']; ?>"
                                 class="action-btn action-btn-delete"
                                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">Supprimer</a>
                         </div>
