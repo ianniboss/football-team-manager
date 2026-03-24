@@ -174,7 +174,6 @@ function putRencontre($id, $data)
     $today = new DateTime('today');
     if ($matchDate < $today) return sendError("Impossible de modifier un match passé.", 403);
 
-    // Vérification stricte des champs obligatoires pour le PUT
     $champsObligatoires = ['date_rencontre', 'heure', 'adresse', 'nom_equipe_adverse', 'lieu'];
     foreach ($champsObligatoires as $champ) {
         if (!isset($data[$champ]) || trim($data[$champ]) === '') {
@@ -217,8 +216,6 @@ function patchRencontre($id, $data)
     $today = new DateTime('today');
     if ($matchDate < $today) return sendError("Impossible de modifier un match passé.", 403);
 
-    // LOGIQUE PATCH : array_key_exists permet de savoir si la clé a été envoyée, 
-    // MÊME SI la valeur fournie par l'utilisateur est explicitement "null".
     $date_rencontre = array_key_exists('date_rencontre', $data) ? trim($data['date_rencontre']) : $existing['date_rencontre'];
     $heure = array_key_exists('heure', $data) ? trim($data['heure']) : $existing['heure'];
     $adresse = array_key_exists('adresse', $data) ? trim($data['adresse']) : $existing['adresse'];

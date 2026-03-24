@@ -110,7 +110,8 @@ function creerJoueur($data)
 {
     global $joueurDAO;
 
-    // Remplacement des htmlspecialchars par des trim et typages
+    // utilisation de trim et vérif de types au lieu de htmlspecialchars,
+    // on utilise htmlspecialchars uniquement lors de l'affichage de la page
     $nom = trim($data['nom'] ?? '');
     $prenom = trim($data['prenom'] ?? '');
 
@@ -166,21 +167,18 @@ function putJoueur($id, $data)
     $existing = $joueurDAO->getJoueurById($id);
     if (!$existing) return sendError("Joueur non trouvé.", 404);
 
-    // Vérification stricte des champs obligatoires
     if (!isset($data['nom']) || trim($data['nom']) === '' || !isset($data['prenom']) || trim($data['prenom']) === '') {
         return sendError("Le nom et le prénom sont obligatoires pour un remplacement complet (PUT).", 400);
     }
 
     $nom = trim($data['nom']);
     $prenom = trim($data['prenom']);
-    // Les autres champs reprennent une valeur par défaut/vide si omis
     $licence = trim($data['num_licence'] ?? '');
     $date_n = trim($data['date_naissance'] ?? '');
     $taille = isset($data['taille']) ? (int)$data['taille'] : 0;
     $poids = isset($data['poids']) ? (int)$data['poids'] : 0;
     $statut = trim($data['statut'] ?? 'Actif');
 
-    // On conserve l'image actuelle (sa modification se fait souvent via un POST multipart spécifique)
     $image = $existing['image'];
 
     $joueurDAO->modifierJoueur($id, $nom, $prenom, $licence, $date_n, $taille, $poids, $statut, $image);
@@ -202,6 +200,7 @@ function patchJoueur($id, $data)
     if (!$existing) return sendError("Joueur non trouvé.", 404);
 
     // On utilise array_key_exists pour détecter la présence de la clé, même si la valeur est null
+    // mieux que isset vu que si l'user souhaite mettre null isset devient false
     $nom = array_key_exists('nom', $data) ? trim($data['nom']) : $existing['nom'];
     $prenom = array_key_exists('prenom', $data) ? trim($data['prenom']) : $existing['prenom'];
     $licence = array_key_exists('num_licence', $data) ? trim($data['num_licence']) : $existing['num_licence'];
@@ -240,7 +239,7 @@ function updateJoueurStatut($id, $nouveauStatut)
         $joueur['taille'],
         $joueur['poids'],
         $nouveauStatut,
-        $joueur['image'] // IMPORTANT : Il manquait l'image ici dans ton ancien code !
+        $joueur['image']
     );
 
     return sendSuccess($joueurDAO->getJoueurById($id));
@@ -269,7 +268,6 @@ function main()
             return ($id) ? getJoueur($id) : getAll();
 
         case "POST":
-            // Vérification JWT
             // $token = get_bearer_token();
             // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
             $data = validateJsonInput();
