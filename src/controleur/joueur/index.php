@@ -2,58 +2,11 @@
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
 require_once __DIR__ . '/../../modele/CommentaireDAO.php';
 require_once __DIR__ . '/../jwt_utils.php';
+require_once __DIR__ . '/../api_utils.php';
 require_once __DIR__ . '/../../../../config.php'; // contient la variable JWT_SECRET
 
 $joueurDAO = new JoueurDAO();
 $commentaireDAO = new CommentaireDAO();
-
-// --- Fonctions utilitaires de réponse ---
-
-function sendSuccess($data, $code = 200)
-{
-    http_response_code($code);
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json; charset=utf-8');
-    return json_encode($data, JSON_UNESCAPED_UNICODE);
-}
-
-function sendError($message, $code = 400)
-{
-    http_response_code($code);
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json; charset=utf-8');
-    $error = ['error' => $message];
-    return json_encode($error, JSON_UNESCAPED_UNICODE);
-}
-
-function sanitizeFilename($string)
-{
-    $string = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
-    $string = strtolower(str_replace(' ', '_', $string));
-    $string = preg_replace('/[^a-z0-9_]/', '', $string);
-    return $string;
-}
-
-function validateJsonInput()
-{
-    $json = file_get_contents('php://input');
-    if (empty($json)) return null;
-    $data = json_decode($json, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        error_log("Erreur JSON : " . json_last_error_msg());
-        return false;
-    }
-    return $data;
-}
-
-function validateId($id)
-{
-    $id = filter_var($id, FILTER_VALIDATE_INT);
-    if ($id === false || $id <= 0) return null;
-    return $id;
-}
-
-// --- Logique métier ---
 
 function getJoueur($id)
 {
