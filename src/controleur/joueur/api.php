@@ -47,12 +47,22 @@ function validateJsonInput()
     return $data;
 }
 
+function validateId($id)
+{
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+    if ($id === false || $id <= 0) return null;
+    return $id;
+}
+
 // --- Logique métier ---
 
 function getJoueur($id)
 {
     global $joueurDAO, $commentaireDAO;
-    $id = intval($id);
+    $id = validateId($id);
+    if ($id === null) {
+        return sendError("L'ID doit être un entier valide et positif.", 400);
+    }
     $joueur = $joueurDAO->getJoueurById($id);
 
     if (!$joueur) {
@@ -107,11 +117,11 @@ function creerJoueur($data)
     if (empty($nom) || empty($prenom)) {
         return sendError("Le nom et le prénom sont obligatoires.");
     }
-    $num_licence = $data['num_licence'] ?? '';
-    $date_naissance = $data['date_naissance'] ?? '';
-    $taille = $data['taille'] ?? 0;
-    $poids = $data['poids'] ?? 0;
-    $statut = $data['statut'] ?? 'Actif';
+    $num_licence = htmlspecialchars($data['num_licence']) ?? '';
+    $date_naissance = htmlspecialchars($data['date_naissance']) ?? '';
+    $taille = htmlspecialchars($data['taille']) ?? 0;
+    $poids = htmlspecialchars($data['poids']) ?? 0;
+    $statut = htmlspecialchars($data['statut']) ?? 'Actif';
 
     $joueurDAO->ajouterJoueur(
         $nom,
@@ -152,6 +162,10 @@ function updateJoueur($id, $data)
     //     "TYPE_DATA" => gettype($data),
     //     "PHP_INPUT" => file_get_contents('php://input')
     // ]);
+    $id = validateId($id);
+    if ($id === null) {
+        return sendError("L'ID doit être un entier valide et positif.", 400);
+    }
     $existing = $joueurDAO->getJoueurById($id);
     if (!$existing) return sendError("Joueur non trouvé.", 404);
 
@@ -172,7 +186,10 @@ function updateJoueur($id, $data)
 function updateJoueurStatut($id, $nouveauStatut)
 {
     global $joueurDAO;
-
+    $id = validateId($id);
+    if ($id === null) {
+        return sendError("L'ID doit être un entier valide et positif.", 400);
+    }
     $statutsAutorises = ['Actif', 'Blessé', 'Suspendu', 'Absent'];
     $joueur = $joueurDAO->getJoueurById($id);
     if (!$joueur) return sendError("Joueur non trouvé.", 404);
@@ -197,12 +214,16 @@ function updateJoueurStatut($id, $nouveauStatut)
 function deleteJoueur($id)
 {
     global $joueurDAO;
+    $id = validateId($id);
+    if ($id === null) {
+        return sendError("L'ID doit être un entier valide et positif.", 400);
+    }
     if (!$joueurDAO->getJoueurById($id)) return sendError("Joueur inexistant.", 404);
     $joueurDAO->supprimerJoueur($id);
     return sendSuccess(null, 204);
 }
 
-// --- Point d'entrée Principal ---
+// --- Point d'entrée principal ---
 
 function main()
 {
@@ -222,7 +243,6 @@ function main()
                 return sendError("Le JSON fourni est mal formé.", 400);
             }
             return creerJoueur($data);
-
         case "PATCH":
             // $token = get_bearer_token();
             // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
@@ -232,10 +252,14 @@ function main()
             // Si l'action est présente (ex: ?id=5&action=Blessé)
             if (isset($_GET['statut'])) {
                 return updateJoueurStatut($id, $_GET['statut']);
-            } else {
-                $data = validateJsonInput();
-                return updateJoueur($id, $data);
             }
+
+            $data = validateJsonInput();
+            if ($data === false) {
+                return sendError("Le JSON fourni est mal formé.", 400);
+            }
+            return updateJoueur($id, $data);
+
 
         case "DELETE":
             // $token = get_bearer_token();
