@@ -67,7 +67,8 @@ function getJoueur($id)
     if (!$joueur) {
         return sendError("Joueur introuvable.", 404);
     }
-
+    // "Data Aggregation"... Plutôt que d'atomiser les ressources on centralise pour
+    // que la réponse soit la plus utile possible pour la vue
     $commentaires = $commentaireDAO->getCommentairesByJoueur($id);
     return sendSuccess([
         'joueur' => $joueur,
