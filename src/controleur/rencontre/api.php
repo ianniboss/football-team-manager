@@ -157,44 +157,78 @@ function creerRencontre($data)
 
 /**
  * PUT /api.php?id=X
- * Met à jour les infos d'une rencontre à venir.
- * Refuse la modification d'un match passé (date < aujourd'hui).
+ * Remplacement total de la ressource.
+ * Tous les champs obligatoires doivent être présents. Les champs omis sont mis à null/défaut.
  */
-function updateRencontre($id, $data)
+function putRencontre($id, $data)
 {
     global $rencontreDAO;
 
     $id = validateId($id);
-    if ($id === null) {
-        return sendError("L'ID doit être un entier valide et positif.", 400);
+    if ($id === null) return sendError("ID invalide.", 400);
+
+    $existing = $rencontreDAO->getRencontreById($id);
+    if (!$existing) return sendError("Rencontre introuvable.", 404);
+
+    $matchDate = new DateTime($existing['date_rencontre']);
+    $today = new DateTime('today');
+    if ($matchDate < $today) return sendError("Impossible de modifier un match passé.", 403);
+
+    // Vérification stricte des champs obligatoires pour le PUT
+    $champsObligatoires = ['date_rencontre', 'heure', 'adresse', 'nom_equipe_adverse', 'lieu'];
+    foreach ($champsObligatoires as $champ) {
+        if (!isset($data[$champ]) || trim($data[$champ]) === '') {
+            return sendError("Le champ '$champ' est obligatoire pour un remplacement complet (PUT).", 400);
+        }
     }
 
-    $rencontre = $rencontreDAO->getRencontreById($id);
-    if (!$rencontre) {
-        return sendError("Rencontre introuvable.", 404);
-    }
+    $date_rencontre = trim($data['date_rencontre']);
+    $heure = trim($data['heure']);
+    $adresse = trim($data['adresse']);
+    $nom_equipe_adverse = trim($data['nom_equipe_adverse']);
+    $lieu = trim($data['lieu']);
 
-    // Refus de modification d'un match passé
-    $matchDate = new DateTime($rencontre['date_rencontre']);
-    $today     = new DateTime('today');
-    if ($matchDate < $today) {
-        return sendError("Impossible de modifier un match dont la date est déjà passée.", 403);
-    }
+    // Si 'resultat' n'est pas envoyé dans un PUT, la règle REST veut qu'on le réinitialise (null)
+    $resultat = $data['resultat'] ?? null;
 
-    $date_rencontre = htmlspecialchars($data['date_rencontre'] ?? '');
-    $heure = htmlspecialchars($data['heure'] ?? '');
-    $adresse = htmlspecialchars($data['adresse'] ?? '');
-    $nom_equipe_adverse = htmlspecialchars($data['nom_equipe_adverse'] ?? '');
-    $lieu = htmlspecialchars($data['lieu'] ?? '');
-    $resultat = htmlspecialchars($data['resultat'] ?? '');
-    // Nouvelle date également dans le passé ?
-    $newDate = new DateTime($date_rencontre);
-    if ($newDate < $today) {
-        return sendError("La nouvelle date du match ne peut pas être dans le passé.", 400);
-    }
+    $ancienneImage = $existing['image_stade'] ?? null;
+    $imageStade = gererUploadImageStade($adresse, $ancienneImage) ?? $ancienneImage;
 
-    $ancienneImage = $rencontre['image_stade'] ?? null;
-    $imageStade    = gererUploadImageStade($adresse, $ancienneImage) ?? $ancienneImage;
+    $rencontreDAO->modifierRencontre($id, $date_rencontre, $heure, $adresse, $nom_equipe_adverse, $lieu, $resultat, $imageStade);
+
+    return sendSuccess($rencontreDAO->getRencontreById($id));
+}
+
+/**
+ * PATCH /api.php?id=X
+ * Modification partielle. Remplace uniquement les clés fournies dans le JSON.
+ */
+function patchRencontre($id, $data)
+{
+    global $rencontreDAO;
+
+    $id = validateId($id);
+    if ($id === null) return sendError("ID invalide.", 400);
+
+    $existing = $rencontreDAO->getRencontreById($id);
+    if (!$existing) return sendError("Rencontre introuvable.", 404);
+
+    $matchDate = new DateTime($existing['date_rencontre']);
+    $today = new DateTime('today');
+    if ($matchDate < $today) return sendError("Impossible de modifier un match passé.", 403);
+
+    // LOGIQUE PATCH : array_key_exists permet de savoir si la clé a été envoyée, 
+    // MÊME SI la valeur fournie par l'utilisateur est explicitement "null".
+    $date_rencontre = array_key_exists('date_rencontre', $data) ? trim($data['date_rencontre']) : $existing['date_rencontre'];
+    $heure = array_key_exists('heure', $data) ? trim($data['heure']) : $existing['heure'];
+    $adresse = array_key_exists('adresse', $data) ? trim($data['adresse']) : $existing['adresse'];
+    $nom_equipe_adverse = array_key_exists('nom_equipe_adverse', $data) ? trim($data['nom_equipe_adverse']) : $existing['nom_equipe_adverse'];
+    $lieu = array_key_exists('lieu', $data) ? trim($data['lieu']) : $existing['lieu'];
+    $resultat = array_key_exists('resultat', $data) ? $data['resultat'] : $existing['resultat'];
+
+    // Si on a changé l'adresse, on gère l'image, sinon on garde l'ancienne.
+    $ancienneImage = $existing['image_stade'] ?? null;
+    $imageStade = gererUploadImageStade($adresse, $ancienneImage) ?? $ancienneImage;
 
     $rencontreDAO->modifierRencontre($id, $date_rencontre, $heure, $adresse, $nom_equipe_adverse, $lieu, $resultat, $imageStade);
 
@@ -332,22 +366,27 @@ function main()
                 return sendError("Le JSON fourni est mal formé.", 400);
             }
             return creerRencontre($data);
-        case 'PATCH':
-            // $token = get_bearer_token();
-            // if (!$token || !is_jwt_valid($token, JWT_SECRET)) {
-            //     return sendError("Authentification requise pour modifier une ressource.", 401);
-            // }
-            if (!$id) {
-                return sendError("L'ID est obligatoire pour une requête PATCH.", 400);
-            }
-            if (isset($_GET['action']) && $_GET['action'] === 'resultat') {
-                return saisirResultatEtEvaluations($id);
-            }
+        case 'PUT':
+            if (!$id) return sendError("L'ID est obligatoire pour un PUT.", 400);
             $data = validateJsonInput();
-            if ($data === false) {
-                return sendError("Le JSON fourni est mal formé.", 400);
+            if ($data === false) return sendError("JSON mal formé.", 400);
+            return putRencontre($id, $data);
+
+        case 'PATCH':
+            if (!$id) return sendError("L'ID est obligatoire pour un PATCH.", 400);
+
+            // Si on a l'action spécifique "resultat" (saisie de fin de match avec évaluations)
+            if (isset($_GET['action'])) {
+                if ($_GET['action'] === 'resultat') {
+                    return saisirResultatEtEvaluations($id);
+                }
+                return sendError("Action non reconnue. Seule 'resultat' est supportée.", 400);
             }
-            return updateRencontre($id, $data);
+
+            // Sinon, c'est une modification partielle classique
+            $data = validateJsonInput();
+            if ($data === false) return sendError("JSON mal formé.", 400);
+            return patchRencontre($id, $data);
         case 'DELETE':
             // $token = get_bearer_token();
             // if (!$token || !is_jwt_valid($token, JWT_SECRET)) {

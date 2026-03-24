@@ -40,7 +40,6 @@ function validateJsonInput()
     if (empty($json)) return null;
     $data = json_decode($json, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        // Optionnel : affiche l'erreur exacte pendant que tu développes
         error_log("Erreur JSON : " . json_last_error_msg());
         return false;
     }
@@ -111,17 +110,19 @@ function creerJoueur($data)
 {
     global $joueurDAO;
 
-    $nom = htmlspecialchars($data['nom'] ?? '');
-    $prenom = htmlspecialchars($data['prenom'] ?? '');
+    // Remplacement des htmlspecialchars par des trim et typages
+    $nom = trim($data['nom'] ?? '');
+    $prenom = trim($data['prenom'] ?? '');
 
     if (empty($nom) || empty($prenom)) {
         return sendError("Le nom et le prénom sont obligatoires.");
     }
-    $num_licence = htmlspecialchars($data['num_licence']) ?? '';
-    $date_naissance = htmlspecialchars($data['date_naissance']) ?? '';
-    $taille = htmlspecialchars($data['taille']) ?? 0;
-    $poids = htmlspecialchars($data['poids']) ?? 0;
-    $statut = htmlspecialchars($data['statut']) ?? 'Actif';
+
+    $num_licence = trim($data['num_licence'] ?? '');
+    $date_naissance = trim($data['date_naissance'] ?? '');
+    $taille = isset($data['taille']) ? (int)$data['taille'] : 0;
+    $poids = isset($data['poids']) ? (int)$data['poids'] : 0;
+    $statut = trim($data['statut'] ?? 'Actif');
 
     $joueurDAO->ajouterJoueur(
         $nom,
@@ -151,34 +152,66 @@ function creerJoueur($data)
     return sendSuccess($joueurDAO->getJoueurById($playerId), 201);
 }
 
-function updateJoueur($id, $data)
+/**
+ * PUT : Remplacement total
+ * Les champs non fournis dans le JSON sont réinitialisés.
+ */
+function putJoueur($id, $data)
 {
     global $joueurDAO;
 
-    // return json_encode([
-    //     "DEBUG_INFO" => "Je suis dans updateJoueur",
-    //     "ID_RECU" => $id,
-    //     "DATA_RECUE" => $data,
-    //     "TYPE_DATA" => gettype($data),
-    //     "PHP_INPUT" => file_get_contents('php://input')
-    // ]);
     $id = validateId($id);
-    if ($id === null) {
-        return sendError("L'ID doit être un entier valide et positif.", 400);
-    }
+    if ($id === null) return sendError("L'ID doit être un entier valide.", 400);
+
     $existing = $joueurDAO->getJoueurById($id);
     if (!$existing) return sendError("Joueur non trouvé.", 404);
 
-    // Fusion des données existantes avec les nouvelles (logique PUT/PATCH simplifiée)
-    $nom = $data['nom'] ?? $existing['nom'];
-    $prenom = $data['prenom'] ?? $existing['prenom'];
-    $licence = $data['num_licence'] ?? $existing['num_licence'];
-    $date_n = $data['date_naissance'] ?? $existing['date_naissance'];
-    $taille = $data['taille'] ?? $existing['taille'];
-    $poids = $data['poids'] ?? $existing['poids'];
-    $statut = $data['statut'] ?? $existing['statut'];
-    $image = $existing['image']; // L'image via json est complexe, on garde l'actuelle ici. Peut-être trouver un moyen de poster une photo
-    // et passer l'url dans le data ?
+    // Vérification stricte des champs obligatoires
+    if (!isset($data['nom']) || trim($data['nom']) === '' || !isset($data['prenom']) || trim($data['prenom']) === '') {
+        return sendError("Le nom et le prénom sont obligatoires pour un remplacement complet (PUT).", 400);
+    }
+
+    $nom = trim($data['nom']);
+    $prenom = trim($data['prenom']);
+    // Les autres champs reprennent une valeur par défaut/vide si omis
+    $licence = trim($data['num_licence'] ?? '');
+    $date_n = trim($data['date_naissance'] ?? '');
+    $taille = isset($data['taille']) ? (int)$data['taille'] : 0;
+    $poids = isset($data['poids']) ? (int)$data['poids'] : 0;
+    $statut = trim($data['statut'] ?? 'Actif');
+
+    // On conserve l'image actuelle (sa modification se fait souvent via un POST multipart spécifique)
+    $image = $existing['image'];
+
+    $joueurDAO->modifierJoueur($id, $nom, $prenom, $licence, $date_n, $taille, $poids, $statut, $image);
+    return sendSuccess($joueurDAO->getJoueurById($id));
+}
+
+/**
+ * PATCH : Modification partielle
+ * Seules les clés envoyées dans le JSON sont modifiées.
+ */
+function patchJoueur($id, $data)
+{
+    global $joueurDAO;
+
+    $id = validateId($id);
+    if ($id === null) return sendError("L'ID doit être un entier valide.", 400);
+
+    $existing = $joueurDAO->getJoueurById($id);
+    if (!$existing) return sendError("Joueur non trouvé.", 404);
+
+    // On utilise array_key_exists pour détecter la présence de la clé, même si la valeur est null
+    $nom = array_key_exists('nom', $data) ? trim($data['nom']) : $existing['nom'];
+    $prenom = array_key_exists('prenom', $data) ? trim($data['prenom']) : $existing['prenom'];
+    $licence = array_key_exists('num_licence', $data) ? trim($data['num_licence']) : $existing['num_licence'];
+    $date_n = array_key_exists('date_naissance', $data) ? trim($data['date_naissance']) : $existing['date_naissance'];
+    $taille = array_key_exists('taille', $data) ? (int)$data['taille'] : $existing['taille'];
+    $poids = array_key_exists('poids', $data) ? (int)$data['poids'] : $existing['poids'];
+    $statut = array_key_exists('statut', $data) ? trim($data['statut']) : $existing['statut'];
+
+    $image = $existing['image'];
+
     $joueurDAO->modifierJoueur($id, $nom, $prenom, $licence, $date_n, $taille, $poids, $statut, $image);
     return sendSuccess($joueurDAO->getJoueurById($id));
 }
@@ -187,16 +220,17 @@ function updateJoueurStatut($id, $nouveauStatut)
 {
     global $joueurDAO;
     $id = validateId($id);
-    if ($id === null) {
-        return sendError("L'ID doit être un entier valide et positif.", 400);
-    }
+    if ($id === null) return sendError("L'ID doit être un entier valide.", 400);
+
     $statutsAutorises = ['Actif', 'Blessé', 'Suspendu', 'Absent'];
     $joueur = $joueurDAO->getJoueurById($id);
     if (!$joueur) return sendError("Joueur non trouvé.", 404);
+
     $nouveauStatut = ucfirst(strtolower(trim($nouveauStatut)));
     if (!in_array($nouveauStatut, $statutsAutorises, true)) {
         return sendError("Statut invalide. Les options sont : " . implode(', ', $statutsAutorises), 400);
     }
+
     $joueurDAO->modifierJoueur(
         $id,
         $joueur['nom'],
@@ -206,6 +240,7 @@ function updateJoueurStatut($id, $nouveauStatut)
         $joueur['taille'],
         $joueur['poids'],
         $nouveauStatut,
+        $joueur['image'] // IMPORTANT : Il manquait l'image ici dans ton ancien code !
     );
 
     return sendSuccess($joueurDAO->getJoueurById($id));
@@ -215,10 +250,9 @@ function deleteJoueur($id)
 {
     global $joueurDAO;
     $id = validateId($id);
-    if ($id === null) {
-        return sendError("L'ID doit être un entier valide et positif.", 400);
-    }
+    if ($id === null) return sendError("L'ID doit être un entier valide et positif.", 400);
     if (!$joueurDAO->getJoueurById($id)) return sendError("Joueur inexistant.", 404);
+
     $joueurDAO->supprimerJoueur($id);
     return sendSuccess(null, 204);
 }
@@ -239,27 +273,32 @@ function main()
             // $token = get_bearer_token();
             // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
             $data = validateJsonInput();
-            if ($data === false) {
-                return sendError("Le JSON fourni est mal formé.", 400);
-            }
+            if ($data === false) return sendError("Le JSON fourni est mal formé.", 400);
             return creerJoueur($data);
+
+        case "PUT":
+            // $token = get_bearer_token();
+            // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
+            if (!$id) return sendError("ID manquant pour le PUT.", 400);
+
+            $data = validateJsonInput();
+            if ($data === false) return sendError("Le JSON fourni est mal formé.", 400);
+            return putJoueur($id, $data);
+
         case "PATCH":
             // $token = get_bearer_token();
             // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
+            if (!$id) return sendError("ID manquant pour le PATCH.", 400);
 
-            if (!$id) return sendError("ID manquant", 400);
-
-            // Si l'action est présente (ex: ?id=5&action=Blessé)
+            // Action spécifique : mise à jour rapide du statut via l'URL
             if (isset($_GET['statut'])) {
                 return updateJoueurStatut($id, $_GET['statut']);
             }
 
+            // Sinon, mise à jour partielle via le JSON
             $data = validateJsonInput();
-            if ($data === false) {
-                return sendError("Le JSON fourni est mal formé.", 400);
-            }
-            return updateJoueur($id, $data);
-
+            if ($data === false) return sendError("Le JSON fourni est mal formé.", 400);
+            return patchJoueur($id, $data);
 
         case "DELETE":
             // $token = get_bearer_token();
@@ -268,7 +307,7 @@ function main()
             return deleteJoueur($id);
 
         case "OPTIONS":
-            header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
+            header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
             header('Access-Control-Allow-Headers: Content-Type, Authorization');
             http_response_code(204);
             exit;
