@@ -28,13 +28,20 @@ function validateJsonInput()
     return (json_last_error() === JSON_ERROR_NONE) ? $data : false;
 }
 
+function validateId($id)
+{
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+    if ($id === false || $id <= 0) return null;
+    return $id;
+}
+
 // --- Logique Métier ---
 
 function ajouterCommentaire($data)
 {
     global $commentaireDAO;
 
-    $id_joueur = filter_var($data['id_joueur'] ?? null, FILTER_VALIDATE_INT);
+    $id_joueur = validateId($data['id_joueur']);
     $texte = trim($data['commentaire'] ?? ''); // On aligne sur le nom du champ dans ton DAO
 
     if (!$id_joueur || empty($texte)) {
@@ -54,7 +61,7 @@ function supprimerCommentaire($id)
 {
     global $commentaireDAO;
 
-    $id_commentaire = filter_var($id, FILTER_VALIDATE_INT);
+    $id_commentaire = validateId($id);
     if (!$id_commentaire) return sendError("ID de commentaire invalide.", 400);
 
     $success = $commentaireDAO->supprimerCommentaire($id_commentaire);
