@@ -1,2 +1,5 @@
 Pour faire les requêtes de l'api vers l'api d'authentification en php utiliser le module curl
 (pas en javascript)
+
+
+-> curl c'est serveur php vers autre serveur php, trop lourd si on fait des appels vers le meme serveur. faire await fetch plutôt.
