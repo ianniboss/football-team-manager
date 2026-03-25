@@ -105,11 +105,16 @@ function creerRencontre($data)
 {
     global $rencontreDAO;
 
-    $date_rencontre = htmlspecialchars($data['date_rencontre'] ?? '');
-    $heure = htmlspecialchars($data['heure'] ?? '');
-    $adresse = htmlspecialchars($data['adresse'] ?? '');
-    $nom_equipe_adverse = htmlspecialchars($data['nom_equipe_adverse'] ?? '');
-    $lieu = htmlspecialchars($data['lieu'] ?? '');
+    $date_rencontre = trim($data['date_rencontre'] ?? '');
+    $heure = trim($data['heure'] ?? '');
+    $adresse = trim($data['adresse'] ?? '');
+    $nom_equipe_adverse = trim($data['nom_equipe_adverse'] ?? '');
+    $lieu = trim($data['lieu'] ?? '');
+
+    // Validation minimale
+    if (empty($date_rencontre) || empty($nom_equipe_adverse)) {
+        return sendError("La date et l'équipe adverse sont obligatoires.", 400);
+    }
 
     $imageStade = gererUploadImageStade($adresse);
 
