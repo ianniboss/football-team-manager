@@ -101,23 +101,21 @@ function getRencontre($id)
  * Crée une nouvelle rencontre. Accepte multipart/form-data (image optionnelle).
  * Champs obligatoires : date_rencontre, heure, adresse, nom_equipe_adverse, lieu
  */
-function creerRencontre($data)
+function creerRencontre() // On n'a plus besoin du paramètre $data
 {
     global $rencontreDAO;
 
-    $date_rencontre = trim($data['date_rencontre'] ?? '');
-    $heure = trim($data['heure'] ?? '');
-    $adresse = trim($data['adresse'] ?? '');
-    $nom_equipe_adverse = trim($data['nom_equipe_adverse'] ?? '');
-    $lieu = trim($data['lieu'] ?? '');
+    // Puisqu'on veut gérer une image, on lit dans $_POST et non dans le JSON
+    $date_rencontre = trim($_POST['date_rencontre'] ?? '');
+    $heure = trim($_POST['heure'] ?? '');
+    $adresse = trim($_POST['adresse'] ?? '');
+    $nom_equipe_adverse = trim($_POST['nom_equipe_adverse'] ?? '');
+    $lieu = trim($_POST['lieu'] ?? '');
 
-    // Validation minimale
     if (empty($date_rencontre) || empty($nom_equipe_adverse)) {
         return sendError("La date et l'équipe adverse sont obligatoires.", 400);
     }
-
     $imageStade = gererUploadImageStade($adresse);
-
     $rencontreDAO->ajouterRencontre($date_rencontre, $heure, $adresse, $nom_equipe_adverse, $lieu, $imageStade);
     $newId = $rencontreDAO->getLastInsertId();
 
@@ -305,25 +303,19 @@ function deleteRencontre($id)
 
 function main()
 {
+    $user = checkAuth();
+    if (!$user) echo sendError("Accès refusé. Token invalide ou expiré.", 401);
+    $role = $user['role']; // 'admin' ou 'guest'
     $method = $_SERVER['REQUEST_METHOD'];
     $id = $_GET['id'] ?? null;
-
-    if ($method === 'OPTIONS') {
-        http_response_code(204);
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Authorization');
-        return;
-    }
 
     switch ($method) {
         case 'GET':
             return ($id) ? getRencontre($id) : getAll();
         case 'POST':
-            // $token = get_bearer_token();
-            // if (!$token || !is_jwt_valid($token, JWT_SECRET)) {
-            //     return sendError("Authentification requise pour créer une ressource.", 401);
-            // }
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             if ($id) {
                 return sendError("L'ID ne doit pas être fourni pour une requête POST.", 400);
             }
@@ -333,14 +325,19 @@ function main()
             }
             return creerRencontre($data);
         case 'PUT':
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             if (!$id) return sendError("L'ID est obligatoire pour un PUT.", 400);
             $data = validateJsonInput();
             if ($data === false) return sendError("JSON mal formé.", 400);
             return putRencontre($id, $data);
 
         case 'PATCH':
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             if (!$id) return sendError("L'ID est obligatoire pour un PATCH.", 400);
-
             // Si on a l'action spécifique "resultat" (saisie de fin de match avec évaluations)
             if (isset($_GET['action'])) {
                 if ($_GET['action'] === 'resultat') {
@@ -348,16 +345,14 @@ function main()
                 }
                 return sendError("Action non reconnue. Seule 'resultat' est supportée.", 400);
             }
-
             // Sinon, c'est une modification partielle classique
             $data = validateJsonInput();
             if ($data === false) return sendError("JSON mal formé.", 400);
             return patchRencontre($id, $data);
         case 'DELETE':
-            // $token = get_bearer_token();
-            // if (!$token || !is_jwt_valid($token, JWT_SECRET)) {
-            //     return sendError("Authentification requise pour supprimer une ressource.", 401);
-            // }
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             if (!$id) {
                 return sendError("L'ID est obligatoire pour une requête DELETE.", 400);
             }

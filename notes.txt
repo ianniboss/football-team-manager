@@ -2,4 +2,5 @@ Pour faire les requêtes de l'api vers l'api d'authentification en php utiliser 
 (pas en javascript)
 
 
--> curl c'est serveur php vers autre serveur php, trop lourd si on fait des appels vers le meme serveur. faire await fetch plutôt.
+-> curl c'est serveur php vers autre serveur php, trop lourd si 
+on fait des appels vers le meme serveur. faire await fetch plutôt en javascript, comme le tp2.

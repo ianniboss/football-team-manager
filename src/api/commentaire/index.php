@@ -47,25 +47,26 @@ function supprimerCommentaire($id)
 
 function main()
 {
+    $user = checkAuth();
+    if (!$user) echo sendError("Accès refusé. Token invalide ou expiré.", 401);
+    $role = $user['role']; // 'admin' ou 'guest'
     $method = $_SERVER['REQUEST_METHOD'];
     $id = $_GET['id'] ?? null;
 
-    // authentification quoi qu'il arrive
-    /*
-    $token = get_bearer_token();
-    if (!$token || !is_jwt_valid($token, JWT_SECRET)) {
-        return sendError("Authentification requise.", 401);
-    }
-    */
-
     switch ($method) {
         case 'POST':
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             // on passe l'id du joueur dans le data, meilleur pratique REST pour du POST
             $data = validateJsonInput();
             if ($data === false) return sendError("JSON mal formé.", 400);
             return ajouterCommentaire($data);
 
         case 'DELETE':
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             if (!$id) return sendError("ID du commentaire manquant dans l'URL.", 400);
             return supprimerCommentaire($id);
 

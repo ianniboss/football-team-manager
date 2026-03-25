@@ -106,6 +106,9 @@ function sauvegarderSelection($data)
 // --- Main ---
 function main()
 {
+    $user = checkAuth();
+    if (!$user) echo sendError("Accès refusé. Token invalide ou expiré.", 401);
+    $role = $user['role']; // 'admin' ou 'guest'
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {
@@ -114,11 +117,19 @@ function main()
             if (!$id) sendError("Paramètre id_rencontre manquant.");
             return getSelectionData($id);
         case 'POST':
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             $data = validateJsonInput();
             if (!$data) sendError("JSON invalide.");
             return sauvegarderSelection($data);
+        case "OPTIONS":
+            header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
+            header('Access-Control-Allow-Headers: Content-Type, Authorization');
+            http_response_code(204);
+            exit;
         default:
-            return sendError("Méthode non autorisée.", 405);
+            return sendError("Méthode HTTP non supportée.", 405);
     }
 }
 

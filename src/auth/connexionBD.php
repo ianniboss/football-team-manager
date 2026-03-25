@@ -6,10 +6,11 @@ class ConnexionBD
 
     private function __construct()
     {
-        $host = '127.0.0.1';
-        $db = 'r401_api';
-        $user = 'root';
-        $pass = '';
+        require_once(__DIR__ . "/../../../config.php");
+        $host = HOST;
+        $db = DB_AUTH;
+        $user = USER;
+        $pass = PASS;
 
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
@@ -33,4 +34,3 @@ class ConnexionBD
         return $this->pdo;
     }
 }
-?>

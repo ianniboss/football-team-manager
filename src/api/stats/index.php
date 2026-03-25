@@ -76,6 +76,9 @@ function getGlobalStats()
 }
 
 // --- Main ---
+
+$user = checkAuth();
+if (!$user) echo sendError("Accès refusé. Token invalide ou expiré.", 401);
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {

@@ -41,7 +41,7 @@ function checkAuth()
     $token = get_bearer_token();
 
     if (!$token || !is_jwt_valid($token, JWT_SECRET)) {
-        sendError("Accès refusé. Token invalide ou expiré.", 401);
+        return false;
     }
     return decode_jwt_payload($token);
 }
