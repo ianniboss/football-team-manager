@@ -1,4 +1,8 @@
 <?php
+
+require_once __DIR__ . '/../../config.php'; // contient JWT_SECRET
+
+
 function sendSuccess($data, $code = 200)
 {
     http_response_code($code);
@@ -26,4 +30,18 @@ function validateId($id)
     $id = filter_var($id, FILTER_VALIDATE_INT);
     if ($id === false || $id <= 0) return null;
     return $id;
+}
+
+/**
+ * Vérifie si le token est présent et valide.
+ * Si non, envoie un 401 et arrête tout.
+ */
+function checkAuth()
+{
+    $token = get_bearer_token();
+
+    if (!$token || !is_jwt_valid($token, JWT_SECRET)) {
+        sendError("Accès refusé. Token invalide ou expiré.", 401);
+    }
+    return decode_jwt_payload($token);
 }
