@@ -304,7 +304,10 @@ function deleteRencontre($id)
 function main()
 {
     $user = checkAuth();
-    if (!$user) echo sendError("Accès refusé. Token invalide ou expiré.", 401);
+    if (!$user) {
+        echo sendError("Accès refusé. Token invalide ou expiré.", 401);
+        exit;
+    }
     $role = $user['role']; // 'admin' ou 'guest'
     $method = $_SERVER['REQUEST_METHOD'];
     $id = $_GET['id'] ?? null;

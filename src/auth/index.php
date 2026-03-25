@@ -2,7 +2,7 @@
 require_once __DIR__ . '/DAO.php';
 require_once __DIR__ . '/../jwt_utils.php';
 require_once __DIR__ . '/../api_utils.php';
-require_once __DIR__ . '/../../../../config.php'; // contient JWT_SECRET
+require_once __DIR__ . '/../../../config.php'; // contient JWT_SECRET
 $dao = new DAO();
 
 function main()
@@ -21,6 +21,18 @@ function main()
             if ($data === false) {
                 return sendError("Le JSON fourni est mal formé.", 400);
             }
+
+            // création d'utilisateurs
+            // if (isset($data['login_admin'], $data['password_admin'], $data['login_guest'], $data['password_guest'])) {
+            //     try {
+            //         $dao->createUser($data['login_admin'], $data['password_admin'], 'admin');
+            //         $dao->createUser($data['login_guest'], $data['password_guest'], 'guest');
+            //         return sendSuccess("Utilisateurs admin et guest créés avec succès !");
+            //     } catch (Exception $e) {
+            //         return sendError("Erreur lors de la création : " . $e->getMessage(), 500);
+            //     }
+            // }
+
             if (!isset($data['login']) || !isset($data['password'])) {
                 return sendError("Les champs 'login' et 'password' sont requis.", 400);
             }
