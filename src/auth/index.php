@@ -38,7 +38,7 @@ function main()
             }
             if ($dao->verifyUser($data['login'], $data['password'])) {
                 $header = ['alg' => 'HS256', 'typ' => 'JWT'];
-                $payload = ['login' => $data['login'], 'role' => $dao->getUserRole($data['login']), 'exp' => time() + 360]; // Token valide pendant 6 minutes
+                $payload = ['login' => $data['login'], 'role' => $dao->getUserRole($data['login']), 'exp' => time() + 900]; // Token valide pendant 15 minutes
                 $token = generate_jwt($header, $payload, JWT_SECRET);
                 header('Access-Control-Allow-Origin: *');
                 header('Content-Type: application/json; charset=utf-8');
