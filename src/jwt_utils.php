@@ -1,6 +1,7 @@
 <?php
 
-function generate_jwt($headers, $payload, $secret) {
+function generate_jwt($headers, $payload, $secret)
+{
 	$headers_encoded = base64url_encode(json_encode($headers));
 
 	$payload_encoded = base64url_encode(json_encode($payload));
@@ -13,7 +14,8 @@ function generate_jwt($headers, $payload, $secret) {
 	return $jwt;
 }
 
-function is_jwt_valid($jwt, $secret) {
+function is_jwt_valid($jwt, $secret)
+{
 	// split the jwt
 	$tokenParts = explode('.', $jwt);
 	//print_r($tokenParts);
@@ -41,11 +43,13 @@ function is_jwt_valid($jwt, $secret) {
 	}
 }
 
-function base64url_encode($data) {
-    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+function base64url_encode($data)
+{
+	return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
 }
 
-function get_authorization_header(){
+function get_authorization_header()
+{
 	$headers = null;
 
 	if (isset($_SERVER['Authorization'])) {
@@ -65,19 +69,31 @@ function get_authorization_header(){
 	return $headers;
 }
 
-function get_bearer_token() {
-    $headers = get_authorization_header();
-    
-    // HEADER: Get the access token from the header
-    if (!empty($headers)) {
-        if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
-            if($matches[1]=='null') //$matches[1] est de type string et peut contenir 'null'
-                return null;
-            else
-                return $matches[1];
-        }
-    }
-    return null;
+function get_bearer_token()
+{
+	$headers = get_authorization_header();
+
+	// HEADER: Get the access token from the header
+	if (!empty($headers)) {
+		if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
+			if ($matches[1] == 'null') //$matches[1] est de type string et peut contenir 'null'
+				return null;
+			else
+				return $matches[1];
+		}
+	}
+	return null;
 }
 
-?>
+/**
+ * Extrait les données (payload) d'un JWT sous forme de tableau associatif.
+ */
+function decode_jwt_payload($jwt)
+{
+	$tokenParts = explode('.', $jwt);
+	if (count($tokenParts) !== 3) {
+		return null;
+	}
+	$payload = base64_decode($tokenParts[1]);
+	return json_decode($payload, true); // true pour obtenir un tableau PHP
+}
