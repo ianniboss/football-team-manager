@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
 require_once __DIR__ . '/../../modele/CommentaireDAO.php';
-require_once __DIR__ . '/../jwt_utils.php';
-require_once __DIR__ . '/../api_utils.php';
+require_once __DIR__ . '/../../jwt_utils.php';
+require_once __DIR__ . '/../../api_utils.php';
 require_once __DIR__ . '/../../../../config.php'; // contient la variable JWT_SECRET
 
 $joueurDAO = new JoueurDAO();

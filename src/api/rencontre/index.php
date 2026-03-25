@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/../../modele/RencontreDAO.php';
 require_once __DIR__ . '/../../modele/ParticiperDAO.php';
-require_once __DIR__ . '/../jwt_utils.php';
-require_once __DIR__ . '/../api_utils.php';
+require_once __DIR__ . '/../../jwt_utils.php';
+require_once __DIR__ . '/../../api_utils.php';
 require_once __DIR__ . '/../../../../config.php'; // contient JWT_SECRET
 
 $rencontreDAO  = new RencontreDAO();
