@@ -1,3 +1,20 @@
 RewriteEngine On
 RewriteCond %{HTTP:Authorization} ^(.*)
 RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# Permet d'appeler /auth au lieu de /auth/index.php
+RewriteRule ^auth$ auth/index.php [L]
+
+RewriteRule ^api/rencontre/?$ api/rencontre/index.php [L,QSA]
+RewriteRule ^api/rencontre/([0-9]+)$ api/rencontre/index.php?id=$1 [L,QSA]
+
+RewriteRule ^api/joueur/?$ api/joueur/index.php [L,QSA]
+RewriteRule ^api/joueur/([0-9]+)$ api/joueur/index.php?id=$1 [L,QSA]
+
+RewriteRule ^api/commentaire/?$ api/commentaire/index.php [L,QSA]
+RewriteRule ^api/commentaire/([0-9]+)$ api/commentaire/index.php?id=$1 [L,QSA]
+
+RewriteRule ^api/selection/?$ api/selection/index.php [L,QSA]
+RewriteRule ^api/selection/([0-9]+)$ api/selection/index.php?id=$1 [L,QSA]
+
+RewriteRule ^api/stats$ api/stats/index.php [L,QSA]
