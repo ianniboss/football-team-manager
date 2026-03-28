@@ -1,6 +1,8 @@
 RewriteEngine On
 RewriteCond %{HTTP:Authorization} ^(.*)
 RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+# Désactive la recherche de fichiers/dossiers correspondants
+Options -MultiViews
 
 # Permet d'appeler /auth au lieu de /auth/index.php
 RewriteRule ^auth$ auth/index.php [L]

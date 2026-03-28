@@ -1,6 +1,44 @@
+Automatiser la récupération du bearer token sur postman :
+Ajouter la variable token à l'environnement
+En script post-response de la requête d'authentification :
+    pm.environment.set("token", pm.response.json().data);
+En script pre-request du dossier de toutes les requêtes : 
+pm.request.headers.add({
+    key: 'Authorization',
+    value: 'Bearer ' + pm.environment.get("token")
+});
+
+
+
 Pour faire les requêtes de l'api vers l'api d'authentification en php utiliser le module curl
 (pas en javascript)
 
-
 -> curl c'est serveur php vers autre serveur php, trop lourd si 
 on fait des appels vers le meme serveur. faire await fetch plutôt en javascript, comme le tp2.
+
+Deux façons de fetch tous les éléments :
+
+try {
+    const response = await fetch(`${baseUrl}${resource}`);
+    if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+    }
+    const result = await response.json();
+    console.log(result);
+    displayData(result.data)
+} catch (error) {
+    console.error(error.message);
+}
+
+OU
+
+console.log(`${baseUrl}${resource}`)
+fetch(`${baseUrl}${resource}`)
+    .then(response => response.json()) // Convertir la réponse JSON en objet Javascript
+    .then(result => {
+        console.log(result); //Afficher en console les données récupérées
+        displayData(result.data); 
+    })
+    .catch(error => console.error('Erreur Fetch:', error)); // Gérer les erreurs
+
+Moi je préfère la première où on visualise les await

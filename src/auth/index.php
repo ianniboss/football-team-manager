@@ -27,7 +27,7 @@ function main()
             //     try {
             //         $dao->createUser($data['login_admin'], $data['password_admin'], 'admin');
             //         $dao->createUser($data['login_guest'], $data['password_guest'], 'guest');
-            //         return sendSuccess("Utilisateurs admin et guest créés avec succès !");
+            //         return sendSuccess("Utilisateurs admin et guest créés");
             //     } catch (Exception $e) {
             //         return sendError("Erreur lors de la création : " . $e->getMessage(), 500);
             //     }
