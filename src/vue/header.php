@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /vue/index.php");
+    header("Location: /ftm/vue/index.php");
     exit;
 }
 ?>

@@ -5,12 +5,12 @@ $rencontre = $_SESSION['rencontre_detail'] ?? null;
 $joueursParticipe = $_SESSION['joueurs_participe'] ?? [];
 
 if (!$rencontre) {
-    header("Location: /vue/rencontres/listeRencontres.php");
+    header("Location: /ftm/vue/rencontres/listeRencontres.php");
     exit;
 }
 ?>
 <!-- utilise RechercherUneRencontre.php -->
-<link rel="stylesheet" href="/css/rencontres.css">
+<link rel="stylesheet" href="/ftm/css/rencontres.css">
 
 <div class="match-detail-container">
     <a href="/controleur/rencontre/ObtenirToutesLesRencontres.php" class="back-link">

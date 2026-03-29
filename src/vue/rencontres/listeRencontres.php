@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../header.php';
 $rencontres = $_SESSION['rencontres'] ?? [];
 ?>
-<link rel="stylesheet" href="/css/rencontres.css">
+<link rel="stylesheet" href="/ftm/css/rencontres.css">
 
 <div class="page-header">
     <div>

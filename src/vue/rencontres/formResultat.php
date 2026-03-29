@@ -4,12 +4,12 @@ $rencontre = $_SESSION['rencontre_resultat'] ?? null;
 $joueursFeuille = $_SESSION['joueurs_feuille_resultat'] ?? [];
 
 if (!$rencontre) {
-    header("Location: /vue/rencontres/listeRencontres.php");
+    header("Location: /ftm/vue/rencontres/listeRencontres.php");
     exit;
 }
 ?>
 <!-- utilise SaisirResultatEtEvaluations.php -->
-<link rel="stylesheet" href="/css/rencontres.css">
+<link rel="stylesheet" href="/ftm/css/rencontres.css">
 
 <div class="result-form-container">
     <a href="/controleur/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="back-link">
@@ -28,8 +28,8 @@ if (!$rencontre) {
             <h3>🏆 Résultat du match</h3>
             <div class="result-options">
                 <div class="result-option victoire">
-                    <input type="radio" name="resultat" id="victoire" value="Victoire" 
-                           <?php echo ($rencontre['resultat'] == 'Victoire') ? 'checked' : ''; ?>>
+                    <input type="radio" name="resultat" id="victoire" value="Victoire"
+                        <?php echo ($rencontre['resultat'] == 'Victoire') ? 'checked' : ''; ?>>
                     <label for="victoire">
                         <span class="icon">🎉</span>
                         <span class="text">Victoire</span>
@@ -37,7 +37,7 @@ if (!$rencontre) {
                 </div>
                 <div class="result-option nul">
                     <input type="radio" name="resultat" id="nul" value="Nul"
-                           <?php echo ($rencontre['resultat'] == 'Nul') ? 'checked' : ''; ?>>
+                        <?php echo ($rencontre['resultat'] == 'Nul') ? 'checked' : ''; ?>>
                     <label for="nul">
                         <span class="icon">🤝</span>
                         <span class="text">Match Nul</span>
@@ -45,7 +45,7 @@ if (!$rencontre) {
                 </div>
                 <div class="result-option defaite">
                     <input type="radio" name="resultat" id="defaite" value="Defaite"
-                           <?php echo ($rencontre['resultat'] == 'Defaite') ? 'checked' : ''; ?>>
+                        <?php echo ($rencontre['resultat'] == 'Defaite') ? 'checked' : ''; ?>>
                     <label for="defaite">
                         <span class="icon">😔</span>
                         <span class="text">Défaite</span>
@@ -56,7 +56,7 @@ if (!$rencontre) {
 
         <div class="evaluations-card">
             <h3>⭐ Évaluer les joueurs</h3>
-            
+
             <?php if (empty($joueursFeuille)): ?>
                 <div class="empty-state">
                     <p>Aucun joueur n'a été convoqué pour ce match.</p>
@@ -67,9 +67,9 @@ if (!$rencontre) {
                         <div class="player-eval-row">
                             <div class="player-info">
                                 <?php if (!empty($j['image'])): ?>
-                                    <img src="/modele/img/players/<?php echo htmlspecialchars($j['image']); ?>" 
-                                         alt="Photo de <?php echo htmlspecialchars($j['prenom']); ?>"
-                                         style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">
+                                    <img src="/modele/img/players/<?php echo htmlspecialchars($j['image']); ?>"
+                                        alt="Photo de <?php echo htmlspecialchars($j['prenom']); ?>"
+                                        style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">
                                 <?php else: ?>
                                     <div class="player-avatar">
                                         <?= strtoupper(substr($j['prenom'], 0, 1) . substr($j['nom'], 0, 1)) ?>
@@ -82,7 +82,7 @@ if (!$rencontre) {
                             </div>
                             <div class="star-rating">
                                 <input type="number" name="evaluations[<?php echo $j['id_participation']; ?>]"
-                                       value="<?php echo $j['evaluation']; ?>" min="1" max="5" placeholder="-">
+                                    value="<?php echo $j['evaluation']; ?>" min="1" max="5" placeholder="-">
                                 <span>/ 5 ⭐</span>
                             </div>
                         </div>

@@ -5,7 +5,7 @@ $joueur = $_SESSION['joueur_detail'] ?? null;
 $commentaires = $_SESSION['joueur_commentaires'] ?? [];
 
 if (!$joueur) {
-    header("Location: /vue/index.php");
+    header("Location: /ftm/vue/index.php");
     exit;
 }
 ?>

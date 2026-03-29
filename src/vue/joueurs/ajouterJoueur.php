@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/../header.php'; ?>
 <!-- Formulaire d'ajout de joueur - Utilisé par AjouterJoueur.php -->
-<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/ftm/css/forms.css">
 
 <div class="form-card">
     <h2>Nouveau Joueur</h2>

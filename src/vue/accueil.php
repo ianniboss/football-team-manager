@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: index.php");
+    header("Location: /ftm/index.php");
     exit;
 }
 
@@ -31,7 +31,7 @@ $prochainMatch = !empty($matchsAVenir) ? reset($matchsAVenir) : null;
 
 require_once __DIR__ . '/header.php';
 ?>
-<link rel="stylesheet" href="/css/accueil.css">
+<link rel="stylesheet" href="/ftm/css/accueil.css">
 
 <div class="dashboard">
     <div class="welcome-section">

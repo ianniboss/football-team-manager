@@ -9,14 +9,14 @@ $joueursCommentaires = $_SESSION['joueurs_commentaires_selection'] ?? [];
 $joueursStats = $_SESSION['joueurs_stats_selection'] ?? [];
 
 if (!$rencontre) {
-    header("Location: /vue/rencontres/listeRencontres.php");
+    header("Location: /ftm/vue/rencontres/listeRencontres.php");
     exit;
 }
 ?>
 <!-- utilise AfficherSelection.php -->
-<link rel="stylesheet" href="/css/selection.css">
-<link rel="stylesheet" href="/css/rencontres.css">
-<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/ftm/css/selection.css">
+<link rel="stylesheet" href="/ftm/css/rencontres.css">
+<link rel="stylesheet" href="/ftm/css/forms.css">
 
 <div class="selection-container">
     <a href="/controleur/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="back-link">
@@ -30,7 +30,7 @@ if (!$rencontre) {
 
     <?php if (isset($_GET['error']) && $_GET['error'] === 'min_titulaires'): ?>
         <div class="error-message">
-            ⚠️ <strong>Erreur :</strong> Vous devez sélectionner au moins <strong>11 titulaires</strong> pour valider la feuille de match. 
+            ⚠️ <strong>Erreur :</strong> Vous devez sélectionner au moins <strong>11 titulaires</strong> pour valider la feuille de match.
             Actuellement : <?php echo isset($_GET['count']) ? intval($_GET['count']) : 0; ?> titulaire(s).
         </div>
     <?php endif; ?>
@@ -44,16 +44,16 @@ if (!$rencontre) {
 
         <div class="players-panel">
             <h3>👥 Effectif disponible</h3>
-            
+
             <?php if (empty($tousLesJoueurs)): ?>
                 <div class="empty-state">
                     <p>Aucun joueur actif disponible.</p>
                 </div>
             <?php else: ?>
                 <div class="players-grid">
-                    <?php foreach ($tousLesJoueurs as $j): 
+                    <?php foreach ($tousLesJoueurs as $j):
                         $id = $j['id_joueur'];
-                        
+
                         if ($pendingSelection !== null) {
                             $is_selected = isset($pendingSelection[$id]['selected']);
                             $val_poste = isset($pendingSelection[$id]['poste']) ? $pendingSelection[$id]['poste'] : '';
@@ -63,7 +63,7 @@ if (!$rencontre) {
                             $val_poste = $is_selected ? $selectionActuelle[$id]['poste'] : '';
                             $is_titulaire = ($is_selected && $selectionActuelle[$id]['titulaire'] == 1);
                         }
-                        
+
                         $hasImage = !empty($j['image']);
                         $comments = isset($joueursCommentaires[$id]) ? $joueursCommentaires[$id] : [];
                         $stats = isset($joueursStats[$id]) ? $joueursStats[$id] : null;
@@ -72,8 +72,8 @@ if (!$rencontre) {
                             <div class="player-card-header">
                                 <div class="player-photo">
                                     <?php if ($hasImage): ?>
-                                        <img src="/modele/img/players/<?php echo htmlspecialchars($j['image']); ?>" 
-                                             alt="Photo de <?php echo htmlspecialchars($j['prenom']); ?>">
+                                        <img src="/modele/img/players/<?php echo htmlspecialchars($j['image']); ?>"
+                                            alt="Photo de <?php echo htmlspecialchars($j['prenom']); ?>">
                                     <?php else: ?>
                                         <div class="player-photo-placeholder">
                                             <?php echo strtoupper(substr($j['prenom'], 0, 1) . substr($j['nom'], 0, 1)); ?>
@@ -124,21 +124,21 @@ if (!$rencontre) {
 
                             <div class="selection-controls">
                                 <div class="control-group">
-                                    <input type="checkbox" 
-                                           class="styled-checkbox"
-                                           id="select_<?php echo $id; ?>"
-                                           name="joueurs[<?php echo $id; ?>][selected]" 
-                                           <?php echo $is_selected ? 'checked' : ''; ?>>
+                                    <input type="checkbox"
+                                        class="styled-checkbox"
+                                        id="select_<?php echo $id; ?>"
+                                        name="joueurs[<?php echo $id; ?>][selected]"
+                                        <?php echo $is_selected ? 'checked' : ''; ?>>
                                     <label for="select_<?php echo $id; ?>">Convoquer</label>
                                 </div>
 
                                 <div class="control-group">
-                                    <input type="checkbox" 
-                                           class="styled-checkbox titulaire-checkbox"
-                                           id="titulaire_<?php echo $id; ?>"
-                                           name="joueurs[<?php echo $id; ?>][titulaire]" 
-                                           value="1" 
-                                           <?php echo $is_titulaire ? 'checked' : ''; ?>>
+                                    <input type="checkbox"
+                                        class="styled-checkbox titulaire-checkbox"
+                                        id="titulaire_<?php echo $id; ?>"
+                                        name="joueurs[<?php echo $id; ?>][titulaire]"
+                                        value="1"
+                                        <?php echo $is_titulaire ? 'checked' : ''; ?>>
                                     <label for="titulaire_<?php echo $id; ?>">Titulaire</label>
                                 </div>
 

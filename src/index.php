@@ -1,4 +1,3 @@
 <?php
-header("Location: vue/index.php");
+header("Location: /ftm/vue/index.php");
 exit;
-?>

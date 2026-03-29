@@ -8,7 +8,7 @@
     <meta name="description" content="Connectez-vous à Football Team Manager pour gérer votre équipe de football.">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/ftm/css/login.css">
 </head>
 
 <body>

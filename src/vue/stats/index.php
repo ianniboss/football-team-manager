@@ -3,7 +3,7 @@ require_once __DIR__ . '/../header.php';
 $statsGlobales = $_SESSION['statsGlobales'] ?? [];
 $tableauJoueurs = $_SESSION['tableauJoueurs'] ?? [];
 ?>
-<link rel="stylesheet" href="/css/stats.css">
+<link rel="stylesheet" href="/ftm/css/stats.css">
 
 <div class="stats-container">
     <h1 class="page-title">📊 Statistiques Globales</h1>
@@ -71,7 +71,7 @@ $tableauJoueurs = $_SESSION['tableauJoueurs'] ?? [];
                             $serieClass = 'serie-w';
                         else if (strpos($serie, 'D') !== false)
                             $serieClass = 'serie-l';
-                        ?>
+                    ?>
                         <tr>
                             <td>
                                 <div class="player-cell">
