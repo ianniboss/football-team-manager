@@ -86,28 +86,28 @@ require_once __DIR__ . '/header.php';
 
     <h2 class="section-title">Actions Rapides</h2>
     <div class="quick-actions">
-        <a href="/controleur/joueur/AjouterJoueur.php" class="action-card">
+        <a href="/api/joueur/AjouterJoueur.php" class="action-card">
             <div class="action-icon">+</div>
             <div>
                 <h4>Ajouter un joueur</h4>
                 <p>Enregistrer un nouveau membre</p>
             </div>
         </a>
-        <a href="/controleur/rencontre/ajouterRencontre.php" class="action-card">
+        <a href="/api/rencontre/ajouterRencontre.php" class="action-card">
             <div class="action-icon">📅</div>
             <div>
                 <h4>Planifier un match</h4>
                 <p>Créer une nouvelle rencontre</p>
             </div>
         </a>
-        <a href="/controleur/joueur/ObtenirTousLesJoueurs.php" class="action-card">
+        <a href="/api/joueur/ObtenirTousLesJoueurs.php" class="action-card">
             <div class="action-icon">👥</div>
             <div>
                 <h4>Voir l'effectif</h4>
                 <p>Gérer les joueurs</p>
             </div>
         </a>
-        <a href="/controleur/rencontre/ObtenirToutesLesRencontres.php" class="action-card">
+        <a href="/api/rencontre/ObtenirToutesLesRencontres.php" class="action-card">
             <div class="action-icon">📋</div>
             <div>
                 <h4>Calendrier</h4>

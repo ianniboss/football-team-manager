@@ -12,7 +12,7 @@ if (!$rencontre) {
 <link rel="stylesheet" href="/ftm/css/rencontres.css">
 
 <div class="result-form-container">
-    <a href="/controleur/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="back-link">
+    <a href="/api/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="back-link">
         ← Retour aux détails
     </a>
 
@@ -21,7 +21,7 @@ if (!$rencontre) {
         <p>Match contre <?php echo htmlspecialchars($rencontre['nom_equipe_adverse']); ?> - <?php echo $rencontre['date_rencontre']; ?></p>
     </div>
 
-    <form method="POST" action="/controleur/rencontre/SaisirResultatEtEvaluations.php">
+    <form method="POST" action="/api/rencontre/SaisirResultatEtEvaluations.php">
         <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
 
         <div class="result-card">
@@ -95,7 +95,7 @@ if (!$rencontre) {
             <button type="submit" class="btn-submit">
                 ✓ Enregistrer le résultat
             </button>
-            <a href="/controleur/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="btn-cancel">
+            <a href="/api/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="btn-cancel">
                 Annuler
             </a>
         </div>

@@ -19,7 +19,7 @@ if (!$rencontre) {
 <link rel="stylesheet" href="/ftm/css/forms.css">
 
 <div class="selection-container">
-    <a href="/controleur/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="back-link">
+    <a href="/api/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="back-link">
         ← Retour aux détails du match
     </a>
 
@@ -39,7 +39,7 @@ if (!$rencontre) {
         💡 <strong>Instructions :</strong> Cochez les joueurs à convoquer, indiquez leur poste, et marquez-les comme titulaires (minimum 11 requis). Consultez leurs statistiques et commentaires pour faire votre choix.
     </div>
 
-    <form method="POST" action="/controleur/selection/EnregistrerSelection.php">
+    <form method="POST" action="/api/selection/EnregistrerSelection.php">
         <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
 
         <div class="players-panel">
@@ -166,7 +166,7 @@ if (!$rencontre) {
             <button type="submit" class="btn-submit" id="submitBtn">
                 ✓ Valider la sélection
             </button>
-            <a href="/controleur/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="btn-cancel">
+            <a href="/api/rencontre/RechercherUneRencontre.php?id=<?php echo $rencontre['id_rencontre']; ?>" class="btn-cancel">
                 Annuler
             </a>
         </div>

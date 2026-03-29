@@ -13,7 +13,7 @@ if (!$rencontre) {
 <link rel="stylesheet" href="/ftm/css/rencontres.css">
 
 <div class="match-detail-container">
-    <a href="/controleur/rencontre/ObtenirToutesLesRencontres.php" class="back-link">
+    <a href="/api/rencontre/ObtenirToutesLesRencontres.php" class="back-link">
         ← Retour au calendrier
     </a>
 
@@ -81,19 +81,19 @@ if (!$rencontre) {
     <?php endif; ?>
 
     <div class="actions-grid">
-        <a href="<?php echo $isMatchPast ? '#' : '/controleur/rencontre/ModifierUneRencontre.php?id=' . $rencontre['id_rencontre']; ?>"
+        <a href="<?php echo $isMatchPast ? '#' : '/api/rencontre/ModifierUneRencontre.php?id=' . $rencontre['id_rencontre']; ?>"
             class="action-card <?php echo $isMatchPast ? 'disabled' : ''; ?>">
             <div class="icon">✏️</div>
             <h4>Modifier infos</h4>
             <p>Éditer les détails du match</p>
         </a>
-        <a href="/controleur/rencontre/SaisirResultatEtEvaluations.php?id=<?php echo $rencontre['id_rencontre']; ?>"
+        <a href="/api/rencontre/SaisirResultatEtEvaluations.php?id=<?php echo $rencontre['id_rencontre']; ?>"
             class="action-card">
             <div class="icon">📊</div>
             <h4>Saisir Résultat</h4>
             <p>Entrer le score et les notes</p>
         </a>
-        <a href="<?php echo $isMatchPast ? '#' : '/controleur/selection/AfficherSelection.php?id_rencontre=' . $rencontre['id_rencontre']; ?>"
+        <a href="<?php echo $isMatchPast ? '#' : '/api/selection/AfficherSelection.php?id_rencontre=' . $rencontre['id_rencontre']; ?>"
             class="action-card <?php echo $isMatchPast ? 'disabled' : ''; ?>">
             <div class="icon">👥</div>
             <h4>Gérer la sélection</h4>

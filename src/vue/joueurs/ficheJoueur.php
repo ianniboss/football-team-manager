@@ -90,7 +90,7 @@ $imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['imag
     <div class="comments-section">
         <h3>Commentaires</h3>
 
-        <form class="comment-form" action="/controleur/commentaire/AjouterUnCommentaireAuJoueur.php" method="POST">
+        <form class="comment-form" action="/api/commentaire/AjouterUnCommentaireAuJoueur.php" method="POST">
             <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
             <textarea name="commentaire" placeholder="Ajouter une note personnelle sur ce joueur..."
                 required></textarea>
@@ -110,7 +110,7 @@ $imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['imag
                         <div class="comment-text">
                             <?php echo htmlspecialchars($commentaire['commentaire']); ?>
                         </div>
-                        <form action="/controleur/commentaire/SupprimerUnCommentaireDuJoueur.php" method="POST"
+                        <form action="/api/commentaire/SupprimerUnCommentaireDuJoueur.php" method="POST"
                             style="display: inline;">
                             <input type="hidden" name="id_commentaire" value="<?php echo $commentaire['id_commentaire']; ?>">
                             <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
@@ -130,11 +130,11 @@ $imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['imag
     </div>
 
     <div class="card-actions">
-        <a href="/controleur/joueur/ModifierIdentiteDuJoueur.php?id=<?php echo $joueur['id_joueur']; ?>"
+        <a href="/api/joueur/ModifierIdentiteDuJoueur.php?id=<?php echo $joueur['id_joueur']; ?>"
             class="btn btn-primary">
             Modifier
         </a>
-        <a href="/controleur/joueur/ObtenirTousLesJoueurs.php" class="btn btn-secondary">
+        <a href="/api/joueur/ObtenirTousLesJoueurs.php" class="btn btn-secondary">
             Retour à la liste
         </a>
     </div>

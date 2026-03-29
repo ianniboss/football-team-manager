@@ -10,7 +10,7 @@ unset($_SESSION['rencontre_modify']);
     <h2><?php echo isset($rencontre) ? 'Modifier la Rencontre' : 'Nouvelle Rencontre'; ?></h2>
     <p class="form-subtitle">Informations générales</p>
 
-    <form method="POST" action="<?php echo isset($rencontre) ? '/controleur/rencontre/ModifierUneRencontre.php' : '/controleur/rencontre/ajouterRencontre.php'; ?>" enctype="multipart/form-data">
+    <form method="POST" action="<?php echo isset($rencontre) ? '/api/rencontre/ModifierUneRencontre.php' : '/api/rencontre/ajouterRencontre.php'; ?>" enctype="multipart/form-data">
         <?php if (isset($rencontre)): ?>
             <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
         <?php endif; ?>
@@ -97,7 +97,7 @@ unset($_SESSION['rencontre_modify']);
             <button type="submit" class="btn btn-primary">
                 <?php echo isset($rencontre) ? 'Modifier' : 'Créer la rencontre'; ?>
             </button>
-            <a href="/controleur/rencontre/ObtenirToutesLesRencontres.php" class="btn btn-secondary" style="text-decoration: none; text-align: center;">
+            <a href="/api/rencontre/ObtenirToutesLesRencontres.php" class="btn btn-secondary" style="text-decoration: none; text-align: center;">
                 Annuler
             </a>
         </div>

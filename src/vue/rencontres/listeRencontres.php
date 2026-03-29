@@ -9,7 +9,7 @@ $rencontres = $_SESSION['rencontres'] ?? [];
         <h2>Calendrier des Rencontres</h2>
         <p class="subtitle">Gérez vos matchs et résultats</p>
     </div>
-    <a href="/controleur/rencontre/ajouterRencontre.php" class="btn-add">
+    <a href="/api/rencontre/ajouterRencontre.php" class="btn-add">
         <span>+</span> Ajouter un match
     </a>
 </div>
@@ -102,13 +102,13 @@ $aVenir = count(array_filter($rencontres, fn($r) => $r['resultat'] === null));
                     </td>
                     <td>
                         <div class="actions-cell">
-                            <a href="/controleur/rencontre/RechercherUneRencontre.php?id=<?= $r['id_rencontre']; ?>"
+                            <a href="/api/rencontre/RechercherUneRencontre.php?id=<?= $r['id_rencontre']; ?>"
                                 class="action-btn action-btn-view">Détails</a>
                             <?php if (!$r['resultat']): ?>
-                                <a href="/controleur/selection/AfficherSelection.php?id_rencontre=<?= $r['id_rencontre']; ?>"
+                                <a href="/api/selection/AfficherSelection.php?id_rencontre=<?= $r['id_rencontre']; ?>"
                                     class="action-btn action-btn-sheet">Feuille de match</a>
                             <?php endif; ?>
-                            <a href="/controleur/rencontre/SupprimerUneRencontre.php?id=<?= $r['id_rencontre']; ?>"
+                            <a href="/api/rencontre/SupprimerUneRencontre.php?id=<?= $r['id_rencontre']; ?>"
                                 class="action-btn action-btn-delete"
                                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
                         </div>

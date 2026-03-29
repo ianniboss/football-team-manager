@@ -23,10 +23,10 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         <a href="/vue/accueil.php" class="logo">Football Team Manager</a>
         <div class="nav-links">
             <a href="/ftm/vue/accueil.php">Accueil</a>
-            <a href="/ftm/controleur/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
-            <a href="/ftm/controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
-            <a href="/ftm/controleur/stats/AfficherStatistiques.php">Statistiques</a>
-            <a href="/ftm/controleur/logout.php" onclick="return confirm('Vous allez vous deconnecter');">Déconnexion</a>
+            <a href="/ftm/api/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
+            <a href="/ftm/api/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
+            <a href="/ftm/api/stats/AfficherStatistiques.php">Statistiques</a>
+            <a href="/ftm/api/logout.php" onclick="return confirm('Vous allez vous deconnecter');">Déconnexion</a>
         </div>
     </nav>
     <div class="container">

@@ -13,7 +13,7 @@ if (!$joueur) {
     <h2>Modifier le Joueur</h2>
     <p class="form-subtitle">Mettre à jour les informations du joueur</p>
 
-    <form method="POST" action="/controleur/joueur/ModifierIdentiteDuJoueur.php" enctype="multipart/form-data">
+    <form method="POST" action="/api/joueur/ModifierIdentiteDuJoueur.php" enctype="multipart/form-data">
         <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
 
         <div class="form-grid">
@@ -118,7 +118,7 @@ if (!$joueur) {
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Enregistrer</button>
-            <a href="/controleur/joueur/ObtenirUnJoueur.php?id=<?php echo $joueur['id_joueur']; ?>" class="btn btn-secondary" style="text-decoration: none; text-align: center;">
+            <a href="/api/joueur/ObtenirUnJoueur.php?id=<?php echo $joueur['id_joueur']; ?>" class="btn btn-secondary" style="text-decoration: none; text-align: center;">
                 Annuler
             </a>
         </div>

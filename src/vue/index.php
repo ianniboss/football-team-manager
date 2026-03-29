@@ -20,7 +20,7 @@
                 <p class="app-subtitle">Gérez votre équipe</p>
             </div>
 
-            <form class="login-form" action="../controleur/login.php" method="POST">
+            <form class="login-form" action="../api/login.php" method="POST">
                 <div class="input-group">
                     <span class="input-icon">
                         <i class="fas fa-user"></i>

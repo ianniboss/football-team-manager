@@ -6,7 +6,7 @@
     <h2>Nouveau Joueur</h2>
     <p class="form-subtitle">Ajouter un nouveau joueur à l'équipe</p>
 
-    <form method="POST" action="/controleur/joueur/AjouterJoueur.php" enctype="multipart/form-data">
+    <form method="POST" action="/api/joueur/AjouterJoueur.php" enctype="multipart/form-data">
         <div class="form-grid">
             <div class="form-section">
                 <h3>Informations personnelles</h3>
@@ -88,7 +88,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Créer le joueur</button>
-            <a href="/controleur/joueur/ObtenirTousLesJoueurs.php" class="btn btn-secondary"
+            <a href="/api/joueur/ObtenirTousLesJoueurs.php" class="btn btn-secondary"
                 style="text-decoration: none; text-align: center;">
                 Annuler
             </a>
