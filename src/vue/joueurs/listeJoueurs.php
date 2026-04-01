@@ -31,7 +31,7 @@ require_once __DIR__ . '/../header.php';
 <div class="search-section">
     <form class="search-form">
         <div class="search-input-group">
-            <span class="search-icon">🔍</span>
+            <!-- <span class="search-icon">🔍</span> -->
             <input type="text" name="search" placeholder="Rechercher un joueur...">
         </div>
         <select name="statut" class="filter-select">
@@ -56,7 +56,7 @@ require_once __DIR__ . '/../header.php';
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="players-tbody">
         <tr>
             <td colspan="6" style="text-align:center; padding: 30px;">
                 <em>Chargement des joueurs en cours...</em>

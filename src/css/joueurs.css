@@ -20,6 +20,8 @@
     flex: 1;
     min-width: 250px;
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .search-input {
@@ -39,9 +41,8 @@
 .search-icon {
     position: absolute;
     left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
     font-size: 1.1rem;
+    z-index: 2;
 }
 
 .filter-select {

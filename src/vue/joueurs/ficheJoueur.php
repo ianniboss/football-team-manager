@@ -10,7 +10,7 @@ if (!$joueur) {
 }
 ?>
 <!-- Fiche détaillée du joueur - Utilisé par ObtenirUnJoueur.php -->
-<link rel="stylesheet" href="/css/joueurs.css">
+<link rel="stylesheet" href="/ftm/css/joueurs.css">
 
 <?php
 $hasImage = !empty($joueur['image']);
