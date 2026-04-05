@@ -10,6 +10,9 @@ function main()
     global $dao;
     $http_method = $_SERVER['REQUEST_METHOD'];
     switch ($http_method) {
+        case "GET":
+            header('Content-Type: application/json');
+            return json_encode(["status" => "active", "message" => "R401 Authentification Service is running."]);
         case "OPTIONS":
             http_response_code(204);
             header('Access-Control-Allow-Origin: *');

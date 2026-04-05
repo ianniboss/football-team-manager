@@ -209,6 +209,12 @@ function deleteJoueur($id)
     if ($id === null) return sendError("L'ID doit être un entier valide et positif.", 400);
     if (!$joueurDAO->getJoueurById($id)) return sendError("Joueur inexistant.", 404);
 
+    // On ne peut supprimer un joueur que s'il n'a jamais participé à un match
+    $participerDAO = new ParticiperDAO();
+    if ($participerDAO->compterParticipations($id) > 0) {
+        return sendError("Impossible de supprimer ce joueur car il a deja participe a des matchs.", 403);
+    }
+
     $joueurDAO->supprimerJoueur($id);
     return sendSuccess(null, 204);
 }
