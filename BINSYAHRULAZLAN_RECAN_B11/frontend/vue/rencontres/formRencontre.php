@@ -100,7 +100,7 @@ require_once __DIR__ . '/../header.php';
                 document.querySelector(`input[name="lieu"][value="${r.lieu}"]`).checked = true;
 
                 if (r.image_stade) {
-                    document.getElementById('imagePreview').innerHTML = `<img src="/ftm/modele/img/matchs/${r.image_stade}" style="width: 120px; border-radius: 8px; margin-bottom: 10px;">`;
+                    document.getElementById('imagePreview').innerHTML = `<img src="https://ftmanager.alwaysdata.net/modele/img/matchs/${r.image_stade}" style="width: 120px; border-radius: 8px; margin-bottom: 10px;">`;
                 }
             }
         }

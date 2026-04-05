@@ -95,7 +95,7 @@ require_once __DIR__ . '/../header.php';
 
         // Image de fond
         if (r.image_stade) {
-            document.getElementById('matchHeader').style.backgroundImage = `linear-gradient(135deg, rgba(45, 52, 54, 0.9) 0%, rgba(0, 0, 0, 0.85) 100%), url('/ftm/modele/img/matchs/${r.image_stade}')`;
+            document.getElementById('matchHeader').style.backgroundImage = `linear-gradient(135deg, rgba(45, 52, 54, 0.9) 0%, rgba(0, 0, 0, 0.85) 100%), url('https://ftmanager.alwaysdata.net/modele/img/matchs/${r.image_stade}')`;
             document.getElementById('matchHeader').style.backgroundSize = 'cover';
         }
 
@@ -119,7 +119,7 @@ require_once __DIR__ . '/../header.php';
             container.innerHTML = `<ul class="player-list">${players.map(p => `
             <li class="player-item">
                 <div class="player-info">
-                    ${p.image ? `<img src="/ftm/modele/img/players/${p.image}" class="player-avatar-img">` : `<div class="player-avatar">${(p.prenom[0]+p.nom[0]).toUpperCase()}</div>`}
+                    ${p.image ? `<img src="https://ftmanager.alwaysdata.net/modele/img/players/${p.image}" class="player-avatar-img">` : `<div class="player-avatar">${(p.prenom[0]+p.nom[0]).toUpperCase()}</div>`}
                     <div>
                         <div class="player-name">${p.prenom} ${p.nom}</div>
                         <div class="player-role">${p.poste}</div>

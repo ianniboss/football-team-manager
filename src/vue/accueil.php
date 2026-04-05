@@ -113,7 +113,6 @@ require_once __DIR__ . '/header.php';
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        // Décodage du JWT pour afficher le nom
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
             document.getElementById('userName').textContent = payload.login;
@@ -125,8 +124,7 @@ require_once __DIR__ . '/header.php';
             'Authorization': 'Bearer ' + token
         };
 
-        // Récupération des joueurs
-        const resJoueurs = await fetch('/ftm/api/joueur/index.php', {
+        const resJoueurs = await fetch('https://ftmanager.alwaysdata.net/api/joueur/index.php', {
             headers
         });
         if (resJoueurs.ok) {
@@ -136,8 +134,7 @@ require_once __DIR__ . '/header.php';
             document.getElementById('statJoueursBlesses').textContent = joueurs.filter(j => j.statut === 'Blessé').length;
         }
 
-        // Récupération des rencontres
-        const resMatchs = await fetch('/ftm/api/rencontre/index.php', {
+        const resMatchs = await fetch('https://ftmanager.alwaysdata.net/api/rencontre/index.php', {
             headers
         });
         if (resMatchs.ok) {

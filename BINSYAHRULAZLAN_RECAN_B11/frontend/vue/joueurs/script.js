@@ -1,5 +1,5 @@
 // Configuration de l'API (Chemin relatif à la racine du serveur)
-const baseUrl = '/ftm/api';
+const baseUrl = 'https://ftmanager.alwaysdata.net/api';
 const resource = '/joueur/index.php';
 
 /**

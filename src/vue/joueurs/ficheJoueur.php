@@ -85,7 +85,7 @@ require_once __DIR__ . '/../header.php';
 
         const imgDiv = document.getElementById('playerImage');
         if (j.image) {
-            imgDiv.innerHTML = `<img src="/ftm/modele/img/players/${j.image}" alt="Photo">`;
+            imgDiv.innerHTML = `<img src="https://ftmanager.alwaysdata.net/modele/img/players/${j.image}" alt="Photo">`;
         } else {
             const initials = (j.prenom[0] + j.nom[0]).toUpperCase();
             imgDiv.innerHTML = `<div class="player-image-placeholder">${initials}</div>`;

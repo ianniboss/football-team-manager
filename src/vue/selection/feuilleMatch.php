@@ -64,7 +64,7 @@ require_once __DIR__ . '/../header.php';
         <div class="player-card ${isSelected ? 'selected' : ''}" data-id="${info.id_joueur}">
             <div class="player-card-header">
                 <div class="player-photo">
-                    ${info.image ? `<img src="/ftm/modele/img/players/${info.image}">` : `<div class="player-photo-placeholder">${info.prenom[0]}${info.nom[0]}</div>`}
+                    ${info.image ? `<img src="https://ftmanager.alwaysdata.net/modele/img/players/${info.image}">` : `<div class="player-photo-placeholder">${info.prenom[0]}${info.nom[0]}</div>`}
                 </div>
                 <div class="player-main-info">
                     <div class="player-name">${info.prenom} ${info.nom}</div>

@@ -9,7 +9,7 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-image: url('/ftm/modele/img/stadiumbackground.jpg');
+    background-image: url('https://ftmanager.alwaysdata.net/modele/img/stadiumbackground.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

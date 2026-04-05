@@ -1,4 +1,4 @@
-const statsApiUrl = '/ftm/api/stats/index.php';
+const statsApiUrl = 'https://ftmanager.alwaysdata.net/api/stats/index.php';
 
 /**
  * Récupère les en-têtes d'authentification
@@ -83,7 +83,7 @@ function displayPlayerStats(players) {
         // Player Info
         const playerCell = row.insertCell(0);
         const avatar = j.image
-            ? `<img src="/ftm/modele/img/players/${j.image}" alt="Photo" class="player-avatar-img" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">`
+            ? `<img src="https://ftmanager.alwaysdata.net/modele/img/players/${j.image}" alt="Photo" class="player-avatar-img" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">`
             : `<div class="player-avatar" style="width: 40px; height: 40px; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem;">${(j.prenom[0] + j.nom[0]).toUpperCase()}</div>`;
 
         playerCell.innerHTML = `<div class="player-cell" style="display: flex; align-items: center; gap: 10px;">${avatar}<span class="player-name">${j.prenom} ${j.nom}</span></div>`;

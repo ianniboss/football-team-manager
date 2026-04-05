@@ -88,7 +88,7 @@ require_once __DIR__ . '/../header.php';
             list.innerHTML = players.map(p => `
                 <div class="player-eval-row">
                     <div class="player-info">
-                        ${p.image ? `<img src="/ftm/modele/img/players/${p.image}" class="player-avatar-img" style="width:45px; height:45px; border-radius:50%;">` : `<div class="player-avatar">${(p.prenom[0]+p.nom[0]).toUpperCase()}</div>`}
+                        ${p.image ? `<img src="https://ftmanager.alwaysdata.net/modele/img/players/${p.image}" class="player-avatar-img" style="width:45px; height:45px; border-radius:50%;">` : `<div class="player-avatar">${(p.prenom[0]+p.nom[0]).toUpperCase()}</div>`}
                         <div>
                             <div class="player-name">${p.prenom} ${p.nom}</div>
                             <div class="player-role">${p.titulaire ? 'Titulaire' : 'Remplaçant'}</div>

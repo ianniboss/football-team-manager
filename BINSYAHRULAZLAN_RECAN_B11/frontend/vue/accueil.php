@@ -126,7 +126,7 @@ require_once __DIR__ . '/header.php';
         };
 
         // Récupération des joueurs
-        const resJoueurs = await fetch('/ftm/api/joueur/index.php', {
+        const resJoueurs = await fetch('https://ftmanager.alwaysdata.net/api/joueur/index.php', {
             headers
         });
         if (resJoueurs.ok) {
@@ -137,7 +137,7 @@ require_once __DIR__ . '/header.php';
         }
 
         // Récupération des rencontres
-        const resMatchs = await fetch('/ftm/api/rencontre/index.php', {
+        const resMatchs = await fetch('https://ftmanager.alwaysdata.net/api/rencontre/index.php', {
             headers
         });
         if (resMatchs.ok) {

@@ -1,4 +1,4 @@
-const selectionApiUrl = '/ftm/api/selection/index.php';
+const selectionApiUrl = 'https://ftmanager.alwaysdata.net/api/selection/index.php';
 
 function getAuthHeaders() {
     const token = localStorage.getItem('token');

@@ -1,5 +1,5 @@
 // Configuration de l'API
-const baseUrl = '/ftm/api/rencontre/index.php';
+const baseUrl = 'https://ftmanager.alwaysdata.net/api/rencontre/index.php';
 
 /**
  * Récupère les en-têtes d'authentification
