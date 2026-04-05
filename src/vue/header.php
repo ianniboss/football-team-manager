@@ -22,8 +22,8 @@
         <div class="nav-links">
             <a href="/ftm/vue/accueil.php">Accueil</a>
             <a href="/ftm/vue/joueurs/listeJoueurs.php">Joueurs</a>
-            <a href="/ftm/controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
-            <a href="/ftm/controleur/stats/AfficherStatistiques.php">Statistiques</a>
+            <a href="/ftm/vue/rencontres/listeRencontres.php">Matchs</a>
+            <a href="/ftm/vue/stats/statistiques.php">Statistiques</a>
             <a href="#" id="logoutBtn">Déconnexion</a>
         </div>
     </nav>
