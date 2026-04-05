@@ -68,7 +68,7 @@ Football Team Manager est une application de gestion d'equipe de football. Elle 
 
 Toutes les API necessitent une authentification par jeton JWT, a l'exception de l'endpoint d'authentification lui-meme.
 
-**URL de base :** `https://<domaine>/api`
+**URL de base :** `https://ftmanager.alwaysdata.net/` (ou `https://www.ribou.fr/ftm/api/` selon le deploiement)
 
 ---
 
