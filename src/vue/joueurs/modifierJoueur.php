@@ -1,20 +1,15 @@
 <?php
 require_once __DIR__ . '/../header.php';
-$joueur = $_SESSION['joueur_modify'] ?? null;
-if (!$joueur) {
-    header("Location: /ftm/vue/joueurs/listeJoueurs.php");
-    exit;
-}
 ?>
-<!-- Formulaire de modification de joueur - Utilisé par ModifierIdentiteDuJoueur.php -->
 <link rel="stylesheet" href="/ftm/css/forms.css">
+<script src="/ftm/vue/joueurs/script.js"></script>
 
 <div class="form-card">
     <h2>Modifier le Joueur</h2>
     <p class="form-subtitle">Mettre à jour les informations du joueur</p>
 
-    <form method="POST" action="/api/joueur/ModifierIdentiteDuJoueur.php" enctype="multipart/form-data">
-        <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
+    <form id="editPlayerForm">
+        <input type="hidden" name="id_joueur" id="id_joueur">
 
         <div class="form-grid">
             <div class="form-section">
@@ -22,32 +17,25 @@ if (!$joueur) {
 
                 <div class="form-group">
                     <label for="prenom">Prénom</label>
-                    <input type="text" name="prenom" id="prenom"
-                        value="<?php echo htmlspecialchars($joueur['prenom']); ?>"
-                        placeholder="Entrez le prénom..." required>
+                    <input type="text" name="prenom" id="prenom" placeholder="Entrez le prénom..." required>
                 </div>
 
                 <div class="form-group">
                     <label for="nom">Nom</label>
-                    <input type="text" name="nom" id="nom"
-                        value="<?php echo htmlspecialchars($joueur['nom']); ?>"
-                        placeholder="Entrez le nom..." required>
+                    <input type="text" name="nom" id="nom" placeholder="Entrez le nom..." required>
                 </div>
 
                 <div class="form-group">
                     <label for="date_naissance">Date de naissance</label>
                     <div class="input-with-icon">
-                        <input type="date" name="date_naissance" id="date_naissance"
-                            value="<?php echo $joueur['date_naissance']; ?>" required>
+                        <input type="date" name="date_naissance" id="date_naissance" required>
                         <span class="icon">📅</span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="num_licence">Numéro de licence</label>
-                    <input type="text" name="num_licence" id="num_licence"
-                        value="<?php echo htmlspecialchars($joueur['num_licence']); ?>"
-                        placeholder="Ex: LIC-2024-001" required>
+                    <input type="text" name="num_licence" id="num_licence" placeholder="Ex: LIC-2024-001" required>
                 </div>
             </div>
 
@@ -59,13 +47,11 @@ if (!$joueur) {
                     <div class="input-row">
                         <div class="input-with-unit">
                             <input type="number" name="taille" id="taille"
-                                value="<?php echo $joueur['taille']; ?>"
                                 placeholder="Taille" step="1" min="1" max="250" required>
                             <span class="unit">cm</span>
                         </div>
                         <div class="input-with-unit">
                             <input type="number" name="poids" id="poids"
-                                value="<?php echo $joueur['poids']; ?>"
                                 placeholder="Poids" step="0.1" min="1" max="200" required>
                             <span class="unit">kg</span>
                         </div>
@@ -74,14 +60,6 @@ if (!$joueur) {
 
                 <div class="form-group" style="margin-top: 20px;">
                     <h3 style="margin-bottom: 12px;">Photo du joueur</h3>
-                    <?php if (!empty($joueur['image'])): ?>
-                        <div style="margin-bottom: 10px;">
-                            <img src="/modele/img/players/<?php echo htmlspecialchars($joueur['image']); ?>"
-                                alt="Photo actuelle"
-                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 2px solid #ddd;">
-                            <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Photo actuelle</p>
-                        </div>
-                    <?php endif; ?>
                     <label for="image">Changer l'image (optionnel)</label>
                     <input type="file" name="image" id="image" accept="image/*"
                         style="width: 100%; padding: 12px; border: 1.5px dashed #ccc; border-radius: 10px; background: #fafafa; cursor: pointer;">
@@ -92,23 +70,19 @@ if (!$joueur) {
                     <label>Statut du joueur</label>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="statut" value="Actif"
-                                <?php echo ($joueur['statut'] == 'Actif') ? 'checked' : ''; ?>>
+                            <input type="radio" name="statut" value="Actif">
                             <span>Actif</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="statut" value="Blessé"
-                                <?php echo ($joueur['statut'] == 'Blessé') ? 'checked' : ''; ?>>
+                            <input type="radio" name="statut" value="Blessé">
                             <span>Blessé</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="statut" value="Suspendu"
-                                <?php echo ($joueur['statut'] == 'Suspendu') ? 'checked' : ''; ?>>
+                            <input type="radio" name="statut" value="Suspendu">
                             <span>Suspendu</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="statut" value="Absent"
-                                <?php echo ($joueur['statut'] == 'Absent') ? 'checked' : ''; ?>>
+                            <input type="radio" name="statut" value="Absent">
                             <span>Absent</span>
                         </label>
                     </div>
@@ -118,11 +92,44 @@ if (!$joueur) {
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Enregistrer</button>
-            <a href="/api/joueur/ObtenirUnJoueur.php?id=<?php echo $joueur['id_joueur']; ?>" class="btn btn-secondary" style="text-decoration: none; text-align: center;">
-                Annuler
-            </a>
+            <a href="listeJoueurs.php" class="btn btn-secondary">Annuler</a>
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        if (!id) return window.location.href = 'listeJoueurs.php';
+
+        const data = await getJoueur(id);
+        if (data) {
+            const j = data.joueur;
+            document.getElementById('id_joueur').value = j.id_joueur;
+            document.getElementById('prenom').value = j.prenom;
+            document.getElementById('nom').value = j.nom;
+            document.getElementById('date_naissance').value = j.date_naissance;
+            document.getElementById('num_licence').value = j.num_licence;
+            document.getElementById('taille').value = j.taille;
+            document.getElementById('poids').value = j.poids;
+
+            const radio = document.querySelector(`input[name="statut"][value="${j.statut}"]`);
+            if (radio) radio.checked = true;
+        }
+    });
+
+    document.getElementById('editPlayerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const id = document.getElementById('id_joueur').value;
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        const result = await updateJoueur(id, data);
+        if (result && !result.error) {
+            window.location.href = 'ficheJoueur.php?id=' + id;
+        }
+    });
+</script>
 
 <?php require_once __DIR__ . '/../footer.php'; ?>

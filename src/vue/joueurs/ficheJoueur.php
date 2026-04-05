@@ -1,143 +1,111 @@
 <?php
 require_once __DIR__ . '/../header.php';
-
-$joueur = $_SESSION['joueur_detail'] ?? null;
-$commentaires = $_SESSION['joueur_commentaires'] ?? [];
-
-if (!$joueur) {
-    header("Location: /ftm/vue/index.php");
-    exit;
-}
 ?>
-<!-- Fiche détaillée du joueur - Utilisé par ObtenirUnJoueur.php -->
-<link rel="stylesheet" href="/css/joueurs.css">
+<link rel="stylesheet" href="/ftm/css/joueurs.css">
+<script src="/ftm/vue/joueurs/script.js"></script>
 
-<?php
-$hasImage = !empty($joueur['image']);
-$imagePath = $hasImage ? '/modele/img/players/' . htmlspecialchars($joueur['image']) : '';
-?>
-
-<div class="player-card">
-    <div class="player-image">
-        <?php if ($hasImage): ?>
-            <img src="<?php echo $imagePath; ?>"
-                alt="Photo de <?php echo htmlspecialchars($joueur['prenom'] . ' ' . $joueur['nom']); ?>">
-        <?php else: ?>
-            <div class="player-image-placeholder">
-                <?php echo strtoupper(substr($joueur['prenom'], 0, 1) . substr($joueur['nom'], 0, 1)); ?>
-            </div>
-        <?php endif; ?>
+<div class="player-card" id="playerContainer" style="display: none;">
+    <div class="player-image" id="playerImage">
+        <!-- Injecté par JS -->
     </div>
 
-    <h2><?php echo htmlspecialchars($joueur['prenom'] . ' ' . $joueur['nom']); ?></h2>
+    <h2 id="playerName"></h2>
     <p class="player-subtitle">Fiche du joueur</p>
 
     <div class="info-grid">
         <div class="info-section">
             <h3>Informations personnelles</h3>
-
             <div class="info-item">
                 <label>Prénom</label>
-                <div class="value"><?php echo htmlspecialchars($joueur['prenom']); ?></div>
+                <div class="value" id="valPrenom"></div>
             </div>
-
             <div class="info-item">
                 <label>Nom</label>
-                <div class="value"><?php echo htmlspecialchars($joueur['nom']); ?></div>
+                <div class="value" id="valNom"></div>
             </div>
-
             <div class="info-item">
                 <label>Date de naissance</label>
-                <div class="value"><?php echo htmlspecialchars($joueur['date_naissance']); ?></div>
+                <div class="value" id="valDateNais"></div>
             </div>
-
             <div class="info-item">
                 <label>Numéro de licence</label>
-                <div class="value"><?php echo htmlspecialchars($joueur['num_licence']); ?></div>
+                <div class="value" id="valLicence"></div>
             </div>
         </div>
-
         <div class="info-section">
             <h3>Attributs physiques</h3>
-
             <div class="info-item">
                 <label>Taille & Poids</label>
                 <div class="info-row">
-                    <div class="value"><?php echo htmlspecialchars($joueur['taille']); ?> cm</div>
-                    <div class="value"><?php echo htmlspecialchars($joueur['poids']); ?> kg</div>
+                    <div class="value"><span id="valTaille"></span> cm</div>
+                    <div class="value"><span id="valPoids"></span> kg</div>
                 </div>
             </div>
-
             <div class="info-item" style="margin-top: 30px;">
                 <label>Statut</label>
-                <?php
-                $statut = $joueur['statut'];
-                $statusClass = 'status-actif';
-                if ($statut == 'Blessé')
-                    $statusClass = 'status-blesse';
-                else if ($statut == 'Suspendu')
-                    $statusClass = 'status-suspendu';
-                else if ($statut == 'Absent')
-                    $statusClass = 'status-absent';
-                ?>
-                <div class="status-badge <?php echo $statusClass; ?>">
-                    <?php echo htmlspecialchars($statut); ?>
-                </div>
+                <div id="statusBadge" class="status-badge"></div>
             </div>
         </div>
     </div>
 
     <div class="comments-section">
         <h3>Commentaires</h3>
-
-        <form class="comment-form" action="/api/commentaire/AjouterUnCommentaireAuJoueur.php" method="POST">
-            <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
-            <textarea name="commentaire" placeholder="Ajouter une note personnelle sur ce joueur..."
-                required></textarea>
-            <button type="submit" class="btn-submit">Ajouter le commentaire</button>
-        </form>
-
-        <div class="comments-list">
-            <?php if (!empty($commentaires)): ?>
-                <?php foreach ($commentaires as $commentaire): ?>
-                    <div class="comment-item">
-                        <div class="comment-date">
-                            <?php
-                            $date = new DateTime($commentaire['date_commentaire']);
-                            echo $date->format('d/m/Y');
-                            ?>
-                        </div>
-                        <div class="comment-text">
-                            <?php echo htmlspecialchars($commentaire['commentaire']); ?>
-                        </div>
-                        <form action="/api/commentaire/SupprimerUnCommentaireDuJoueur.php" method="POST"
-                            style="display: inline;">
-                            <input type="hidden" name="id_commentaire" value="<?php echo $commentaire['id_commentaire']; ?>">
-                            <input type="hidden" name="id_joueur" value="<?php echo $joueur['id_joueur']; ?>">
-                            <button type="submit" class="comment-delete" title="Supprimer ce commentaire"
-                                onclick="return confirm('Voulez-vous vraiment supprimer ce commentaire ?');">
-                                ✕
-                            </button>
-                        </form>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="no-comments">
-                    Aucun commentaire pour ce joueur. Ajoutez vos premières notes !
-                </div>
-            <?php endif; ?>
+        <div class="comments-list" id="commentsList">
+            <!-- Injecté par JS -->
         </div>
     </div>
 
     <div class="card-actions">
-        <a href="/api/joueur/ModifierIdentiteDuJoueur.php?id=<?php echo $joueur['id_joueur']; ?>"
-            class="btn btn-primary">
-            Modifier
-        </a>
-        <a href="/api/joueur/ObtenirTousLesJoueurs.php" class="btn btn-secondary">
-            Retour à la liste
-        </a>
+        <a id="linkModifier" href="#" class="btn btn-primary">Modifier</a>
+        <a href="listeJoueurs.php" class="btn btn-secondary">Retour à la liste</a>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) return window.location.href = 'listeJoueurs.php';
+
+        const data = await getJoueur(id);
+        if (!data) return;
+
+        const j = data.joueur;
+        document.getElementById('playerName').textContent = j.prenom + ' ' + j.nom;
+        document.getElementById('valPrenom').textContent = j.prenom;
+        document.getElementById('valNom').textContent = j.nom;
+        document.getElementById('valDateNais').textContent = j.date_naissance;
+        document.getElementById('valLicence').textContent = j.num_licence;
+        document.getElementById('valTaille').textContent = j.taille;
+        document.getElementById('valPoids').textContent = j.poids;
+
+        const badge = document.getElementById('statusBadge');
+        badge.textContent = j.statut;
+        badge.className = 'status-badge status-' + j.statut.toLowerCase().replace('é', 'e');
+
+        const imgDiv = document.getElementById('playerImage');
+        if (j.image) {
+            imgDiv.innerHTML = `<img src="/ftm/modele/img/players/${j.image}" alt="Photo">`;
+        } else {
+            const initials = (j.prenom[0] + j.nom[0]).toUpperCase();
+            imgDiv.innerHTML = `<div class="player-image-placeholder">${initials}</div>`;
+        }
+
+        const commentsList = document.getElementById('commentsList');
+        if (data.commentaires && data.commentaires.length > 0) {
+            commentsList.innerHTML = data.commentaires.map(c => `
+            <div class="comment-item">
+                <div class="comment-date">${new Date(c.date_commentaire).toLocaleDateString()}</div>
+                <div class="comment-text">${c.commentaire}</div>
+            </div>
+        `).join('');
+        } else {
+            commentsList.innerHTML = '<div class="no-comments">Aucun commentaire pour ce joueur.</div>';
+        }
+
+        document.getElementById('linkModifier').href = `modifierJoueur.php?id=${j.id_joueur}`;
+        document.getElementById('playerContainer').style.display = 'block';
+    });
+</script>
 
 <?php require_once __DIR__ . '/../footer.php'; ?>

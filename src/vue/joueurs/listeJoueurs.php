@@ -15,26 +15,26 @@ require_once __DIR__ . '/../header.php';
 
 <div class="stats-bar">
     <div class="stat-item">
-        <div class="stat-number">...</div>
+        <div class="stat-number" id="statTotal">...</div>
         <div class="stat-label">Total Joueurs</div>
     </div>
     <div class="stat-item">
-        <div class="stat-number">...</div>
+        <div class="stat-number" id="statActifs">...</div>
         <div class="stat-label">Joueurs Actifs</div>
     </div>
     <div class="stat-item">
-        <div class="stat-number">...</div>
+        <div class="stat-number" id="statBlesses">...</div>
         <div class="stat-label">Joueurs Blessés</div>
     </div>
 </div>
 
 <div class="search-section">
-    <form class="search-form">
+    <form id="filterForm" class="search-form">
         <div class="search-input-group">
             <span class="search-icon">🔍</span>
-            <input type="text" name="search" placeholder="Rechercher un joueur...">
+            <input type="text" name="search" id="searchInput" placeholder="Rechercher un joueur...">
         </div>
-        <select name="statut" class="filter-select">
+        <select name="statut" id="statusFilter" class="filter-select">
             <option value="">Tous les statuts</option>
             <option value="Actif">Actif</option>
             <option value="Blessé">Blessé</option>
@@ -66,5 +66,14 @@ require_once __DIR__ . '/../header.php';
 </table>
 
 <script src="/ftm/vue/joueurs/script.js"></script>
+<script>
+    // Gestion des filtres en JS
+    document.getElementById('filterForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const search = document.getElementById('searchInput').value;
+        const statut = document.getElementById('statusFilter').value;
+        getAllJoueurs(search, statut);
+    });
+</script>
 
 <?php require_once __DIR__ . '/../footer.php'; ?>

@@ -20,7 +20,7 @@
                 <p class="app-subtitle">Gérez votre équipe</p>
             </div>
 
-            <form class="login-form" action="../api/login.php" method="POST">
+            <form id="loginForm" class="login-form">
                 <div class="input-group">
                     <span class="input-icon">
                         <i class="fas fa-user"></i>
@@ -44,12 +44,10 @@
                     </button>
                 </div>
 
-                <?php if (isset($_GET['error']) && $_GET['error'] === 'invalid'): ?>
-                    <div class="error-message">
-                        <i class="fas fa-exclamation-circle"></i>
-                        Identifiants invalides
-                    </div>
-                <?php endif; ?>
+                <div id="errorBox" class="error-message" style="display: <?php echo (isset($_GET['error'])) ? 'block' : 'none'; ?>;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText">Identifiants invalides</span>
+                </div>
             </form>
 
             <div class="login-footer">
@@ -57,6 +55,53 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const login = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorBox = document.getElementById('errorBox');
+            const errorText = document.getElementById('errorText');
+
+            try {
+                // 1. Récupération du Token JWT via l'API d'Auth
+                const response = await fetch('../auth/index.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        login,
+                        password
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Stockage du token pour les futurs fetch
+                    localStorage.setItem('token', result.data);
+
+                    // 2. Compatibilité Session PHP (pour header.php)
+                    const formData = new FormData();
+                    formData.append('username', login);
+                    formData.append('password', password);
+                    await fetch('../api/login.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    window.location.href = 'accueil.php';
+                } else {
+                    errorBox.style.display = 'block';
+                    errorText.innerText = result.error || "Identifiants incorrects";
+                }
+            } catch (err) {
+                console.error("Erreur de connexion:", err);
+            }
+        });
+    </script>
 </body>
 
 </html>

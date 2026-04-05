@@ -1,160 +1,141 @@
-// L'URL de base de l'API
-const baseUrl = ' https://ribou.fr/ftm/api/';
-const resource = '/joueur/index.php'
+// Configuration de l'API (Chemin relatif à la racine du serveur)
+const baseUrl = '/ftm/api';
+const resource = '/joueur/index.php';
 
-async function getAll() {
+/**
+ * Récupère les en-têtes d'authentification incluant le token JWT stocké
+ */
+function getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+    };
+}
+
+/**
+ * Récupère tous les joueurs (avec filtres optionnels)
+ */
+async function getAllJoueurs(search = '', statut = '') {
     try {
-        const response = await fetch(`${baseUrl}${resource}`);
+        const url = new URL(window.location.origin + baseUrl + resource);
+        if (search) url.searchParams.append('search', search);
+        if (statut) url.searchParams.append('statut', statut);
+
+        const response = await fetch(url, { headers: getAuthHeaders() });
+
         if (!response.ok) {
+            if (response.status === 401) window.location.href = '../index.php';
             throw new Error(`Response status: ${response.status}`);
         }
         const result = await response.json();
-        console.log(result);
-        displayData(result.data)
+        displayJoueursTable(result);
     } catch (error) {
-        console.error(error.message);
+        console.error('Erreur lors de la récupération des joueurs:', error);
     }
 }
 
-function getJoueur() {
-    var valeurDeLaBalise = document.getElementById('phraseID').value;
-
-    fetch(`${baseUrl}${resource}/${valeurDeLaBalise}`)
-        .then(response => response.json()) // Convertir la réponse JSON en objet Javascript
-        .then(result => {
-            console.log(result); //Afficher en console les données récupérées
-            if (result.status_code == 200) {
-                displayData(result.data);
-                alert('Phrase obtenue : ' + result.data[0].phrase + '\n(Voir le tableau plus bas pour plus de données)')
-            } else if (result.status_code == 404) {
-                alert('Erreur 404 : pas de données trouvées à l\'id ' + valeurDeLaBalise + '.')
-            }
-        })
-        .catch(error => console.error('Erreur Fetch:', error)); // Gérer les erreurs
-
-    // d'une autre façon pour tester :
-    // try {
-    //     const response = await fetch(`${baseUrl}${resource}/${valeurDeLaBalise}`);
-    //     if (!response.ok) {
-    //         throw new Error(`Response status: ${response.status}`);
-    //     }
-    //     const result = await response.json();
-    //     console.log(result);
-    //     displayData(result.data)
-    // } catch (error) {
-    //     console.error(error.message);
-    // }
+/**
+ * Récupère un joueur spécifique par son ID
+ */
+async function getJoueur(id) {
+    try {
+        const response = await fetch(`${baseUrl}${resource}?id=${id}`, { headers: getAuthHeaders() });
+        if (response.status === 401) window.location.href = '../index.php';
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Erreur lors de la récupération du joueur:', error);
+    }
 }
 
-// Méthode pour créer une nouvelle phrase
-function addPhrase() {
-    /*TODO : Remplacer/Adapter le code ci-dessous par votre code d'envoi d'une phrase avec la méthode POST*/
-    // Récupérer la valeur d'une balise <input> identifiée avec l'id 'newPhrase' : <input type="text" id="newPhrase">
-    var valeurDeLaBalise = document.getElementById('newPhrase').value;
-    // Données à envoyer
-    const phraseData = {
-        phrase: valeurDeLaBalise
-    };
-    // Options de requête pour un envoi en méthode POST d’une donnée JSON
-    const requestOptions = {
-        method: 'POST', // Méthode HTTP
-        headers: { 'Content-Type': 'application/json' }, // Type de contenu
-        body: JSON.stringify(phraseData) // Corps de la requête
-    };
-    // Effectuer une requête POST pour envoyer des données JSON
-    fetch(`${baseUrl}${resource}`, requestOptions)
-        .then(response => response.json()) // Convertir la réponse en JSON
-        .then(result => {
-            console.log(result); //Afficher en console les données récupérées
-            alert('J\'envoie une phrase pour être créée dans la base de données, id : ' + result.data[0].id);
-        })
-        .catch(error => console.error('Erreur Fetch:', error)); // Gérer les erreurs           
+/**
+ * Ajoute un nouveau joueur via l'API
+ */
+async function addJoueur(joueurData) {
+    try {
+        const response = await fetch(`${baseUrl}${resource}`, {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify(joueurData)
+        });
+        if (response.status === 401) window.location.href = '../index.php';
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout du joueur:', error);
+    }
 }
 
-// Méthode pour mettre à jour une phrase
-function updatePhrase() {
-    /*TODO : Remplacer/Adapter le code ci-dessous par votre code de mise à jour d'une phrase avec la méthode PATCH puis PUT*/
-    var valeurId = document.getElementById('updatePhraseID').value;
-    var valeurPhrase = document.getElementById('updateContent').value;
-    var valeurVote = document.getElementById('updateVote').value;
-    var valeurFaute = document.getElementById('updateFaute').value;
-    var valeurSignalement = document.getElementById('updateSignalement').value;
-    var valeurMethod = document.getElementById('updateMethod').value;
-    // Données à envoyer
-    const phraseData = {
-        id: valeurId,
-        phrase: valeurPhrase,
-        vote: valeurVote,
-        faute: valeurFaute,
-        signalement: valeurSignalement
-    };
-    const requestOptions = {
-        method: valeurMethod, // Méthode HTTP
-        headers: { 'Content-Type': 'application/json' }, // Type de contenu
-        body: JSON.stringify(phraseData) // Corps de la requête
-    };
-    fetch(`${baseUrl}${resource}`, requestOptions)
-        .then(response => response.json()) // Convertir la réponse en JSON
-        .then(result => {
-            console.log(result); //Afficher en console les données récupérées
-            alert('J\'envoie une phrase pour être créée dans la base de données, id : ' + result.data[0].id);
-        })
-        .catch(error => console.error('Erreur Fetch:', error)); // Gérer les erreurs   
+/**
+ * Met à jour un joueur existant
+ */
+async function updateJoueur(id, joueurData, method = 'PUT') {
+    try {
+        const response = await fetch(`${baseUrl}${resource}?id=${id}`, {
+            method: method,
+            headers: getAuthHeaders(),
+            body: JSON.stringify(joueurData)
+        });
+        if (response.status === 401) window.location.href = '../index.php';
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour:', error);
+    }
 }
 
-// Méthode pour supprimer une phrase
-function deletePhrase() {
-    /*TODO : Remplacer/Adapter le code ci-dessous par votre code de suppression d'une phrase avec la méthode DELETE*/
+/**
+ * Supprime un joueur
+ */
+async function deleteJoueur(id) {
+    if (!confirm('Voulez-vous vraiment supprimer ce joueur ?')) return;
 
-    var valeurDeLaBalise = document.getElementById('deletePhraseID').value;
-
-    // Options de requête pour un envoi en méthode POST d’une donnée JSON
-    const requestOptions = {
-        method: 'DELETE', // Méthode HTTP
-        headers: { 'Content-Type': 'application/json' }, // Type de contenu
-    };
-    // Effectuer une requête POST pour envoyer des données JSON
-    fetch(`${baseUrl}${resource}/${valeurDeLaBalise}`, requestOptions)
-        .then(response => response.json()) // Convertir la réponse en JSON
-        .then(result => {
-            console.log(result); //Afficher en console les données récupérées
-            alert('Phrase supprimée (id : ' + valeurDeLaBalise + ')');
-        })
-        .catch(error => console.error('Erreur Fetch:', error)); // Gérer les erreurs  
+    try {
+        const response = await fetch(`${baseUrl}${resource}?id=${id}`, {
+            method: 'DELETE',
+            headers: getAuthHeaders()
+        });
+        if (response.status === 401) window.location.href = '../index.php';
+        if (response.ok) location.reload();
+    } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
+    }
 }
 
-// Méthode pour afficher les données dans le tableau HTML
-function displayData(phrases) {
-    const tableBody = document.getElementById('responseTableBody');
-    tableBody.innerHTML = ''; // nettoie le tableau avant de le remplir
-    const apiResponse = document.getElementById('apiResponse');
-    apiResponse.style.display = phrases.length > 0 ? 'block' : 'none';
+/**
+ * Affiche les joueurs dans le tableau HTML
+ */
+function displayJoueursTable(joueurs) {
+    const tableBody = document.querySelector('.players-table tbody');
+    if (!tableBody) return;
+    // Sécurité : on vérifie que tableBody existe et que joueurs est bien un tableau
+    if (!tableBody || !Array.isArray(joueurs)) return;
 
-    phrases.forEach(phrase => {
+    // Mise à jour des statistiques en haut de page
+    if (document.getElementById('statTotal')) document.getElementById('statTotal').textContent = joueurs.length;
+    if (document.getElementById('statActifs')) document.getElementById('statActifs').textContent = joueurs.filter(j => j.statut === 'Actif').length;
+    if (document.getElementById('statBlesses')) document.getElementById('statBlesses').textContent = joueurs.filter(j => j.statut === 'Blessé').length;
+
+    tableBody.innerHTML = '';
+    joueurs.forEach(j => {
         const row = tableBody.insertRow();
-        row.insertCell(0).textContent = phrase.id;
-        row.insertCell(1).textContent = phrase.phrase;
-        row.insertCell(2).textContent = phrase.date_ajout;
-        row.insertCell(3).textContent = phrase.date_modif;
-        row.insertCell(4).textContent = phrase.vote;
-        row.insertCell(5).textContent = phrase.faute;
-        row.insertCell(6).textContent = phrase.signalement;
+        row.insertCell(0).textContent = `${j.prenom} ${j.nom}`;
+        row.insertCell(1).textContent = j.num_licence;
+        row.insertCell(2).textContent = `${j.taille} cm`;
+        row.insertCell(3).textContent = `${j.poids} kg`;
+        // Correction de la classe pour gérer les accents (ex: Blessé -> blesse)
+        const statusClass = j.statut.toLowerCase().replace('é', 'e');
+        row.insertCell(4).innerHTML = `<span class="status-badge status-${statusClass}">${j.statut}</span>`;
+        const actions = row.insertCell(5);
+        actions.innerHTML = `
+            <div class="actions-cell">
+                <a href="ficheJoueur.php?id=${j.id_joueur}" class="action-btn action-btn-view">Voir</a>
+                <button onclick="deleteJoueur(${j.id_joueur})" class="action-btn action-btn-delete">Supprimer</button>
+            </div>
+        `;
     });
 }
 
-// Mise à jour de la fonction pour afficher les informations de réponse
-function displayInfoResponse(baliseInfo, info) {
-    if (info) {
-        baliseInfo.textContent = `Statut: ${info.status}, Code: ${info.status_code}, Message: ${info.status_message}`;
-        baliseInfo.style.display = 'block';
-    } else {
-        baliseInfo.style.display = 'none';
-    }
-}
-
-// Attacher les événements aux boutons
-document.getElementById('getAllPhrases').addEventListener('click', getAllPhrases);
-document.getElementById('getPhrase').addEventListener('click', getPhrase);
-document.getElementById('addPhrase').addEventListener('click', addPhrase);
-document.getElementById('deletePhrase').addEventListener('click', deletePhrase);
-document.getElementById('updatePhrase').addEventListener('click', updatePhrase);
+// Chargement initial de la liste
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.players-table')) getAllJoueurs();
+});
