@@ -18,7 +18,6 @@
 | API Backend | https://ftmanager.alwaysdata.net/ |
 | API Authentification | https://ftm-auth.alwaysdata.net/ |
 
-*(Les URLs sont susceptibles de changer si les API sont hebergees sur des domaines separes.)*
 
 ### Identifiants de connexion
 
