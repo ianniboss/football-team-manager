@@ -1,6 +1,7 @@
 <?php
-// Empêche les warnings/erreurs PHP de polluer la réponse JSON
-ini_set('display_errors', 0);
+// Activé temporairement pour voir l'erreur réelle en console JS
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 require_once __DIR__ . '/../../modele/RencontreDAO.php';
 require_once __DIR__ . '/../../modele/ParticiperDAO.php';
@@ -19,10 +20,12 @@ function sanitizeStadiumName($adresse)
 {
     $parts = explode(',', $adresse);
     $name  = trim($parts[0]);
-    $name  = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $name);
-    $name  = strtolower(str_replace(' ', '_', $name));
-    $name  = preg_replace('/[^a-z0-9_]/', '', $name);
-    return $name;
+
+    // Remplacement de iconv (souvent source de 500) par un nettoyage plus simple
+    $name = str_replace([' ', '\''], '_', $name);
+    $name = preg_replace('/[^A-Za-z0-9\_]/', '', $name);
+
+    return strtolower($name);
 }
 
 /**
@@ -229,18 +232,6 @@ function patchRencontre($id, $data)
 /**
  * PATCH /api.php?id=X&action=resultat
  * Saisit le résultat d'un match terminé et les évaluations des joueurs.
- *
- * Corps JSON attendu :
- * {
- *   "resultat": "Victoire",           // obligatoire
- *   "evaluations": {                  // optionnel
- *     "12": 8,
- *     "15": 6
- *   }
- * }
- *
- * Équivalent du changerStatut des joueurs : action ciblée sur un seul aspect
- * de la ressource, sans toucher au reste (date, adresse, équipe…).
  */
 function saisirResultatEtEvaluations($id)
 {
@@ -308,20 +299,35 @@ function saisirResultatEtEvaluations($id)
  */
 function deleteRencontre($id)
 {
-    global $rencontreDAO;
+    global $rencontreDAO, $participerDAO;
 
     $id = validateId($id);
     if ($id === null) {
         return sendError("L'ID doit être un entier valide et positif.", 400);
     }
 
-    if (!$rencontreDAO->getRencontreById($id)) {
+    $rencontre = $rencontreDAO->getRencontreById($id);
+    if (!$rencontre) {
         return sendError("Rencontre introuvable.", 404);
     }
 
-    $rencontreDAO->supprimerRencontre($id);
+    // 1. D'ABORD : Supprimer les participations (feuille de match) pour éviter l'erreur de clé étrangère
+    $participerDAO->supprimerParticipationsParMatch($id);
 
-    return sendSuccess(null, 204);
+    // 2. Supprimer l'image du stade si elle existe
+    if (!empty($rencontre['image_stade'])) {
+        $imagePath = __DIR__ . '/../../modele/img/matchs/' . $rencontre['image_stade'];
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+    }
+
+    // 3. ENFIN : Supprimer la rencontre
+    if ($rencontreDAO->supprimerRencontre($id)) {
+        return sendSuccess(null, 204);
+    } else {
+        return sendError("Erreur lors de la suppression en base de données.", 500);
+    }
 }
 
 // --- Point d'entrée principal ---

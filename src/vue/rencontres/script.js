@@ -31,15 +31,20 @@ async function getAllRencontres() {
         const response = await fetch(baseUrl, { headers: getAuthHeaders() });
         if (handleUnauthorized(response)) return;
 
-        // Vérification de la réussite de la requête avant de parser le JSON
+        const text = await response.text(); // On récupère le texte BRUT une seule fois
+
         if (!response.ok) {
-            const errorBody = await response.text();
-            console.error('Erreur serveur (Text):', errorBody);
-            throw new Error(`Erreur HTTP : ${response.status}`);
+            console.error("Le serveur a renvoyé une erreur HTTP:", response.status, text);
+            throw new Error(`Erreur serveur ${response.status}`);
         }
 
-        const result = await response.json();
-        displayRencontresTable(result);
+        try {
+            const result = JSON.parse(text); // On tente de transformer le texte en JSON
+            displayRencontresTable(result);
+        } catch (parseError) {
+            console.error("Réponse corrompue (pas du JSON) :", text);
+            throw new Error("La réponse du serveur est illisible.");
+        }
     } catch (error) {
         console.error('Erreur lors de la récupération des rencontres:', error);
     }
@@ -109,10 +114,13 @@ async function deleteMatch(id) {
         if (handleUnauthorized(response)) return;
 
         if (response.ok) {
-            location.reload();
+            alert("Match supprimé avec succès !");
+            // On force le rechargement des données depuis l'API
+            getAllRencontres();
         } else {
-            const result = await response.json();
-            alert(result.error || "Erreur lors de la suppression");
+            const text = await response.text();
+            const result = JSON.parse(text || '{}');
+            alert(result.error || "Le match n'a pas pu être supprimé (vérifiez s'il y a des joueurs liés).");
         }
     } catch (error) {
         console.error('Erreur Fetch:', error);

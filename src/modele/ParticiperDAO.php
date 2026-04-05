@@ -72,6 +72,16 @@ class ParticiperDAO
     }
 
     /**
+     * Supprime toutes les participations liées à une rencontre (DELETE)
+     */
+    public function supprimerParticipationsParMatch($id_rencontre)
+    {
+        $sql = "DELETE FROM participer WHERE id_rencontre = :id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute(array(':id' => $id_rencontre));
+    }
+
+    /**
      * Enregistre l'évaluation d'un joueur (UPDATE)
      */
     public function noterJoueur($id_participation, $evaluation)
