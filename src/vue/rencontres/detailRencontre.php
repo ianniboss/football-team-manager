@@ -107,7 +107,7 @@ require_once __DIR__ . '/../header.php';
             document.getElementById('btnSelection').classList.add('disabled');
         } else {
             document.getElementById('btnModifier').href = `formRencontre.php?id=${r.id_rencontre}`;
-            document.getElementById('btnSelection').href = `/ftm/api/selection/AfficherSelection.php?id_rencontre=${r.id_rencontre}`;
+            document.getElementById('btnSelection').href = `../selection/feuilleMatch.php?id_rencontre=${r.id_rencontre}`;
         }
         document.getElementById('btnResultat').href = `formResultat.php?id=${r.id_rencontre}`;
 

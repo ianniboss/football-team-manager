@@ -1,4 +1,7 @@
 <?php
+// Empêche les warnings PHP de polluer le JSON
+ini_set('display_errors', 0);
+
 require_once __DIR__ . '/../../modele/RencontreDAO.php';
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
 require_once __DIR__ . '/../../modele/ParticiperDAO.php';
@@ -63,13 +66,13 @@ function sauvegarderSelection($data)
     global $participerDAO;
 
     $id_rencontre = validateId($data['id_rencontre']);
-    $joueursEnregristres = $data['joueurs'] ?? []; // Array d'objets {id_joueur, poste, titulaire}
+    $joueursEnregistres = $data['joueurs'] ?? []; // Array d'objets {id_joueur, poste, titulaire, selected}
 
     if (!$id_rencontre) return sendError("ID rencontre invalide.", 400);
 
     // Validation du nombre de titulaires
     $titulairesCount = 0;
-    foreach ($joueursEnregristres as $j) {
+    foreach ($joueursEnregistres as $j) {
         if (!empty($j['selected']) && !empty($j['titulaire'])) $titulairesCount++;
     }
 
@@ -83,7 +86,7 @@ function sauvegarderSelection($data)
         $existingIds[$p['id_joueur']] = $p['id_participation'];
     }
 
-    foreach ($joueursEnregristres as $j) {
+    foreach ($joueursEnregistres as $j) {
         if (empty($j['selected'])) continue;
 
         $id_j = (int)$j['id_joueur'];
