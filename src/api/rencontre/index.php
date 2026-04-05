@@ -66,10 +66,7 @@ function getAll()
 {
     global $rencontreDAO;
     $rencontres = $rencontreDAO->getRencontres();
-    return sendSuccess([
-        'data'  => array_values($rencontres),
-        'total' => count($rencontres),
-    ]);
+    return sendSuccess(array_values($rencontres));
 }
 
 /**
@@ -294,9 +291,7 @@ function deleteRencontre($id)
 
     $rencontreDAO->supprimerRencontre($id);
 
-    http_response_code(204);
-    header('Access-Control-Allow-Origin: *');
-    // 204 No Content : pas de corps de réponse
+    return sendSuccess(null, 204);
 }
 
 // --- Point d'entrée principal ---
@@ -322,11 +317,11 @@ function main()
             if ($id) {
                 return sendError("L'ID ne doit pas être fourni pour une requête POST.", 400);
             }
-            $data = validateJsonInput();
-            if ($data === false) {
-                return sendError("Le JSON fourni est mal formé.", 400);
+            // creerRencontre utilise directement $_POST pour gérer l'upload
+            if (empty($_POST)) {
+                return sendError("Données de formulaire manquantes.", 400);
             }
-            return creerRencontre($data);
+            return creerRencontre();
         case 'PUT':
             if ($role !== 'admin') {
                 return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
