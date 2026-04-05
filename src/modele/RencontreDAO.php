@@ -92,4 +92,3 @@ class RencontreDAO
         return $stmt->execute(array(':id' => $id_rencontre));
     }
 }
-?>

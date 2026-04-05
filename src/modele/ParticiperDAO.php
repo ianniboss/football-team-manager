@@ -177,4 +177,3 @@ class ParticiperDAO
         return $serie;
     }
 }
-?>
