@@ -15,8 +15,8 @@
 | Application | URL |
 |---|---|
 | Frontend | https://www.ribou.fr/ftm/vue/ |
-| API Backend | https://www.ribou.fr/ftm/api/ |
-| API Authentification | https://www.ribou.fr/ftm/auth/ |
+| API Backend | https://ftmanager.alwaysdata.net/ |
+| API Authentification | https://ftm-auth.alwaysdata.net/ |
 
 *(Les URLs sont susceptibles de changer si les API sont hebergees sur des domaines separes.)*
 
