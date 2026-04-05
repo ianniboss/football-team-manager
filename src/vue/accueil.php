@@ -63,7 +63,7 @@ require_once __DIR__ . '/header.php';
                 <p>Enregistrer un nouveau membre</p>
             </div>
         </a>
-        <a href="/ftm/vue/rencontres/ajouterRencontre.php" class="action-card">
+        <a href="/ftm/vue/rencontres/formRencontre.php" class="action-card">
             <div class="action-icon">📅</div>
             <div>
                 <h4>Planifier un match</h4>
