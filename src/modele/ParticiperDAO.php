@@ -186,4 +186,15 @@ class ParticiperDAO
         }
         return $serie;
     }
+
+    /**
+     * Compte le nombre de matchs auxquels un joueur a participe
+     */
+    public function compterParticipations($id_joueur)
+    {
+        $sql = "SELECT COUNT(*) FROM participer WHERE id_joueur = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(array(':id' => $id_joueur));
+        return (int)$stmt->fetchColumn();
+    }
 }
