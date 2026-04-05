@@ -1,8 +1,13 @@
 <?php
+// Empêche les warnings/erreurs PHP de polluer la réponse JSON
+ini_set('display_errors', 0);
+
 require_once __DIR__ . '/../../modele/RencontreDAO.php';
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
 require_once __DIR__ . '/../../modele/ParticiperDAO.php';
+require_once __DIR__ . '/../../jwt_utils.php';
 require_once __DIR__ . '/../../api_utils.php';
+require_once __DIR__ . '/../../../../config.php';
 
 $rencontreDAO  = new RencontreDAO();
 $joueurDAO     = new JoueurDAO();
@@ -69,20 +74,30 @@ function getGlobalStats()
     }
 
     // 3. Réponse agrégée
-    return sendSuccess([
-        'club_stats' => $statsGlobales,
-        'player_stats' => $tableauJoueurs
+    return sendSuccess([ // L'API renvoie un objet agrégé, ce qui est bien pour les stats
+        'club_stats' => $statsGlobales, // Statistiques globales de l'équipe
+        'player_stats' => $tableauJoueurs // Statistiques détaillées par joueur
     ]);
 }
 
 // --- Main ---
 
 $user = checkAuth();
-if (!$user) echo sendError("Accès refusé. Token invalide ou expiré.", 401);
+if (!$user) {
+    echo sendError("Accès refusé. Token invalide ou expiré.", 401);
+    exit;
+}
 $method = $_SERVER['REQUEST_METHOD'];
-
-if ($method === 'GET') {
-    echo getGlobalStats();
-} else {
-    echo sendError("Méthode non autorisée.", 405);
+switch ($method) {
+    case 'GET':
+        echo getGlobalStats();
+        break;
+    case "OPTIONS":
+        header('Access-Control-Allow-Methods: GET, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Authorization');
+        http_response_code(204);
+        exit;
+    default:
+        echo sendError("Méthode non autorisée.", 405);
+        break;
 }
