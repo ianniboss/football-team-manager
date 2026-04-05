@@ -23,8 +23,8 @@
 
 | Role | Login | Mot de passe |
 |---|---|---|
-| Administrateur | *(a completer)* | *(a completer)* |
-| Invite | *(a completer)* | *(a completer)* |
+| Administrateur | admin | iutinfo |
+| Invite (guest) | anonyme | anonyme |
 
 L'administrateur peut effectuer toutes les operations (lecture, creation, modification, suppression). L'invite a un acces en lecture seule.
 
