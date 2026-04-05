@@ -46,6 +46,56 @@ async function getAllRencontres() {
 }
 
 /**
+ * Récupère les détails d'une rencontre (infos + feuille de match)
+ */
+async function getRencontreDetails(id) {
+    try {
+        const response = await fetch(`${baseUrl}?id=${id}`, { headers: getAuthHeaders() });
+        if (handleUnauthorized(response)) return;
+        if (!response.ok) throw new Error(`Erreur: ${response.status}`);
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors de la récupération des détails:', error);
+    }
+}
+
+/**
+ * Enregistre une rencontre (POST avec FormData pour l'image)
+ */
+async function saveRencontre(formData) {
+    try {
+        const response = await fetch(baseUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: formData
+        });
+        if (handleUnauthorized(response)) return;
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors de l\'enregistrement:', error);
+    }
+}
+
+/**
+ * Enregistre le résultat et les évaluations (PATCH avec JSON)
+ */
+async function saveResultat(id, data) {
+    try {
+        const response = await fetch(`${baseUrl}?id=${id}&action=resultat`, {
+            method: 'PATCH',
+            headers: getAuthHeaders(),
+            body: JSON.stringify(data)
+        });
+        if (handleUnauthorized(response)) return;
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors de l\'enregistrement du résultat:', error);
+    }
+}
+
+/**
  * Supprime une rencontre
  */
 async function deleteMatch(id) {
@@ -101,7 +151,7 @@ function displayRencontresTable(rencontres) {
         const actions = row.insertCell(5);
         actions.innerHTML = `
             <div class="actions-cell">
-                <a href="ficheRencontre.php?id=${r.id_rencontre}" class="action-btn action-btn-view">Détails</a>
+                <a href="detailRencontre.php?id=${r.id_rencontre}" class="action-btn action-btn-view">Détails</a>
                 <button onclick="deleteMatch(${r.id_rencontre})" class="action-btn action-btn-delete">Supprimer</button>
             </div>
         `;

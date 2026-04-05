@@ -1,100 +1,58 @@
 <?php
 require_once __DIR__ . '/../header.php';
-
-$rencontre = $_SESSION['rencontre_detail'] ?? null;
-$joueursParticipe = $_SESSION['joueurs_participe'] ?? [];
-
-if (!$rencontre) {
-    header("Location: /ftm/vue/rencontres/listeRencontres.php");
-    exit;
-}
 ?>
-<!-- utilise RechercherUneRencontre.php -->
 <link rel="stylesheet" href="/ftm/css/rencontres.css">
+<script src="script.js" defer></script>
 
-<div class="match-detail-container">
-    <a href="/api/rencontre/ObtenirToutesLesRencontres.php" class="back-link">
+<div class="match-detail-container" id="detailContainer" style="display: none;">
+    <a href="listeRencontres.php" class="back-link">
         ← Retour au calendrier
     </a>
 
-    <?php
-    $hasStadiumImage = !empty($rencontre['image_stade']);
-    $stadiumStyle = $hasStadiumImage
-        ? "background: linear-gradient(135deg, rgba(45, 52, 54, 0.9) 0%, rgba(0, 0, 0, 0.85) 100%), url('/modele/img/matchs/" . htmlspecialchars($rencontre['image_stade']) . "'); background-size: cover; background-position: center;"
-        : "background: linear-gradient(135deg, #2d3436 0%, #000000 100%);";
-    ?>
-    <div class="match-header" style="<?= $stadiumStyle ?>">
-        <h1>Match contre <?php echo htmlspecialchars($rencontre['nom_equipe_adverse']); ?></h1>
+    <div class="match-header" id="matchHeader">
+        <h1 id="matchTitle">Match contre ...</h1>
 
         <div class="match-meta">
             <div class="meta-item">
                 <span class="label">Date</span>
-                <span class="value"><?php echo $rencontre['date_rencontre']; ?></span>
+                <span class="value" id="valDate"></span>
             </div>
             <div class="meta-item">
                 <span class="label">Heure</span>
-                <span class="value"><?php echo $rencontre['heure']; ?></span>
+                <span class="value" id="valHeure"></span>
             </div>
             <div class="meta-item">
                 <span class="label">Lieu</span>
-                <?php $venueClass = $rencontre['lieu'] === 'Domicile' ? 'venue-domicile' : 'venue-exterieur'; ?>
-                <span class="venue-badge <?= $venueClass ?>"><?php echo $rencontre['lieu']; ?></span>
+                <span id="venueBadge" class="venue-badge"></span>
             </div>
             <div class="meta-item">
                 <span class="label">Adresse</span>
-                <span class="value"><?php echo htmlspecialchars($rencontre['adresse']); ?></span>
+                <span class="value" id="valAdresse"></span>
             </div>
             <div class="meta-item">
                 <span class="label">Résultat</span>
-                <?php
-                $resultat = $rencontre['resultat'];
-                if ($resultat === 'Victoire') {
-                    $resultClass = 'result-victoire';
-                    $resultText = '✓ Victoire';
-                } else if ($resultat === 'Defaite') {
-                    $resultClass = 'result-defaite';
-                    $resultText = '✗ Défaite';
-                } else if ($resultat === 'Nul') {
-                    $resultClass = 'result-nul';
-                    $resultText = '= Nul';
-                } else {
-                    $resultClass = 'result-avenir';
-                    $resultText = '⏱ À jouer';
-                }
-                ?>
-                <span class="result-badge <?= $resultClass ?>"><?= $resultText ?></span>
+                <span id="resultBadge" class="result-badge"></span>
             </div>
         </div>
     </div>
 
-    <?php
-    $matchDate = new DateTime($rencontre['date_rencontre']);
-    $today = new DateTime('today');
-    $isMatchPast = $matchDate < $today;
-    ?>
-
-    <?php if ($isMatchPast): ?>
-        <div class="match-locked-notice">
-            <span class="icon">🔒</span>
-            <span>Ce match est passé. Seule la saisie du résultat et des évaluations est disponible.</span>
-        </div>
-    <?php endif; ?>
+    <div id="lockedNotice" class="match-locked-notice" style="display: none;">
+        <span class="icon">🔒</span>
+        <span>Ce match est passé. Seule la saisie du résultat et des évaluations est disponible.</span>
+    </div>
 
     <div class="actions-grid">
-        <a href="<?php echo $isMatchPast ? '#' : '/api/rencontre/ModifierUneRencontre.php?id=' . $rencontre['id_rencontre']; ?>"
-            class="action-card <?php echo $isMatchPast ? 'disabled' : ''; ?>">
+        <a id="btnModifier" href="#" class="action-card">
             <div class="icon">✏️</div>
             <h4>Modifier infos</h4>
             <p>Éditer les détails du match</p>
         </a>
-        <a href="/api/rencontre/SaisirResultatEtEvaluations.php?id=<?php echo $rencontre['id_rencontre']; ?>"
-            class="action-card">
+        <a id="btnResultat" href="#" class="action-card">
             <div class="icon">📊</div>
             <h4>Saisir Résultat</h4>
             <p>Entrer le score et les notes</p>
         </a>
-        <a href="<?php echo $isMatchPast ? '#' : '/api/selection/AfficherSelection.php?id_rencontre=' . $rencontre['id_rencontre']; ?>"
-            class="action-card <?php echo $isMatchPast ? 'disabled' : ''; ?>">
+        <a id="btnSelection" href="#" class="action-card">
             <div class="icon">👥</div>
             <h4>Gérer la sélection</h4>
             <p>Convoquer les joueurs</p>
@@ -103,45 +61,80 @@ if (!$rencontre) {
 
     <div class="players-section">
         <h3>📋 Feuille de match</h3>
-
-        <?php if (empty($joueursParticipe)): ?>
-            <div class="empty-state">
-                <p>Aucun joueur sélectionné pour ce match.</p>
-            </div>
-        <?php else: ?>
-            <ul class="player-list">
-                <?php foreach ($joueursParticipe as $j): ?>
-                    <li class="player-item">
-                        <div class="player-info">
-                            <?php if (!empty($j['image'])): ?>
-                                <img src="/modele/img/players/<?php echo htmlspecialchars($j['image']); ?>"
-                                    alt="Photo de <?php echo htmlspecialchars($j['prenom']); ?>"
-                                    style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #e0e0e0;">
-                            <?php else: ?>
-                                <div class="player-avatar">
-                                    <?= strtoupper(substr($j['prenom'], 0, 1) . substr($j['nom'], 0, 1)) ?>
-                                </div>
-                            <?php endif; ?>
-                            <div>
-                                <div class="player-name"><?php echo htmlspecialchars($j['prenom'] . ' ' . $j['nom']); ?></div>
-                                <div class="player-role"><?php echo htmlspecialchars($j['poste']); ?></div>
-                            </div>
-                        </div>
-                        <div class="player-stats">
-                            <span class="titulaire-badge <?= $j['titulaire'] ? 'titular' : 'sub' ?>">
-                                <?= $j['titulaire'] ? 'Titulaire' : 'Remplaçant' ?>
-                            </span>
-                            <?php if ($j['evaluation']): ?>
-                                <div class="rating">
-                                    ⭐ <?php echo $j['evaluation']; ?>/5
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
+        <div id="playerListContainer">
+            <!-- Rempli par JS -->
+        </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (!id) return window.location.href = 'listeRencontres.php';
+
+        const data = await getRencontreDetails(id);
+        if (!data) return;
+
+        const r = data.rencontre;
+        const players = data.feuille_match;
+
+        // Remplissage En-tête
+        document.getElementById('matchTitle').textContent = `Match contre ${r.nom_equipe_adverse}`;
+        document.getElementById('valDate').textContent = r.date_rencontre;
+        document.getElementById('valHeure').textContent = r.heure;
+        document.getElementById('valAdresse').textContent = r.adresse;
+
+        const vBadge = document.getElementById('venueBadge');
+        vBadge.textContent = r.lieu;
+        vBadge.className = `venue-badge ${r.lieu === 'Domicile' ? 'venue-domicile' : 'venue-exterieur'}`;
+
+        const rBadge = document.getElementById('resultBadge');
+        const res = r.resultat;
+        rBadge.textContent = res ? `✓ ${res}` : '⏱ À jouer';
+        rBadge.className = `result-badge ${res ? 'result-' + res.toLowerCase() : 'result-avenir'}`;
+
+        // Image de fond
+        if (r.image_stade) {
+            document.getElementById('matchHeader').style.backgroundImage = `linear-gradient(135deg, rgba(45, 52, 54, 0.9) 0%, rgba(0, 0, 0, 0.85) 100%), url('/ftm/modele/img/matchs/${r.image_stade}')`;
+            document.getElementById('matchHeader').style.backgroundSize = 'cover';
+        }
+
+        // Gestion des dates et verrouillage
+        const isMatchPast = new Date(r.date_rencontre) < new Date().setHours(0, 0, 0, 0);
+        if (isMatchPast) {
+            document.getElementById('lockedNotice').style.display = 'flex';
+            document.getElementById('btnModifier').classList.add('disabled');
+            document.getElementById('btnSelection').classList.add('disabled');
+        } else {
+            document.getElementById('btnModifier').href = `formRencontre.php?id=${r.id_rencontre}`;
+            document.getElementById('btnSelection').href = `/ftm/api/selection/AfficherSelection.php?id_rencontre=${r.id_rencontre}`;
+        }
+        document.getElementById('btnResultat').href = `formResultat.php?id=${r.id_rencontre}`;
+
+        // Feuille de match
+        const container = document.getElementById('playerListContainer');
+        if (players.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>Aucun joueur sélectionné.</p></div>';
+        } else {
+            container.innerHTML = `<ul class="player-list">${players.map(p => `
+            <li class="player-item">
+                <div class="player-info">
+                    ${p.image ? `<img src="/ftm/modele/img/players/${p.image}" class="player-avatar-img">` : `<div class="player-avatar">${(p.prenom[0]+p.nom[0]).toUpperCase()}</div>`}
+                    <div>
+                        <div class="player-name">${p.prenom} ${p.nom}</div>
+                        <div class="player-role">${p.poste}</div>
+                    </div>
+                </div>
+                <div class="player-stats">
+                    <span class="titulaire-badge ${p.titulaire ? 'titular' : 'sub'}">${p.titulaire ? 'Titulaire' : 'Remplaçant'}</span>
+                    ${p.evaluation ? `<div class="rating">⭐ ${p.evaluation}/10</div>` : ''}
+                </div>
+            </li>
+        `).join('')}</ul>`;
+        }
+
+        document.getElementById('detailContainer').style.display = 'block';
+    });
+</script>
 
 <?php require_once __DIR__ . '/../footer.php'; ?>

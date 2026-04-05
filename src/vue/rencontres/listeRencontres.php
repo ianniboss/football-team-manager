@@ -8,7 +8,7 @@ require_once __DIR__ . '/../header.php';
         <h2>Calendrier des Rencontres</h2>
         <p class="subtitle">Gérez vos matchs et résultats</p>
     </div>
-    <a href="ajouterRencontre.php" class="btn-add">
+    <a href="formRencontre.php" class="btn-add">
         <span>+</span> Ajouter un match
     </a>
 </div>

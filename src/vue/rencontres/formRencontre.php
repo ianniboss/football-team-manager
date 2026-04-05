@@ -1,19 +1,15 @@
 <?php
 require_once __DIR__ . '/../header.php';
-$rencontre = $_SESSION['rencontre_modify'] ?? null;
-unset($_SESSION['rencontre_modify']);
 ?>
-<!-- utilise ajouterRencontre.php et ModifierUneRencontre.php -->
 <link rel="stylesheet" href="/ftm/css/forms.css">
+<script src="script.js" defer></script>
 
 <div class="form-card">
-    <h2><?php echo isset($rencontre) ? 'Modifier la Rencontre' : 'Nouvelle Rencontre'; ?></h2>
+    <h2 id="formTitle">Nouvelle Rencontre</h2>
     <p class="form-subtitle">Informations générales</p>
 
-    <form method="POST" action="<?php echo isset($rencontre) ? '/api/rencontre/ModifierUneRencontre.php' : '/api/rencontre/ajouterRencontre.php'; ?>" enctype="multipart/form-data">
-        <?php if (isset($rencontre)): ?>
-            <input type="hidden" name="id_rencontre" value="<?php echo $rencontre['id_rencontre']; ?>">
-        <?php endif; ?>
+    <form id="matchForm">
+        <input type="hidden" name="id_rencontre" id="id_rencontre">
 
         <div class="form-grid">
             <div class="form-section">
@@ -23,7 +19,6 @@ unset($_SESSION['rencontre_modify']);
                     <label for="nom_equipe_adverse">Équipe adverse</label>
                     <div class="input-with-icon">
                         <input type="text" name="nom_equipe_adverse" id="nom_equipe_adverse"
-                            value="<?php echo $rencontre['nom_equipe_adverse'] ?? ''; ?>"
                             placeholder="Ex: FC Paris" required>
                         <span class="icon">⚽</span>
                     </div>
@@ -33,7 +28,6 @@ unset($_SESSION['rencontre_modify']);
                     <label for="date_rencontre">Date</label>
                     <div class="input-with-icon">
                         <input type="date" name="date_rencontre" id="date_rencontre"
-                            value="<?php echo $rencontre['date_rencontre'] ?? ''; ?>"
                             min="<?php echo date('Y-m-d'); ?>" required>
                         <span class="icon">📅</span>
                     </div>
@@ -43,8 +37,7 @@ unset($_SESSION['rencontre_modify']);
                 <div class="form-group">
                     <label for="heure">Heure</label>
                     <div class="input-with-icon">
-                        <input type="time" name="heure" id="heure"
-                            value="<?php echo $rencontre['heure'] ?? ''; ?>" required>
+                        <input type="time" name="heure" id="heure" required>
                         <span class="icon">🕐</span>
                     </div>
                 </div>
@@ -57,13 +50,11 @@ unset($_SESSION['rencontre_modify']);
                     <label>Type de rencontre</label>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="lieu" value="Domicile"
-                                <?php echo (!isset($rencontre) || $rencontre['lieu'] == 'Domicile') ? 'checked' : ''; ?>>
+                            <input type="radio" name="lieu" value="Domicile" checked>
                             <span>Domicile</span>
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="lieu" value="Exterieur"
-                                <?php echo (isset($rencontre) && $rencontre['lieu'] == 'Exterieur') ? 'checked' : ''; ?>>
+                            <input type="radio" name="lieu" value="Exterieur">
                             <span>Extérieur</span>
                         </label>
                     </div>
@@ -72,20 +63,12 @@ unset($_SESSION['rencontre_modify']);
                 <div class="form-group">
                     <label for="adresse">Adresse du stade</label>
                     <input type="text" name="adresse" id="adresse"
-                        value="<?php echo $rencontre['adresse'] ?? ''; ?>"
                         placeholder="Entrez l'adresse complète du stade..." required>
                 </div>
 
                 <div class="form-group" style="margin-top: 20px;">
                     <h3 style="margin-bottom: 12px;">Image du stade</h3>
-                    <?php if (isset($rencontre) && !empty($rencontre['image_stade'])): ?>
-                        <div style="margin-bottom: 10px;">
-                            <img src="/modele/img/matchs/<?php echo htmlspecialchars($rencontre['image_stade']); ?>"
-                                alt="Photo du stade"
-                                style="width: 120px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
-                            <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Image actuelle</p>
-                        </div>
-                    <?php endif; ?>
+                    <div id="imagePreview"></div>
                     <label for="image_stade">Sélectionner une image (optionnel)</label>
                     <input type="file" name="image_stade" id="image_stade" accept="image/*"
                         style="width: 100%; padding: 12px; border: 1.5px dashed #ccc; border-radius: 10px; background: #fafafa; cursor: pointer;">
@@ -94,14 +77,46 @@ unset($_SESSION['rencontre_modify']);
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">
-                <?php echo isset($rencontre) ? 'Modifier' : 'Créer la rencontre'; ?>
-            </button>
-            <a href="/api/rencontre/ObtenirToutesLesRencontres.php" class="btn btn-secondary" style="text-decoration: none; text-align: center;">
-                Annuler
-            </a>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Créer la rencontre</button>
+            <a href="listeRencontres.php" class="btn btn-secondary">Annuler</a>
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (id) {
+            const data = await getRencontreDetails(id);
+            if (data) {
+                const r = data.rencontre;
+                document.getElementById('formTitle').textContent = "Modifier la Rencontre";
+                document.getElementById('submitBtn').textContent = "Modifier";
+                document.getElementById('id_rencontre').value = r.id_rencontre;
+                document.getElementById('nom_equipe_adverse').value = r.nom_equipe_adverse;
+                document.getElementById('date_rencontre').value = r.date_rencontre;
+                document.getElementById('heure').value = r.heure;
+                document.getElementById('adresse').value = r.adresse;
+                document.querySelector(`input[name="lieu"][value="${r.lieu}"]`).checked = true;
+
+                if (r.image_stade) {
+                    document.getElementById('imagePreview').innerHTML = `<img src="/ftm/modele/img/matchs/${r.image_stade}" style="width: 120px; border-radius: 8px; margin-bottom: 10px;">`;
+                }
+            }
+        }
+    });
+
+    document.getElementById('matchForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const id = document.getElementById('id_rencontre').value;
+
+        // Si ID présent, on utilise PATCH ou PUT. Ici l'API gère le POST pour création/upload.
+        const result = await saveRencontre(formData);
+        if (result && !result.error) {
+            window.location.href = 'listeRencontres.php';
+        }
+    });
+</script>
 
 <?php require_once __DIR__ . '/../footer.php'; ?>
