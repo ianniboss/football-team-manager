@@ -6,7 +6,7 @@
 
 ## Informations generales
 
-**Etudiants :** Ian Bin Syahrul Azlan et Lucas Recan
+**Etudiants :** Ian Bin Syahrul Azlan et Lucas Récan
 
 **Groupe :** B11
 
