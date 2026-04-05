@@ -38,7 +38,7 @@ async function fetchAndDisplayStats() {
 
         const result = await response.json();
 
-        // Assurez-vous que l'API renvoie bien un objet avec 'club_stats' et 'player_stats'
+        // Vérification du format de réponse
         if (result && result.club_stats && result.player_stats) {
             displayGlobalStats(result.club_stats);
             displayPlayerStats(result.player_stats);

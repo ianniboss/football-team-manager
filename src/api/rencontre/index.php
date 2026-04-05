@@ -311,10 +311,10 @@ function deleteRencontre($id)
         return sendError("Rencontre introuvable.", 404);
     }
 
-    // 1. D'ABORD : Supprimer les participations (feuille de match) pour éviter l'erreur de clé étrangère
+    // Suppression des participations (clé étrangère)
     $participerDAO->supprimerParticipationsParMatch($id);
 
-    // 2. Supprimer l'image du stade si elle existe
+    // Suppression de l'image du stade
     if (!empty($rencontre['image_stade'])) {
         $imagePath = __DIR__ . '/../../modele/img/matchs/' . $rencontre['image_stade'];
         if (file_exists($imagePath)) {
@@ -322,7 +322,7 @@ function deleteRencontre($id)
         }
     }
 
-    // 3. ENFIN : Supprimer la rencontre
+    // Suppression de la rencontre
     if ($rencontreDAO->supprimerRencontre($id)) {
         return sendSuccess(null, 204);
     } else {

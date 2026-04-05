@@ -113,7 +113,7 @@ require_once __DIR__ . '/header.php';
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        // 1. Décoder le JWT pour le nom d'utilisateur
+        // Décodage du JWT pour afficher le nom
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
             document.getElementById('userName').textContent = payload.login;
@@ -125,7 +125,7 @@ require_once __DIR__ . '/header.php';
             'Authorization': 'Bearer ' + token
         };
 
-        // 2. Fetch Joueurs
+        // Récupération des joueurs
         const resJoueurs = await fetch('/ftm/api/joueur/index.php', {
             headers
         });
@@ -136,7 +136,7 @@ require_once __DIR__ . '/header.php';
             document.getElementById('statJoueursBlesses').textContent = joueurs.filter(j => j.statut === 'Blessé').length;
         }
 
-        // 3. Fetch Rencontres
+        // Récupération des rencontres
         const resMatchs = await fetch('/ftm/api/rencontre/index.php', {
             headers
         });

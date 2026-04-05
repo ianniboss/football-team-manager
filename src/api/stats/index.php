@@ -73,8 +73,7 @@ function getGlobalStats()
         ];
     }
 
-    // 3. Réponse agrégée
-    return sendSuccess([ // L'API renvoie un objet agrégé, ce qui est bien pour les stats
+    return sendSuccess([
         'club_stats' => $statsGlobales, // Statistiques globales de l'équipe
         'player_stats' => $tableauJoueurs // Statistiques détaillées par joueur
     ]);

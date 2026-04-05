@@ -65,7 +65,7 @@
             const errorText = document.getElementById('errorText');
 
             try {
-                // 1. Récupération du Token JWT via l'API d'Auth
+                // Appel à l'API d'authentification
                 const response = await fetch('../auth/index.php', {
                     method: 'POST',
                     headers: {
