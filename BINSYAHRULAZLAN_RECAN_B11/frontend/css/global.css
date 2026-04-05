@@ -1,0 +1,415 @@
+/* global */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-image: url('/ftm/modele/img/stadiumbackground.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: #e8ecef;
+    min-height: 100vh;
+}
+
+/* Navigation */
+nav {
+    background-color: #2d3436;
+    padding: 0 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-style: italic;
+    color: #1db988;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.logo:hover {
+    color: #25d9a0;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-links a {
+    color: #b2bec3;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Container */
+.container {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+}
+
+/* Common Components */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.page-header .subtitle {
+    color: #888;
+    font-size: 0.95rem;
+    margin-top: 5px;
+}
+
+/* Buttons */
+.btn {
+    padding: 14px 40px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #1db988;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #17a077;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 185, 136, 0.3);
+}
+
+.btn-secondary {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1.5px solid #ddd;
+}
+
+.btn-secondary:hover {
+    background-color: #eee;
+    border-color: #ccc;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #1db988;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.btn-add:hover {
+    background-color: #17a077;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 185, 136, 0.3);
+}
+
+/* Action buttons */
+.action-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.action-btn-view {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.action-btn-view:hover {
+    background-color: #bbdefb;
+}
+
+.action-btn-edit {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.action-btn-edit:hover {
+    background-color: #ffe0b2;
+}
+
+.action-btn-delete {
+    background-color: #ffebee;
+    color: #d32f2f;
+}
+
+.action-btn-delete:hover {
+    background-color: #ffcdd2;
+}
+
+.action-btn-sheet {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+.action-btn-sheet:hover {
+    background-color: #c8e6c9;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 8px;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-actif {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-blesse {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-suspendu {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status-absent {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+/* Venue badges */
+.venue-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.venue-domicile {
+    background: #1db988;
+    color: white;
+}
+
+.venue-exterieur {
+    background: #f39c12;
+    color: white;
+}
+
+/* Result badges */
+.result-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.result-victoire {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.result-defaite {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.result-nul {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.result-avenir {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+/* Stats bar */
+.stats-bar {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.stat-item {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1db988;
+}
+
+.stat-number.victories {
+    color: #28a745;
+}
+
+.stat-number.defeats {
+    color: #dc3545;
+}
+
+.stat-number.draws {
+    color: #6c757d;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    background: white;
+    border-radius: 12px;
+}
+
+.empty-state h3 {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Back link */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #1db988;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 25px;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #17a077;
+}
+
+/* Player avatar */
+.player-avatar {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    color: #636e72;
+    font-size: 0.85rem;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 0 20px;
+        height: auto;
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links a {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .stats-bar {
+        flex-wrap: wrap;
+    }
+
+    .actions-cell {
+        flex-direction: column;
+    }
+}
