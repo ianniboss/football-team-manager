@@ -1,0 +1,113 @@
+// Configuration de l'API
+const baseUrl = '/ftm/api/rencontre/index.php';
+
+/**
+ * Récupère les en-têtes d'authentification
+ */
+function getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Authorization': token ? `Bearer ${token}` : ''
+    };
+}
+
+/**
+ * Gère les erreurs 401 (Unauthorized) globalement
+ */
+function handleUnauthorized(response) {
+    if (response.status === 401) {
+        localStorage.removeItem('token');
+        window.location.href = '/ftm/vue/index.php';
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Récupère toutes les rencontres
+ */
+async function getAllRencontres() {
+    try {
+        const response = await fetch(baseUrl, { headers: getAuthHeaders() });
+        if (handleUnauthorized(response)) return;
+
+        // Vérification de la réussite de la requête avant de parser le JSON
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error('Erreur serveur (Text):', errorBody);
+            throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+
+        const result = await response.json();
+        displayRencontresTable(result);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des rencontres:', error);
+    }
+}
+
+/**
+ * Supprime une rencontre
+ */
+async function deleteMatch(id) {
+    if (!confirm('Voulez-vous vraiment supprimer cette rencontre ?')) return;
+
+    try {
+        const response = await fetch(`${baseUrl}?id=${id}`, {
+            method: 'DELETE',
+            headers: getAuthHeaders()
+        });
+        if (handleUnauthorized(response)) return;
+
+        if (response.ok) {
+            location.reload();
+        } else {
+            const result = await response.json();
+            alert(result.error || "Erreur lors de la suppression");
+        }
+    } catch (error) {
+        console.error('Erreur Fetch:', error);
+    }
+}
+
+/**
+ * Affiche les rencontres dans le tableau et met à jour les stats
+ */
+function displayRencontresTable(rencontres) {
+    const tableBody = document.querySelector('.matches-table tbody');
+    if (!tableBody || !Array.isArray(rencontres)) return;
+
+    // Mise à jour des statistiques
+    document.getElementById('statTotal').textContent = rencontres.length;
+    document.getElementById('statVictoires').textContent = rencontres.filter(r => r.resultat === 'Victoire').length;
+    document.getElementById('statDefaites').textContent = rencontres.filter(r => r.resultat === 'Defaite').length;
+    document.getElementById('statNuls').textContent = rencontres.filter(r => r.resultat === 'Nul').length;
+    document.getElementById('statAVenir').textContent = rencontres.filter(r => r.resultat === null).length;
+
+    tableBody.innerHTML = '';
+    rencontres.forEach(r => {
+        const row = tableBody.insertRow();
+        const date = new Date(r.date_rencontre);
+
+        row.insertCell(0).innerHTML = `<strong>${date.toLocaleDateString()}</strong><br><small>${r.heure}</small>`;
+        row.insertCell(1).textContent = r.nom_equipe_adverse;
+        const venueClass = r.lieu === 'Domicile' ? 'venue-domicile' : 'venue-exterieur';
+        row.insertCell(2).innerHTML = `<span class="venue-badge ${venueClass}">${r.lieu}</span>`;
+        row.insertCell(3).textContent = r.adresse;
+
+        const resClass = r.resultat ? `result-${r.resultat.toLowerCase()}` : 'result-avenir';
+        const resText = r.resultat || '⏱ À venir';
+        row.insertCell(4).innerHTML = `<span class="result-badge ${resClass}">${resText}</span>`;
+
+        const actions = row.insertCell(5);
+        actions.innerHTML = `
+            <div class="actions-cell">
+                <a href="ficheRencontre.php?id=${r.id_rencontre}" class="action-btn action-btn-view">Détails</a>
+                <button onclick="deleteMatch(${r.id_rencontre})" class="action-btn action-btn-delete">Supprimer</button>
+            </div>
+        `;
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.matches-table')) getAllRencontres();
+});
