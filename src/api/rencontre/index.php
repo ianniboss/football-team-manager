@@ -101,11 +101,10 @@ function getRencontre($id)
  * Crée une nouvelle rencontre. Accepte multipart/form-data (image optionnelle).
  * Champs obligatoires : date_rencontre, heure, adresse, nom_equipe_adverse, lieu
  */
-function creerRencontre() // On n'a plus besoin du paramètre $data
+function creerRencontre()
 {
     global $rencontreDAO;
 
-    // Puisqu'on veut gérer une image, on lit dans $_POST et non dans le JSON
     $date_rencontre = trim($_POST['date_rencontre'] ?? '');
     $heure = trim($_POST['heure'] ?? '');
     $adresse = trim($_POST['adresse'] ?? '');
@@ -115,11 +114,39 @@ function creerRencontre() // On n'a plus besoin du paramètre $data
     if (empty($date_rencontre) || empty($nom_equipe_adverse)) {
         return sendError("La date et l'équipe adverse sont obligatoires.", 400);
     }
+
     $imageStade = gererUploadImageStade($adresse);
     $rencontreDAO->ajouterRencontre($date_rencontre, $heure, $adresse, $nom_equipe_adverse, $lieu, $imageStade);
     $newId = $rencontreDAO->getLastInsertId();
 
     return sendSuccess($rencontreDAO->getRencontreById($newId), 201);
+}
+
+/**
+ * Mise à jour via POST (Multipart) pour supporter l'upload d'image.
+ */
+function modifierRencontreMultipart($id)
+{
+    global $rencontreDAO;
+    $existing = $rencontreDAO->getRencontreById($id);
+    if (!$existing) return sendError("Rencontre introuvable.", 404);
+
+    // Sécurité : pas de modif sur match passé
+    if (new DateTime($existing['date_rencontre']) < new DateTime('today')) {
+        return sendError("Impossible de modifier un match passé.", 403);
+    }
+
+    $date_rencontre = trim($_POST['date_rencontre'] ?? $existing['date_rencontre']);
+    $heure = trim($_POST['heure'] ?? $existing['heure']);
+    $adresse = trim($_POST['adresse'] ?? $existing['adresse']);
+    $nom_equipe_adverse = trim($_POST['nom_equipe_adverse'] ?? $existing['nom_equipe_adverse']);
+    $lieu = trim($_POST['lieu'] ?? $existing['lieu']);
+
+    $ancienneImage = $existing['image_stade'] ?? null;
+    $imageStade = gererUploadImageStade($adresse, $ancienneImage) ?? $ancienneImage;
+
+    $rencontreDAO->modifierRencontre($id, $date_rencontre, $heure, $adresse, $nom_equipe_adverse, $lieu, $existing['resultat'], $imageStade);
+    return sendSuccess($rencontreDAO->getRencontreById($id));
 }
 
 /**
@@ -317,13 +344,17 @@ function main()
             if ($role !== 'admin') {
                 return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
             }
-            if ($id) {
-                return sendError("L'ID ne doit pas être fourni pour une requête POST.", 400);
-            }
-            // creerRencontre utilise directement $_POST pour gérer l'upload
+
             if (empty($_POST)) {
                 return sendError("Données de formulaire manquantes.", 400);
             }
+
+            // Si un ID est présent dans l'URL ou dans le corps du formulaire, c'est une modif
+            $targetId = validateId($id ?? $_POST['id_rencontre'] ?? null);
+            if ($targetId) {
+                return modifierRencontreMultipart($targetId);
+            }
+
             return creerRencontre();
         case 'PUT':
             if ($role !== 'admin') {
