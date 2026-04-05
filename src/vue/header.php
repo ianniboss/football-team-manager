@@ -1,16 +1,14 @@
-<?php
-?>
-<script>
-    // Protection client-side : redirection si pas de token
-    if (!localStorage.getItem('token')) {
-        window.location.href = "/ftm/vue/index.php";
-    }
-</script>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
+    <script>
+        // Protection client-side : redirection si pas de token
+        if (!localStorage.getItem('token')) {
+            window.location.href = "/ftm/vue/index.php";
+        }
+    </script>
     <title>Football Team Manager</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/ftm/css/global.css">
