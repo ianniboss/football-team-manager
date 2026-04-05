@@ -1,13 +1,11 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /ftm/vue/index.php");
-    exit;
-}
 ?>
+<script>
+    // Protection client-side : redirection si pas de token
+    if (!localStorage.getItem('token')) {
+        window.location.href = "/ftm/vue/index.php";
+    }
+</script>
 <!DOCTYPE html>
 <html>
 
@@ -20,13 +18,22 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 <body>
     <nav>
-        <a href="/vue/accueil.php" class="logo">Football Team Manager</a>
+        <a href="/ftm/vue/accueil.php" class="logo">Football Team Manager</a>
         <div class="nav-links">
             <a href="/ftm/vue/accueil.php">Accueil</a>
-            <a href="/ftm/api/joueur/ObtenirTousLesJoueurs.php">Joueurs</a>
-            <a href="/ftm/api/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
-            <a href="/ftm/api/stats/AfficherStatistiques.php">Statistiques</a>
-            <a href="/ftm/api/logout.php" onclick="return confirm('Vous allez vous deconnecter');">Déconnexion</a>
+            <a href="/ftm/vue/joueurs/listeJoueurs.php">Joueurs</a>
+            <a href="/ftm/controleur/rencontre/ObtenirToutesLesRencontres.php">Matchs</a>
+            <a href="/ftm/controleur/stats/AfficherStatistiques.php">Statistiques</a>
+            <a href="#" id="logoutBtn">Déconnexion</a>
         </div>
     </nav>
+    <script>
+        document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Voulez-vous vous déconnecter ?')) {
+                localStorage.removeItem('token');
+                window.location.href = "/ftm/vue/index.php";
+            }
+        });
+    </script>
     <div class="container">

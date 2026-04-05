@@ -1,4 +1,9 @@
 <?php
+// Désactivation explicite des sessions pour une architecture pure API
+ini_set('session.use_cookies', 0);
+ini_set('session.use_only_cookies', 0);
+ini_set('session.use_trans_sid', 0);
+
 require_once __DIR__ . '/../../modele/JoueurDAO.php';
 require_once __DIR__ . '/../../modele/CommentaireDAO.php';
 require_once __DIR__ . '/../../jwt_utils.php';

@@ -14,6 +14,18 @@ function getAuthHeaders() {
 }
 
 /**
+ * Gère les réponses d'erreur globales (notamment la 401)
+ */
+function handleResponse(response) {
+    if (response.status === 401) {
+        localStorage.removeItem('token');
+        window.location.href = '/ftm/vue/index.php';
+        return false;
+    }
+    return response;
+}
+
+/**
  * Récupère tous les joueurs (avec filtres optionnels)
  */
 async function getAllJoueurs(search = '', statut = '') {
@@ -22,10 +34,11 @@ async function getAllJoueurs(search = '', statut = '') {
         if (search) url.searchParams.append('search', search);
         if (statut) url.searchParams.append('statut', statut);
 
-        const response = await fetch(url, { headers: getAuthHeaders() });
+        let response = await fetch(url, { headers: getAuthHeaders() });
+        response = handleResponse(response);
+        if (!response) return;
 
         if (!response.ok) {
-            if (response.status === 401) window.location.href = '../index.php';
             throw new Error(`Response status: ${response.status}`);
         }
         const result = await response.json();

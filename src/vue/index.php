@@ -83,15 +83,6 @@
                     // Stockage du token pour les futurs fetch
                     localStorage.setItem('token', result.data);
 
-                    // 2. Compatibilité Session PHP (pour header.php)
-                    const formData = new FormData();
-                    formData.append('username', login);
-                    formData.append('password', password);
-                    await fetch('../api/login.php', {
-                        method: 'POST',
-                        body: formData
-                    });
-
                     window.location.href = 'accueil.php';
                 } else {
                     errorBox.style.display = 'block';
