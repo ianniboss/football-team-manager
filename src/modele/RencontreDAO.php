@@ -14,6 +14,9 @@ class RencontreDAO
     {
         $sql = "SELECT * FROM rencontre ORDER BY date_rencontre DESC, heure DESC";
         $req = $this->pdo->query($sql);
+        if (!$req) {
+            return [];
+        }
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 

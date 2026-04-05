@@ -74,11 +74,11 @@ class JoueurDAO
             ':statut' => $statut,
             ':id' => $id_joueur
         );
-        
+
         if ($image !== null) {
             $params[':image'] = $image;
         }
-        
+
         return $stmt->execute($params);
     }
 
@@ -96,4 +96,3 @@ class JoueurDAO
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-?>
