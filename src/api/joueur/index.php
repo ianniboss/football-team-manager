@@ -212,8 +212,15 @@ function deleteJoueur($id)
 
 // --- Point d'entrée principal ---
 
+
 function main()
 {
+    $user = checkAuth();
+    if (!$user) {
+        echo sendError("Accès refusé. Token invalide ou expiré.", 401);
+        exit;
+    }
+    $role = $user['role']; // 'admin' ou 'guest'
     $method = $_SERVER['REQUEST_METHOD'];
     $id = $_GET['id'] ?? null;
 
@@ -222,15 +229,17 @@ function main()
             return ($id) ? getJoueur($id) : getAll();
 
         case "POST":
-            // $token = get_bearer_token();
-            // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             $data = validateJsonInput();
             if ($data === false) return sendError("Le JSON fourni est mal formé.", 400);
             return creerJoueur($data);
 
         case "PUT":
-            // $token = get_bearer_token();
-            // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             if (!$id) return sendError("ID manquant pour le PUT.", 400);
 
             $data = validateJsonInput();
@@ -238,8 +247,9 @@ function main()
             return putJoueur($id, $data);
 
         case "PATCH":
-            // $token = get_bearer_token();
-            // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
             if (!$id) return sendError("ID manquant pour le PATCH.", 400);
 
             // Action spécifique : mise à jour rapide du statut via l'URL
@@ -253,10 +263,12 @@ function main()
             return patchJoueur($id, $data);
 
         case "DELETE":
-            // $token = get_bearer_token();
-            // if (!$token || !is_jwt_valid($token, JWT_SECRET)) return sendError("Non autorisé", 401);
-            if (!$id) return sendError("ID manquant", 400);
+            if ($role !== 'admin') {
+                return sendError("Droits insuffisants. Seul un administrateur peut modifier ces données.", 403);
+            }
+            if (!$id) return sendError("L'ID est obligatoire pour une requête DELETE.", 400);
             return deleteJoueur($id);
+
 
         case "OPTIONS":
             header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
