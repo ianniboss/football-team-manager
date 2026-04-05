@@ -65,8 +65,7 @@
             const errorText = document.getElementById('errorText');
 
             try {
-                // Appel à l'API d'authentification
-                const response = await fetch('../auth/index.php', {
+                const response = await fetch('https://ftm-auth.alwaysdata.net/auth/index.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

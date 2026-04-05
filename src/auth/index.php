@@ -2,7 +2,7 @@
 require_once __DIR__ . '/DAO.php';
 require_once __DIR__ . '/../jwt_utils.php';
 require_once __DIR__ . '/../api_utils.php';
-require_once __DIR__ . '/../../../config.php'; // contient JWT_SECRET
+require_once __DIR__ . '/../../../config.php';
 $dao = new DAO();
 
 function main()
@@ -15,7 +15,7 @@ function main()
             return json_encode(["status" => "active", "message" => "R401 Authentification Service is running."]);
         case "OPTIONS":
             http_response_code(204);
-            header('Access-Control-Allow-Origin: *');
+            header('Access-Control-Allow-Origin: https://www.ribou.fr');
             header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
             header('Access-Control-Allow-Headers: Content-Type, Authorization');
             return '';
@@ -41,11 +41,11 @@ function main()
             }
             if ($dao->verifyUser($data['login'], $data['password'])) {
                 $header = ['alg' => 'HS256', 'typ' => 'JWT'];
-                $payload = ['login' => $data['login'], 'role' => $dao->getUserRole($data['login']), 'exp' => time() + 900]; // Token valide pendant 15 minutes
+                $payload = ['login' => $data['login'], 'role' => $dao->getUserRole($data['login']), 'exp' => time() + 900];
                 $token = generate_jwt($header, $payload, JWT_SECRET);
-                header('Access-Control-Allow-Origin: *');
+                header('Access-Control-Allow-Origin: https://www.ribou.fr');
                 header('Content-Type: application/json; charset=utf-8');
-                return sendSuccess(["status" => "success", "status_code" => 200, "status_message" => "[R401 REST AUTH] : Authentification OK", "data" => $token]);
+                return sendSuccess(["status" => "success", "data" => $token]);
             } else {
                 return sendError("Login ou mot de passe incorrect.", 401);
             }
