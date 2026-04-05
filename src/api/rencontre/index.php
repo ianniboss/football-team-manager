@@ -1,4 +1,7 @@
 <?php
+// Empêche les warnings/erreurs PHP de polluer la réponse JSON
+ini_set('display_errors', 0);
+
 require_once __DIR__ . '/../../modele/RencontreDAO.php';
 require_once __DIR__ . '/../../modele/ParticiperDAO.php';
 require_once __DIR__ . '/../../jwt_utils.php';
@@ -365,4 +368,8 @@ function main()
     }
 }
 
-echo main();
+// On s'assure qu'aucun contenu parasite n'est envoyé avant ou après
+$output = main();
+if ($output !== null) {
+    echo $output;
+}
