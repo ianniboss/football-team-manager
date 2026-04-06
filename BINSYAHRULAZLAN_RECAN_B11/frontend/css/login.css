@@ -18,7 +18,7 @@ body {
     font-size: 14px;
     line-height: 1.5;
     color: #333;
-    background-image: url('../modele/img/stadiumbackground.jpg');
+    background-image: url('https://ftmanager.alwaysdata.net/modele/img/stadiumbackground.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

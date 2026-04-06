@@ -30,7 +30,7 @@ function handleResponse(response) {
  */
 async function getAllJoueurs(search = '', statut = '') {
     try {
-        const url = new URL(window.location.origin + baseUrl + resource);
+        const url = new URL(baseUrl + resource);
         if (search) url.searchParams.append('search', search);
         if (statut) url.searchParams.append('statut', statut);
 

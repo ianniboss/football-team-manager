@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../config.php'; // contient JWT_SECRET
+require_once __DIR__ . '/../config.php'; // contient JWT_SECRET
 
 
 function sendSuccess($data, $code = 200)

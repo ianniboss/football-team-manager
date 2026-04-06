@@ -1,0 +1,8 @@
+Header always set Access-Control-Allow-Origin "https://www.ribou.fr"
+Header always set Access-Control-Allow-Methods "GET, POST, DELETE, PUT, PATCH, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+
+# Gestion du Preflight (OPTIONS) au niveau Apache
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=204,L]

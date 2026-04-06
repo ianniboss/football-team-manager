@@ -15,7 +15,7 @@
     <div class="login-container">
         <div class="login-card">
             <div class="logo-container">
-                <img src="../modele/img/logoFTM.png" alt="Logo Football Team Manager">
+                <img src="https://ftmanager.alwaysdata.net/modele/img/logoFTM.png" alt="Logo Football Team Manager">
                 <h1 class="app-title">Football Team Manager</h1>
                 <p class="app-subtitle">Gérez votre équipe</p>
             </div>
